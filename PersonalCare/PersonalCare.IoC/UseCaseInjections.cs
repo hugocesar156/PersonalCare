@@ -10,6 +10,7 @@ namespace PersonalCare.IoC
         public static IServiceCollection AddUseCases(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IConta, Conta>();
+            services.AddScoped<ICategoriaTreino, CategoriaTreino>();
 
             return services;
         }
