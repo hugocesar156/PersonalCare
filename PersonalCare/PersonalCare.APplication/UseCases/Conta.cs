@@ -16,6 +16,40 @@ namespace PersonalCare.Application.UseCases
             _contaRepository = contaRepository;
         }
 
+        public ContaResponse Buscar(int idConta)
+        {
+            try
+            {
+                var conta = _contaRepository.Buscar(idConta);
+
+                if (conta is not null)
+                {
+                    return new ContaResponse(
+                        conta.Id,
+                        conta.Nome,
+                        conta.Email,
+                        conta.Cpf,
+                        conta.Altura,
+                        conta.Biotipo,
+                        conta.DataNascimento,
+                        conta.Contatos);
+                }
+
+                throw new PersonalCareException(
+                    "Não foi possível buscar informações da conta.", 
+                    "Registro de conta não encontrado no servidor.", 
+                    HttpStatusCode.NotFound);
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao buscar registro de conta", ex.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
         public ContaResponse Inserir(ContaRequest request)
         {
             try
@@ -48,15 +82,23 @@ namespace PersonalCare.Application.UseCases
 
                 var conta = _contaRepository.Buscar(idConta);
 
-                return new ContaResponse(
-                    conta.Id,
-                    conta.Nome,
-                    conta.Email,
-                    conta.Cpf,
-                    conta.Altura,
-                    conta.Biotipo,
-                    conta.DataNascimento,
-                    new List<Domain.Entities.ContatoConta>());
+                if (conta is not null)
+                {
+                    return new ContaResponse(
+                        conta.Id,
+                        conta.Nome,
+                        conta.Email,
+                        conta.Cpf,
+                        conta.Altura,
+                        conta.Biotipo,
+                        conta.DataNascimento,
+                        new List<Domain.Entities.ContatoConta>());
+                }
+
+                throw new PersonalCareException(
+                        "Ocorreu um erro duarante o cadastro da conta",
+                        "Falha ao retornar informações da conta cadastrada.",
+                        HttpStatusCode.InternalServerError);
             }
             catch (PersonalCareException)
             {
@@ -73,14 +115,22 @@ namespace PersonalCare.Application.UseCases
             try
             {
                 var contas = _contaRepository.Listar();
-                return contas.Select(c => new ContaResponse(c.Id, c.Nome, c.Email, c.Cpf, c.Altura, c.Biotipo, c.DataNascimento, c.Contatos)).ToList();
+
+                if (contas is not null)
+                {
+                    return contas.Select(c => new ContaResponse(c.Id, c.Nome, c.Email, c.Cpf, c.Altura, c.Biotipo, c.DataNascimento, c.Contatos)).ToList();
+                }
+
+                return new List<ContaResponse>();
+            }
+            catch (PersonalCareException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
-
+                throw new PersonalCareException("Ocorreu um erro ao listar registro de contas", ex.Message, HttpStatusCode.InternalServerError);
             }
-
-            throw new NotImplementedException();
         }
     }
 }

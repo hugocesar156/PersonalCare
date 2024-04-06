@@ -5,6 +5,7 @@ namespace PersonalCare.Application.Interfaces
 {
     public interface IConta
     {
+        ContaResponse Buscar(int idConta);
         ContaResponse Inserir(ContaRequest request);
         List<ContaResponse> Listar();
     }
