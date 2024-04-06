@@ -9,6 +9,7 @@ namespace PersonalCare.Application.Interfaces
         void AtualizarContato(AtualizarContaContatoRequest request);
         ContaResponse Buscar(int idConta);
         void Deletar(int idConta);
+        void DeletarContato(int idContato);
         ContaResponse Inserir(InserirContaRequest request);
         void InserirContato(InserirContaContatoRequest request);
         List<ContaResponse> Listar();

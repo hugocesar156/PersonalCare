@@ -91,6 +91,24 @@ namespace PersonalCare.API.Controllers.Conta
         }
 
         /// <summary>
+        /// Deleta um contato de um registro de conta a partir do ID do contato informado.
+        /// </summary>
+        [HttpDelete("DeletarContato/{idContato}")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult DeletarContato(int idContato)
+        {
+            try
+            {
+                _conta.DeletarContato(idContato);
+                return StatusCode((int)HttpStatusCode.OK, "Contato da conta deletado com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Insere um registro de conta.
         /// </summary>
         [HttpPost("Inserir")]

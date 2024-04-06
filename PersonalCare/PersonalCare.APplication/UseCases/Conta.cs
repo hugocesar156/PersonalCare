@@ -1,6 +1,7 @@
 ﻿using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Conta;
 using PersonalCare.Application.Models.Responses.Conta;
+using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 using PersonalCare.Shared;
 using System.Net;
@@ -59,7 +60,7 @@ namespace PersonalCare.Application.UseCases
             }
             catch (Exception ex)
             {
-                throw new PersonalCareException("Ocorreu um erro ao atualizar registro de conta", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+                throw new PersonalCareException("Ocorreu um erro ao atualizar registro de conta.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 
@@ -72,7 +73,7 @@ namespace PersonalCare.Application.UseCases
                 if (!_contaRepository.AtualizarContato(entity))
                 {
                     throw new PersonalCareException(
-                        "Ocorreu um erro ao deletar registro de conta",
+                        "Ocorreu um erro ao atualizar contato do registro de conta.",
                         "Registro de conta não encontrado para concluir a ação.",
                         HttpStatusCode.NotFound);
                 }
@@ -83,7 +84,7 @@ namespace PersonalCare.Application.UseCases
             }
             catch (Exception ex)
             {
-                throw new PersonalCareException("Ocorreu um erro ao deletar registro de conta", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+                throw new PersonalCareException("Ocorreu um erro ao atualizar contato do registro de conta.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 
@@ -117,7 +118,7 @@ namespace PersonalCare.Application.UseCases
             }
             catch (Exception ex)
             {
-                throw new PersonalCareException("Ocorreu um erro ao buscar registro de conta", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+                throw new PersonalCareException("Ocorreu um erro ao buscar registro de conta.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 
@@ -128,7 +129,7 @@ namespace PersonalCare.Application.UseCases
                 if (!_contaRepository.Deletar(idConta))
                 {
                     throw new PersonalCareException(
-                        "Ocorreu um erro ao deletar registro de conta",
+                        "Ocorreu um erro ao deletar registro de conta.",
                         "Registro de conta não encontrado para concluir a ação.",
                         HttpStatusCode.NotFound);
                 }
@@ -139,7 +140,29 @@ namespace PersonalCare.Application.UseCases
             }
             catch (Exception ex)
             {
-                throw new PersonalCareException("Ocorreu um erro ao deletar registro de conta", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+                throw new PersonalCareException("Ocorreu um erro ao deletar registro de conta.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public void DeletarContato(int idContato)
+        {
+            try
+            {
+                if (!_contaRepository.DeletarContato(idContato))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao deletar contato do registro de conta.",
+                        "Contato não encontrado para concluir a ação.",
+                        HttpStatusCode.NotFound);
+                }
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao deletar contato do registro de conta.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 
@@ -212,7 +235,7 @@ namespace PersonalCare.Application.UseCases
                 if (!_contaRepository.InserirContato(entity))
                 {
                     throw new PersonalCareException(
-                        "Ocorreu um erro ao adicionar contato para a conta",
+                        "Ocorreu um erro ao adicionar contato para a conta.",
                         "Registro de conta não encontrado para concluir a ação.",
                         HttpStatusCode.NotFound);
                 }
@@ -223,7 +246,7 @@ namespace PersonalCare.Application.UseCases
             }
             catch (Exception ex)
             {
-                throw new PersonalCareException("Ocorreu um erro ao listar registro de contas", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+                throw new PersonalCareException("Ocorreu um erro ao adicionar contato para a conta.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 
@@ -246,7 +269,7 @@ namespace PersonalCare.Application.UseCases
             }
             catch (Exception ex)
             {
-                throw new PersonalCareException("Ocorreu um erro ao listar registro de contas", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+                throw new PersonalCareException("Ocorreu um erro ao listar registro de contas.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
     }

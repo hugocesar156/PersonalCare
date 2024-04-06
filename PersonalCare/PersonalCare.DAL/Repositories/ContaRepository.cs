@@ -135,6 +135,19 @@ namespace PersonalCare.Domain.Repositories
             return false;
         }
 
+        public bool DeletarContato(int idContato)
+        {
+            var entity = _data.CONTATO_CONTAs.FirstOrDefault(c => c.ID == idContato);
+
+            if (entity is not null)
+            {
+                _data.Remove(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
         public int Inserir(Conta request)
         {
             var entity = new CONTum
