@@ -16,6 +16,53 @@ namespace PersonalCare.Application.UseCases
             _contaRepository = contaRepository;
         }
 
+        public ContaResponse Atualizar(AtualizarContaRequest request)
+        {
+            try
+            {
+                var entity = new Domain.Entities.Conta(
+                    request.Id,
+                    request.Nome,
+                    request.Email,
+                    request.Cpf,
+                    request.Altura,
+                    request.Biotipo,
+                    request.DataNascimento,
+                    DateTime.MinValue,
+                    DateTime.Now,
+                    0,
+                    new List<Domain.Entities.ContatoConta>());
+
+                var conta = _contaRepository.Atualizar(entity);
+
+                if (conta is not null)
+                {
+                    return new ContaResponse(
+                       conta.Id,
+                       conta.Nome,
+                       conta.Email,
+                       conta.Cpf,
+                       conta.Altura,
+                       conta.Biotipo,
+                       conta.DataNascimento,
+                       conta.Contatos);
+                }
+
+                throw new PersonalCareException(
+                    "Não foi possível atualizar informações da conta.",
+                    "Registro de conta não encontrado no servidor.",
+                    HttpStatusCode.NotFound);
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao atualizar registro de conta", ex.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
         public ContaResponse Buscar(int idConta)
         {
             try
@@ -50,7 +97,7 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
-        public ContaResponse Inserir(ContaRequest request)
+        public ContaResponse Inserir(InserirContaRequest request)
         {
             try
             {

@@ -4,6 +4,7 @@ namespace PersonalCare.Domain.Interfaces
 {
     public interface IContaRepository
     {
+        Conta? Atualizar(Conta request);
         Conta? Buscar(int idConta);
         Conta? Buscar(string cpf);
         int Inserir(Conta request);

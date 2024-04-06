@@ -15,6 +15,40 @@ namespace PersonalCare.Domain.Repositories
             _data = data;
         }
 
+        public Conta? Atualizar(Conta request)
+        {
+            var entity = _data.CONTAs.FirstOrDefault(c => c.ID == request.Id);
+
+            if (entity is not null)
+            {
+                entity.NOME = request.Nome;
+                entity.EMAIL = request.Email;
+                entity.CPF = request.Cpf;
+                entity.ALTURA = request.Altura;
+                entity.BIOTIPO = request.Biotipo;
+                entity.DATA_NASCIMENTO = request.DataNascimento;
+                entity.DATA_ATUALIZACAO = request.DataAtualizacao;
+
+                _data.Update(entity);
+                _data.SaveChanges();
+
+                return new Conta(
+                    entity.ID,
+                    entity.NOME,
+                    entity.EMAIL,
+                    entity.CPF,
+                    entity.ALTURA,
+                    entity.BIOTIPO,
+                    entity.DATA_NASCIMENTO,
+                    entity.DATA_CADASTRO,
+                    entity.DATA_ATUALIZACAO,
+                    entity.ID_USUARIO_CADASTRO,
+                    new List<ContatoConta>());
+            }
+
+            return null;
+        }
+
         public Conta? Buscar(int idConta)
         {
             var entity = _data.CONTAs.Include(c => c.CONTATO_CONTa).FirstOrDefault(c => c.ID == idConta);

@@ -3,10 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PersonalCare.Application.Models.Requests.Conta
 {
-    public class ContaRequest
+    public class AtualizarContaRequest
     {
+        [Obrigatorio]
         public int Id { get; set; }
-        
+
         [Obrigatorio]
         public string Nome { get; set; }
 
@@ -22,10 +23,5 @@ namespace PersonalCare.Application.Models.Requests.Conta
 
         [Obrigatorio]
         public DateTime DataNascimento { get; set; }
-
-        [Obrigatorio]
-        public int IdUsuarioCadastro { get; set; }
-
-        public List<ContatoContaRequest>? ContatoConta { get; set; }
     }
 }

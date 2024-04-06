@@ -19,6 +19,24 @@ namespace PersonalCare.API.Controllers.Conta
         }
 
         /// <summary>
+        /// Atualiza um registro de conta.
+        /// </summary>
+        [HttpPut("Atualizar")]
+        [ProducesResponseType(typeof(ContaResponse), StatusCodes.Status200OK)]
+        public IActionResult Atualizar(AtualizarContaRequest request)
+        {
+            try
+            {
+                var conta = _conta.Atualizar(request);
+                return StatusCode((int)HttpStatusCode.OK, conta);
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Retorna registro de conta a partir do ID da conta informado.
         /// </summary>
         [HttpGet("Buscar/{idConta}")]
@@ -41,7 +59,7 @@ namespace PersonalCare.API.Controllers.Conta
         /// </summary>
         [HttpPost("Inserir")]
         [ProducesResponseType(typeof(ContaResponse), StatusCodes.Status200OK)]
-        public IActionResult Inserir(ContaRequest request)
+        public IActionResult Inserir(InserirContaRequest request)
         {
             try
             {
