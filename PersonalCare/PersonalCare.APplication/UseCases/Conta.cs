@@ -1,6 +1,7 @@
 ﻿using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Conta;
 using PersonalCare.Application.Models.Responses.Conta;
+using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 using PersonalCare.Shared;
 using System.Net;
@@ -176,6 +177,30 @@ namespace PersonalCare.Application.UseCases
             catch (Exception ex)
             {
                 throw new PersonalCareException("Ocorreu um erro ao inserir registro de conta", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public void InserirContato(InserirContaContatoRequest request)
+        {
+            try
+            {
+                var entity = new Domain.Entities.ContatoConta(0, request.Nome, request.Numero, request.Ddd, request.Ddi, request.IdConta);
+
+                if (!_contaRepository.InserirContato(entity))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao adicionar contato para a conta",
+                        "Registro de conta não encontrado para concluir a ação.",
+                        HttpStatusCode.NotFound);
+                }
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao listar registro de contas", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 

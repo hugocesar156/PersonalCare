@@ -8,10 +8,10 @@ namespace PersonalCare.Application.Models.Requests.Conta
         [Obrigatorio]
         public int Id { get; set; }
 
-        [Obrigatorio]
+        [Obrigatorio, TamanhoMaximo(50)]
         public string Nome { get; set; }
 
-        [Obrigatorio, EmailAddress]
+        [Obrigatorio, EmailAddress, TamanhoMaximo(50)]
         public string Email { get; set; }
 
         [Obrigatorio, Cpf]
@@ -19,9 +19,10 @@ namespace PersonalCare.Application.Models.Requests.Conta
 
         public decimal? Altura { get; set; }
 
+        [TamanhoMaximo(1)]
         public string? Biotipo { get; set; }
 
-        [Obrigatorio]
+        [Obrigatorio, IdadeMinima(14)]
         public DateTime DataNascimento { get; set; }
     }
 }

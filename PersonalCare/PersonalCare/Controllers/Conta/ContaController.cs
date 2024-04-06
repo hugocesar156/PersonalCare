@@ -58,7 +58,7 @@ namespace PersonalCare.API.Controllers.Conta
         /// Deleta um registro de conta a partir do ID da conta informado.
         /// </summary>
         [HttpDelete("Deletar/{idConta}")]
-        [ProducesResponseType(typeof(ContaResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Deletar(int idConta)
         {
             try
@@ -83,6 +83,24 @@ namespace PersonalCare.API.Controllers.Conta
             {
                 var conta = _conta.Inserir(request);
                 return StatusCode((int)HttpStatusCode.OK, conta);
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
+        /// Insere um novo contato para o registro de conta.
+        /// </summary>
+        [HttpPost("InserirContato")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult InserirContato(InserirContaContatoRequest request)
+        {
+            try
+            {
+                _conta.InserirContato(request);
+                return StatusCode((int)HttpStatusCode.OK, "Contato adicionado para a conta com sucesso.");
             }
             catch (PersonalCareException ex)
             {

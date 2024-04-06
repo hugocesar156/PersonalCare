@@ -138,6 +138,28 @@ namespace PersonalCare.Domain.Repositories
             return entity.ID;
         }
 
+        public bool InserirContato(ContatoConta request)
+        {
+            var conta = _data.CONTAs.FirstOrDefault(c => c.ID == request.IdConta);
+
+            if (conta is not null)
+            {
+                var entity = new CONTATO_CONTum
+                {
+                    NOME = request.Nome,
+                    NUMERO = request.Numero,
+                    DDD = request.Ddd,
+                    DDI = request.Ddi,
+                    ID_CONTA = request.IdConta
+                };
+
+                _data.CONTATO_CONTAs.Add(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
         public void InserirContato(List<ContatoConta> request)
         {
             var entities = new List<CONTATO_CONTum>();
