@@ -24,6 +24,6 @@ namespace PersonalCare.Application.Models.Requests.Conta
         [Obrigatorio]
         public int IdUsuarioCadastro { get; set; }
 
-        public List<ContatoContaRequest>? ContatoConta { get; set; }
+        public List<InserirContaContatoRequest>? ContatoConta { get; set; }
     }
 }

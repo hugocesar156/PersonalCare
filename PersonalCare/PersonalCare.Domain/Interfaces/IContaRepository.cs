@@ -7,6 +7,7 @@ namespace PersonalCare.Domain.Interfaces
         Conta? Atualizar(Conta request);
         Conta? Buscar(int idConta);
         Conta? Buscar(string cpf);
+        bool Deletar(int idConta);
         int Inserir(Conta request);
         void InserirContato(List<ContatoConta> request);
         List<Conta>? Listar();

@@ -102,6 +102,21 @@ namespace PersonalCare.Domain.Repositories
             return null;
         }
 
+        public bool Deletar(int idConta)
+        {
+            var entity = _data.CONTAs.Include(c => c.CONTATO_CONTa).FirstOrDefault(c => c.ID == idConta);
+
+            if (entity is not null)
+            {
+                _data.RemoveRange(entity.CONTATO_CONTa);
+                _data.Remove(entity);
+
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
         public int Inserir(Conta request)
         {
             var entity = new CONTum
