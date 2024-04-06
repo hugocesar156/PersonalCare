@@ -6,8 +6,5 @@ namespace PersonalCare.Application.Models.Requests.Conta
     {
         [Obrigatorio]
         public int Id { get; set; }
-
-        [Obrigatorio]
-        public int IdConta { get; set; }
     }
 }

@@ -37,6 +37,24 @@ namespace PersonalCare.API.Controllers.Conta
         }
 
         /// <summary>
+        /// Atualiza um contato existente de um registro de conta.
+        /// </summary>
+        [HttpPut("AtualizarContato")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult AtualizarContato(AtualizarContaContatoRequest request)
+        {
+            try
+            {
+                _conta.AtualizarContato(request);
+                return StatusCode((int)HttpStatusCode.OK, "Contato da conta alterado com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Retorna registro de conta a partir do ID da conta informado.
         /// </summary>
         [HttpGet("Buscar/{idConta}")]

@@ -1,7 +1,6 @@
 ﻿using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Conta;
 using PersonalCare.Application.Models.Responses.Conta;
-using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 using PersonalCare.Shared;
 using System.Net;
@@ -64,6 +63,30 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
+        public void AtualizarContato(AtualizarContaContatoRequest request)
+        {
+            try
+            {
+                var entity = new Domain.Entities.ContatoConta(request.Id, request.Nome, request.Numero, request.Ddd, request.Ddi, 0);
+
+                if (!_contaRepository.AtualizarContato(entity))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao deletar registro de conta",
+                        "Registro de conta não encontrado para concluir a ação.",
+                        HttpStatusCode.NotFound);
+                }
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao deletar registro de conta", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
         public ContaResponse Buscar(int idConta)
         {
             try
@@ -84,8 +107,8 @@ namespace PersonalCare.Application.UseCases
                 }
 
                 throw new PersonalCareException(
-                    "Não foi possível buscar informações da conta.", 
-                    "Registro de conta não encontrado no servidor.", 
+                    "Não foi possível buscar informações da conta.",
+                    "Registro de conta não encontrado no servidor.",
                     HttpStatusCode.NotFound);
             }
             catch (PersonalCareException)
@@ -140,8 +163,8 @@ namespace PersonalCare.Application.UseCases
                 if (_contaRepository.Buscar(entity.Cpf) is not null)
                 {
                     throw new PersonalCareException(
-                        "Ocorreu um erro ao inserir registro de conta", 
-                        $"O CPF '{entity.Cpf}' já está registrado para uma outra conta.", 
+                        "Ocorreu um erro ao inserir registro de conta",
+                        $"O CPF '{entity.Cpf}' já está registrado para uma outra conta.",
                         HttpStatusCode.Forbidden);
                 }
 

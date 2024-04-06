@@ -6,6 +6,7 @@ namespace PersonalCare.Application.Interfaces
     public interface IConta
     {
         ContaResponse Atualizar(AtualizarContaRequest request);
+        void AtualizarContato(AtualizarContaContatoRequest request);
         ContaResponse Buscar(int idConta);
         void Deletar(int idConta);
         ContaResponse Inserir(InserirContaRequest request);

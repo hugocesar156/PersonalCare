@@ -49,6 +49,24 @@ namespace PersonalCare.Domain.Repositories
             return null;
         }
 
+        public bool AtualizarContato(ContatoConta request)
+        {
+            var entity = _data.CONTATO_CONTAs.FirstOrDefault(c => c.ID == request.Id);
+
+            if (entity is not null)
+            {
+                entity.NOME = request.Nome;
+                entity.NUMERO = request.Numero;
+                entity.DDD = request.Ddd;
+                entity.DDI = request.Ddi;
+
+                _data.Update(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
         public Conta? Buscar(int idConta)
         {
             var entity = _data.CONTAs.Include(c => c.CONTATO_CONTa).FirstOrDefault(c => c.ID == idConta);
