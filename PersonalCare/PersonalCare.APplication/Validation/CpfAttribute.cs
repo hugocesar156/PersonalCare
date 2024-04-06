@@ -2,7 +2,7 @@
 
 namespace PersonalCare.Application.Validation
 {
-    public class CpfAttribute: ValidationAttribute
+    public class CpfAttribute : ValidationAttribute
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
