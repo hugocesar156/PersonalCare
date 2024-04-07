@@ -56,6 +56,12 @@ namespace PersonalCare.DAL.Repositories
             return false;
         }
 
+        public bool ExisteTreinoPorCategoria(int idCategoria)
+        {
+            var entity = _data.TREINOs.FirstOrDefault(t => t.ID_CATEGORIA_TREINO == idCategoria);
+            return entity is not null;
+        }
+
         public int Inserir(Treino request)
         {
             var entity = new TREINO

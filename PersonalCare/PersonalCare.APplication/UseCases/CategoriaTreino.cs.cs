@@ -10,10 +10,12 @@ namespace PersonalCare.Application.UseCases
     public class CategoriaTreino : ICategoriaTreino
     {
         private readonly ICategoriaTreinoRepository _categoriaTreinoRepository;
+        private readonly ITreinoRepository _treinoRepository;
 
-        public CategoriaTreino(ICategoriaTreinoRepository categoriaTreinoRepository)
+        public CategoriaTreino(ICategoriaTreinoRepository categoriaTreinoRepository, ITreinoRepository treinoRepository)
         {
             _categoriaTreinoRepository = categoriaTreinoRepository;
+            _treinoRepository = treinoRepository;
         }
 
         public void Atualizar(AtualizarCategoriaTreinoRequest request)
@@ -70,6 +72,14 @@ namespace PersonalCare.Application.UseCases
         {
             try
             {
+                if (_treinoRepository.ExisteTreinoPorCategoria(idCategoriaTreino))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao deletar categoria de treino.",
+                        "Existem um ou mais treinos cadastrados para a categoria informada, desvincule-os dessa categoria para que seja possível deletar o registro.",
+                        HttpStatusCode.Forbidden);
+                }
+
                 if (!_categoriaTreinoRepository.Deletar(idCategoriaTreino))
                 {
                     throw new PersonalCareException(
