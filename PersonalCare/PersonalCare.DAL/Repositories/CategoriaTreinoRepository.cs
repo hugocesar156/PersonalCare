@@ -14,7 +14,47 @@ namespace PersonalCare.DAL.Repositories
             _data = data;
         }
 
-        public void Inserir(CategoriaTreino request)
+        public bool Atualizar(CategoriaTreino request)
+        {
+            var entity = _data.CATEGORIA_TREINOs.FirstOrDefault(c => c.ID == request.Id);
+
+            if (entity is not null)
+            {
+                entity.NOME = request.Nome;
+
+                _data.Update(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
+        public CategoriaTreino? Buscar(int idCategoriaTreino)
+        {
+            var entity = _data.CATEGORIA_TREINOs.FirstOrDefault(c => c.ID == idCategoriaTreino);
+
+            if (entity is not null)
+            {
+                return new CategoriaTreino(entity.ID, entity.NOME);
+            }
+
+            return null;
+        }
+
+        public bool Deletar(int idCategoriaTreino)
+        {
+            var entity = _data.CATEGORIA_TREINOs.FirstOrDefault(c => c.ID == idCategoriaTreino);
+
+            if (entity is not null)
+            {
+                _data.Remove(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
+        public int Inserir(CategoriaTreino request)
         {
             var entity = new CATEGORIA_TREINO
             {
@@ -23,6 +63,14 @@ namespace PersonalCare.DAL.Repositories
 
             _data.Add(entity);
             _data.SaveChanges();
+
+            return entity.ID;
+        }
+
+        public List<CategoriaTreino> Listar()
+        {
+            var entities = _data.CATEGORIA_TREINOs.ToList();
+            return entities.Select(c => new CategoriaTreino(c.ID, c.NOME)).ToList();
         }
     }
 }
