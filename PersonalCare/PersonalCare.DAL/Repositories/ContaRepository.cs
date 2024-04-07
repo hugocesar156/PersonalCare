@@ -84,31 +84,16 @@ namespace PersonalCare.Domain.Repositories
             return null;
         }
 
-        public Conta? BuscarDadosExistentes(string cpf, string email)
+        public (string, string) BuscarDadosExistentes(string cpf, string email, int idConta = 0)
         {
-            var entity = _data.CONTAs.Select(c => new CONTum
-            {
-                CPF = cpf,
-                EMAIL = email
-            }).FirstOrDefault(c => c.CPF == cpf || c.EMAIL == email);
+            var entity = _data.CONTAs.FirstOrDefault(c => (idConta == 0 || c.ID != idConta) && (c.CPF == cpf || c.EMAIL == email));
 
             if (entity is not null)
             {
-                return new Conta(
-                    entity.ID,
-                    entity.NOME,
-                    entity.EMAIL,
-                    entity.CPF,
-                    entity.ALTURA,
-                    entity.BIOTIPO,
-                    entity.DATA_NASCIMENTO,
-                    entity.DATA_CADASTRO,
-                    entity.DATA_ATUALIZACAO,
-                    entity.ID_USUARIO_CADASTRO,
-                    new List<ContatoConta>());
+                return (entity.CPF, entity.EMAIL);
             }
 
-            return null;
+            return (string.Empty, string.Empty);
         }
 
         public bool Deletar(int idConta)

@@ -33,6 +33,18 @@ namespace PersonalCare.Application.UseCases
                     0,
                     new List<Domain.Entities.ContatoConta>());
 
+                var dadosExistentes = _contaRepository.BuscarDadosExistentes(entity.Cpf, entity.Email, entity.Id);
+
+                if (!string.IsNullOrEmpty(dadosExistentes.Item1) || !string.IsNullOrEmpty(dadosExistentes.Item2))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao atualizar registro de conta",
+                        entity.Cpf.Equals(dadosExistentes.Item1) ?
+                            $"O CPF '{entity.Cpf}' já está registrado para uma outra conta." :
+                            $"O e-mail '{entity.Email}' já está registrado para uma outra conta.",
+                        HttpStatusCode.Forbidden);
+                }
+
                 var conta = _contaRepository.Atualizar(entity);
 
                 if (!_contaRepository.Atualizar(entity))
@@ -172,14 +184,14 @@ namespace PersonalCare.Application.UseCases
                     request.IdUsuarioCadastro,
                     new List<Domain.Entities.ContatoConta>());
 
-                var contaExistente = _contaRepository.BuscarDadosExistentes(entity.Cpf, entity.Email);
+                var dadosExistentes = _contaRepository.BuscarDadosExistentes(entity.Cpf, entity.Email);
 
-                if (contaExistente is not null)
+                if (!string.IsNullOrEmpty(dadosExistentes.Item1) || !string.IsNullOrEmpty(dadosExistentes.Item2))
                 {
                     throw new PersonalCareException(
-                        "Ocorreu um erro ao inserir registro de conta",
-                        contaExistente.Cpf == entity.Cpf ? 
-                            $"O CPF '{entity.Cpf}' já está registrado para uma outra conta." : 
+                        "Ocorreu um erro ao atualizar registro de conta",
+                        entity.Cpf.Equals(dadosExistentes.Item1) ?
+                            $"O CPF '{entity.Cpf}' já está registrado para uma outra conta." :
                             $"O e-mail '{entity.Email}' já está registrado para uma outra conta.",
                         HttpStatusCode.Forbidden);
                 }
