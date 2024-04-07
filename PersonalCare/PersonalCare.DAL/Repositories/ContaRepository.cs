@@ -15,7 +15,7 @@ namespace PersonalCare.Domain.Repositories
             _data = data;
         }
 
-        public Conta? Atualizar(Conta request)
+        public bool Atualizar(Conta request)
         {
             var entity = _data.CONTAs.FirstOrDefault(c => c.ID == request.Id);
 
@@ -30,23 +30,10 @@ namespace PersonalCare.Domain.Repositories
                 entity.DATA_ATUALIZACAO = request.DataAtualizacao;
 
                 _data.Update(entity);
-                _data.SaveChanges();
-
-                return new Conta(
-                    entity.ID,
-                    entity.NOME,
-                    entity.EMAIL,
-                    entity.CPF,
-                    entity.ALTURA,
-                    entity.BIOTIPO,
-                    entity.DATA_NASCIMENTO,
-                    entity.DATA_CADASTRO,
-                    entity.DATA_ATUALIZACAO,
-                    entity.ID_USUARIO_CADASTRO,
-                    new List<ContatoConta>());
+                return _data.SaveChanges() > 0;
             }
 
-            return null;
+            return false;
         }
 
         public bool AtualizarContato(ContatoConta request)
@@ -97,9 +84,13 @@ namespace PersonalCare.Domain.Repositories
             return null;
         }
 
-        public Conta? Buscar(string cpf)
+        public Conta? BuscarDadosExistentes(string cpf, string email)
         {
-            var entity = _data.CONTAs.FirstOrDefault(c => c.CPF == cpf);
+            var entity = _data.CONTAs.Select(c => new CONTum
+            {
+                CPF = cpf,
+                EMAIL = email
+            }).FirstOrDefault(c => c.CPF == cpf || c.EMAIL == email);
 
             if (entity is not null)
             {
@@ -191,7 +182,7 @@ namespace PersonalCare.Domain.Repositories
             return false;
         }
 
-        public void InserirContato(List<ContatoConta> request)
+        public bool InserirContato(List<ContatoConta> request)
         {
             var entities = new List<CONTATO_CONTum>();
 
@@ -208,7 +199,7 @@ namespace PersonalCare.Domain.Repositories
             }
 
             _data.CONTATO_CONTAs.AddRange(entities);
-            _data.SaveChanges();
+           return _data.SaveChanges() > 0;
         }
 
         public List<Conta>? Listar()
