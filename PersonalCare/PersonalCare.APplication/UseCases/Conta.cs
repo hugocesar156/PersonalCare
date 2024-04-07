@@ -189,7 +189,7 @@ namespace PersonalCare.Application.UseCases
                 if (!string.IsNullOrEmpty(dadosExistentes.Item1) || !string.IsNullOrEmpty(dadosExistentes.Item2))
                 {
                     throw new PersonalCareException(
-                        "Ocorreu um erro ao atualizar registro de conta",
+                        "Ocorreu um erro ao inserir registro de conta",
                         entity.Cpf.Equals(dadosExistentes.Item1) ?
                             $"O CPF '{entity.Cpf}' já está registrado para uma outra conta." :
                             $"O e-mail '{entity.Email}' já está registrado para uma outra conta.",
