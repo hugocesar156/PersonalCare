@@ -9,6 +9,6 @@ namespace PersonalCare.Application.Interfaces
         TreinoResponse Buscar(int idTreino);
         void Deletar(int idTreino);
         void Inserir(InserirTreinoRequest request);
-        List<TreinoResponse> Listar();
+        List<TreinoResponse> Listar(int idCategoriaTreino = 0);
     }
 }

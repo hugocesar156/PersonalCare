@@ -19,17 +19,74 @@ namespace PersonalCare.Application.UseCases
 
         public void Atualizar(AtualizarTreinoRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entity = new Domain.Entities.Treino(request.Id, request.Nome, request.Descricao, new Domain.Entities.CategoriaTreino(request.IdCategoriaTreino, ""));
+
+                if (!_treinoRepository.Atualizar(entity))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao atualizar registro de treino",
+                        "O registro de treino não foi encontrado",
+                        HttpStatusCode.NotFound);
+                }
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao atualizar registro de treino", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
         }
 
         public TreinoResponse Buscar(int idTreino)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entity = _treinoRepository.Buscar(idTreino);
+
+                if (entity is not null)
+                {
+                    return new TreinoResponse(entity.IdTreino, entity.Nome, entity.Descricao, new Domain.Entities.CategoriaTreino(entity.Categoria.Id, entity.Categoria.Nome));
+                }
+
+                throw new PersonalCareException(
+                    "Ocorreu um erro ao buscar registro de treino",
+                    "O registro de treino não foi encontrado",
+                    HttpStatusCode.NotFound);
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao buscar registro de treino.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
         }
 
         public void Deletar(int idTreino)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (!_treinoRepository.Deletar(idTreino))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao deletar registro de treino",
+                        "O registro de treino não foi encontrado",
+                        HttpStatusCode.NotFound);
+                }
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao deletar registro de treino.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
         }
 
         public void Inserir(InserirTreinoRequest request)
@@ -55,9 +112,21 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
-        public List<TreinoResponse> Listar()
+        public List<TreinoResponse> Listar(int idCategoriaTreino = 0)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var lista = _treinoRepository.Listar(idCategoriaTreino);
+                return lista.Select(t => new TreinoResponse(t.IdTreino, t.Nome, t.Descricao, new Domain.Entities.CategoriaTreino(t.Categoria.Id, t.Categoria.Nome))).ToList();
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao listar treinos.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

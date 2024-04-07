@@ -1,4 +1,5 @@
-﻿using PersonalCare.DAL.Context.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonalCare.DAL.Context.Data;
 using PersonalCare.DAL.Models.Data;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
@@ -15,17 +16,44 @@ namespace PersonalCare.DAL.Repositories
 
         public bool Atualizar(Treino request)
         {
-            throw new NotImplementedException();
+            var entity = _data.TREINOs.FirstOrDefault(t => t.ID == request.IdTreino);
+
+            if (entity is not null)
+            {
+                entity.NOME = request.Nome;
+                entity.DESCRICAO = request.Descricao;
+                entity.ID_CATEGORIA_TREINO = request.Categoria.Id;
+
+                _data.Update(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
         }
 
-        public Treino Buscar(int idTreino)
+        public Treino? Buscar(int idTreino)
         {
-            throw new NotImplementedException();
+            var entity = _data.TREINOs.Include(t => t.ID_CATEGORIA_TREINONavigation).FirstOrDefault(t => t.ID == idTreino);
+
+            if (entity is not null)
+            {
+                return new Treino(entity.ID, entity.NOME, entity.DESCRICAO, new CategoriaTreino(entity.ID_CATEGORIA_TREINONavigation.ID, entity.ID_CATEGORIA_TREINONavigation.NOME));
+            }
+
+            return null;
         }
 
         public bool Deletar(int idTreino)
         {
-            throw new NotImplementedException();
+            var entity = _data.TREINOs.FirstOrDefault(t => t.ID == idTreino);
+
+            if (entity is not null)
+            {
+                _data.Remove(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
         }
 
         public int Inserir(Treino request)
@@ -45,7 +73,12 @@ namespace PersonalCare.DAL.Repositories
 
         public List<Treino> Listar(int idCategoria = 0)
         {
-            throw new NotImplementedException();
+            var entities = _data.TREINOs
+                .Include(t => t.ID_CATEGORIA_TREINONavigation)
+                .Where(t => idCategoria == 0 || t.ID_CATEGORIA_TREINO == idCategoria)
+                .OrderBy(t => t.NOME).ToList();
+
+            return entities.Select(t => new Treino(t.ID, t.NOME, t.DESCRICAO, new CategoriaTreino(t.ID_CATEGORIA_TREINONavigation.ID, t.ID_CATEGORIA_TREINONavigation.NOME))).ToList();
         }
     }
 }
