@@ -10,8 +10,9 @@ namespace PersonalCare.IoC
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IContaRepository, ContaRepository>();
             services.AddScoped<ICategoriaTreinoRepository, CategoriaTreinoRepository>();
+            services.AddScoped<IContaRepository, ContaRepository>();
+            services.AddScoped<ITreinoRepository, TreinoRepository>();
 
             return services;
         }

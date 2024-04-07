@@ -9,8 +9,9 @@ namespace PersonalCare.IoC
     {
         public static IServiceCollection AddUseCases(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IConta, Conta>();
             services.AddScoped<ICategoriaTreino, CategoriaTreino>();
+            services.AddScoped<IConta, Conta>();
+            services.AddScoped<ITreino, Treino>();
 
             return services;
         }
