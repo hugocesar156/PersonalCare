@@ -49,7 +49,7 @@ namespace PersonalCare.Application.UseCases
 
                 if (entity is not null)
                 {
-                    return new TreinoResponse(entity.IdTreino, entity.Nome, entity.Descricao, new Domain.Entities.CategoriaTreino(entity.Categoria.Id, entity.Categoria.Nome));
+                    return new TreinoResponse(entity.Id, entity.Nome, entity.Descricao, new Domain.Entities.CategoriaTreino(entity.Categoria.Id, entity.Categoria.Nome));
                 }
 
                 throw new PersonalCareException(
@@ -117,7 +117,7 @@ namespace PersonalCare.Application.UseCases
             try
             {
                 var lista = _treinoRepository.Listar(idCategoriaTreino);
-                return lista.Select(t => new TreinoResponse(t.IdTreino, t.Nome, t.Descricao, new Domain.Entities.CategoriaTreino(t.Categoria.Id, t.Categoria.Nome))).ToList();
+                return lista.Select(t => new TreinoResponse(t.Id, t.Nome, t.Descricao, new Domain.Entities.CategoriaTreino(t.Categoria.Id, t.Categoria.Nome))).ToList();
             }
             catch (PersonalCareException)
             {

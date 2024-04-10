@@ -16,7 +16,7 @@ namespace PersonalCare.DAL.Repositories
 
         public bool Atualizar(Treino request)
         {
-            var entity = _data.TREINOs.FirstOrDefault(t => t.ID == request.IdTreino);
+            var entity = _data.TREINOs.FirstOrDefault(t => t.ID == request.Id);
 
             if (entity is not null)
             {

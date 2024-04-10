@@ -1,5 +1,8 @@
 ﻿using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Ficha;
+using PersonalCare.Application.Models.Responses.CategoriaTreino;
+using PersonalCare.Application.Models.Responses.Ficha;
+using PersonalCare.Application.Models.Responses.Treino;
 using PersonalCare.Domain.Interfaces;
 using PersonalCare.Shared;
 using System.Net;
@@ -13,6 +16,32 @@ namespace PersonalCare.Application.UseCases
         public Ficha(IFichaRepository fichaRepository)
         {
             _fichaRepository = fichaRepository;
+        }
+
+        public FichaResponse BuscarFichaConta(int idConta)
+        {
+            try
+            {
+                var entity = _fichaRepository.BuscarPorConta(idConta);
+
+                if (entity is not null)
+                {
+                    return new FichaResponse(entity.Id, entity.DataCriacao, entity.DataValidade, entity.IdConta, entity.IdUsuarioCadastro, entity.ItemFicha);
+                }
+
+                throw new PersonalCareException(
+                    "Ocorreu um erro ao buscar registro de ficha", 
+                    "Registro de ficha não encontrado", 
+                    HttpStatusCode.NotFound);
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao buscar registro de ficha", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
         }
 
         public void Inserir(InserirFichaRequest request)
@@ -31,7 +60,7 @@ namespace PersonalCare.Application.UseCases
                         i.Series,
                         i.Repeticoes, 
                         0, 
-                        i.IdTreino)).ToList());
+                        new Domain.Entities.Treino(i.IdTreino, "", "", new Domain.Entities.CategoriaTreino(0, "")))).ToList());
 
                 if (_fichaRepository.Inserir(entity) == 0)
                 {
@@ -54,7 +83,8 @@ namespace PersonalCare.Application.UseCases
         {
             try
             {
-                var entity = new Domain.Entities.ItemFicha(0, request.Grupo, request.Series, request.Repeticoes, request.IdFicha, request.IdTreino);
+                var entity = new Domain.Entities.ItemFicha(0, request.Grupo, request.Series, request.Repeticoes, request.IdFicha, 
+                    new Domain.Entities.Treino(request.IdTreino, "", "", new Domain.Entities.CategoriaTreino(0, "")));
 
                 if (_fichaRepository.InserirItemFicha(entity) == 0)
                 {

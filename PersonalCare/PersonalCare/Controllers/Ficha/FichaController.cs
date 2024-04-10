@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Ficha;
+using PersonalCare.Application.Models.Responses.Ficha;
 using PersonalCare.Shared;
 using System.Net;
 
@@ -15,6 +16,24 @@ namespace PersonalCare.API.Controllers.Ficha
         public FichaController(IFicha ficha)
         {
             _ficha = ficha;
+        }
+
+        /// <summary>
+        /// Busca o registro de ficha para uma conta a partir do ID da conta informado.
+        /// </summary>
+        [HttpGet("BuscarFichaConta")]
+        [ProducesResponseType(typeof(FichaResponse), StatusCodes.Status200OK)]
+        public IActionResult BuscarFichaConta(int idConta)
+        {
+            try
+            {
+                var ficha = _ficha.BuscarFichaConta(idConta);
+                return StatusCode((int)HttpStatusCode.OK, ficha);
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
         }
 
         /// <summary>
