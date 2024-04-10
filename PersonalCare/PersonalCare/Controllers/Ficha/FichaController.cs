@@ -34,5 +34,23 @@ namespace PersonalCare.API.Controllers.Ficha
                 return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
             }
         }
+
+        /// <summary>
+        /// Insere um novo treino para a ficha do clente.
+        /// </summary>
+        [HttpPost("InserirItemFicha")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult InserirItemFicha(InserirItemFichaRequest request)
+        {
+            try
+            {
+                _ficha.InserirItemFicha(request);
+                return StatusCode((int)HttpStatusCode.OK, "Treino adicionado para a ficha com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
     }
 }

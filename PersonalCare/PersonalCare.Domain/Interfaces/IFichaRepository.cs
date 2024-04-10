@@ -5,5 +5,6 @@ namespace PersonalCare.Domain.Interfaces
     public interface IFichaRepository
     {
         int Inserir(Ficha request);
+        int InserirItemFicha(ItemFicha request);
     }
 }

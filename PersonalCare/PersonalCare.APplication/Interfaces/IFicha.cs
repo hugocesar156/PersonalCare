@@ -5,5 +5,6 @@ namespace PersonalCare.Application.Interfaces
     public interface IFicha
     {
         void Inserir(InserirFichaRequest request);
+        void InserirItemFicha(InserirItemFichaRequest request);
     }
 }

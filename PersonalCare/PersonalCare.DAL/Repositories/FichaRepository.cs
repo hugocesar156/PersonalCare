@@ -48,5 +48,22 @@ namespace PersonalCare.DAL.Repositories
 
             return entity.ID;
         }
+
+        public int InserirItemFicha(ItemFicha request)
+        {
+            var entity = new ITEM_FICHA
+            {
+                GRUPO = request.Grupo,
+                SERIES = request.Series,
+                REPETICOES = request.Repeticoes,
+                ID_TREINO = request.IdTreino,
+                ID_FICHA = request.IdFicha
+            };
+
+            _data.Add(entity);
+            _data.SaveChanges();
+
+            return entity.ID;
+        }
     }
 }
