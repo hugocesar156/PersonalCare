@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using PersonalCare.DAL.Models.Data;
 
 namespace PersonalCare.DAL.Context.Data
@@ -135,6 +138,11 @@ namespace PersonalCare.DAL.Context.Data
             modelBuilder.Entity<ITEM_FICHA>(entity =>
             {
                 entity.ToTable("ITEM_FICHA");
+
+                entity.Property(e => e.GRUPO)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('')");
 
                 entity.HasOne(d => d.ID_FICHANavigation)
                     .WithMany(p => p.ITEM_FICHAs)

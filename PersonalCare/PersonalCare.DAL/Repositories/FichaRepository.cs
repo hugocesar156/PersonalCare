@@ -33,6 +33,7 @@ namespace PersonalCare.DAL.Repositories
             {
                 var itemFicha = new ITEM_FICHA
                 {
+                    GRUPO = item.Grupo,
                     SERIES = item.Series,
                     REPETICOES = item.Repeticoes,
                     ID_TREINO = item.IdTreino,

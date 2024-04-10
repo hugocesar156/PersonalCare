@@ -27,6 +27,7 @@ namespace PersonalCare.Application.UseCases
                     request.IdUsuarioCadastro, 
                     request.ItemFicha.Select(i => new Domain.Entities.ItemFicha(
                         0, 
+                        i.Grupo,
                         i.Series,
                         i.Repeticoes, 
                         0, 

@@ -10,6 +10,7 @@ namespace PersonalCare.DAL.Models.Data
         public int REPETICOES { get; set; }
         public int ID_FICHA { get; set; }
         public int ID_TREINO { get; set; }
+        public string GRUPO { get; set; } = null!;
 
         public virtual FICHA ID_FICHANavigation { get; set; } = null!;
         public virtual TREINO ID_TREINONavigation { get; set; } = null!;
