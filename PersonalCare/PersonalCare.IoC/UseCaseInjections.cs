@@ -11,6 +11,7 @@ namespace PersonalCare.IoC
         {
             services.AddScoped<ICategoriaTreino, CategoriaTreino>();
             services.AddScoped<IConta, Conta>();
+            services.AddScoped<IFicha, Ficha>();
             services.AddScoped<ITreino, Treino>();
 
             return services;
