@@ -8,7 +8,7 @@
             Nome = _nome;
         }
 
-        public int Id { get; private set; }
-        public string Nome { get; private set; }
+        public int Id { get; }
+        public string Nome { get; }
     }
 }

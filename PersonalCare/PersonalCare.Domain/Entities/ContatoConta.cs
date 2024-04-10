@@ -12,11 +12,11 @@
             IdConta = _idConta;
         }
 
-        public int Id { get; private set; }
-        public string Nome { get; private set; } 
-        public string Numero { get; private set; } 
-        public string Ddd { get; private set; } 
-        public string Ddi { get; private set; }
-        public int IdConta { get; private set; }
+        public int Id { get; }
+        public string Nome { get; }
+        public string Numero { get; } 
+        public string Ddd { get; } 
+        public string Ddi { get; }
+        public int IdConta { get; }
     }
 }

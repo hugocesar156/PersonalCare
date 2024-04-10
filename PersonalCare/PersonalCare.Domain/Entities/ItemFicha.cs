@@ -12,11 +12,11 @@
             Treino = _treino;
         }
 
-        public int Id { get; private set; }
-        public string Grupo { get; private set; }
-        public byte Series { get; private set; }
-        public byte Repeticoes { get; private set; }
-        public int IdFicha { get; private set; }
-        public Treino Treino { get; private set; }
+        public int Id { get; }
+        public string Grupo { get; }
+        public byte Series { get; }
+        public byte Repeticoes { get; }
+        public int IdFicha { get; }
+        public Treino Treino { get; }
     }
 }

@@ -10,9 +10,9 @@
             Categoria = _categoria;
         }
 
-        public int Id { get; private set; }
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
-        public CategoriaTreino Categoria { get; set; }
+        public int Id { get; }
+        public string Nome { get; }
+        public string Descricao { get; }
+        public CategoriaTreino Categoria { get; }
     }
 }

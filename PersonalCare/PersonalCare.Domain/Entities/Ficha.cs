@@ -12,11 +12,11 @@
             ItemFicha = _itemFicha;
         }
 
-        public int Id { get; private set; }
-        public DateTime DataCriacao { get; private set; }
-        public DateTime DataValidade { get; private set; }
-        public int IdConta { get; private set; }
-        public int IdUsuarioCadastro { get; private set; }
-        public List<ItemFicha> ItemFicha { get; private set; }
+        public int Id { get; }
+        public DateTime DataCriacao { get; }
+        public DateTime DataValidade { get; }
+        public int IdConta { get; }
+        public int IdUsuarioCadastro { get; }
+        public List<ItemFicha> ItemFicha { get; }
     }
 }

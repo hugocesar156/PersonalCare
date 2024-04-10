@@ -17,16 +17,16 @@
             Contatos = contatos;
         }
 
-        public int Id { get; private set; }
-        public string Nome { get; private set; }
-        public string Email { get; private set; }
-        public string Cpf { get; private set; }
-        public decimal? Altura { get; private set; }
-        public string? Biotipo { get; private set; }
-        public DateTime DataNascimento { get; private set; }
-        public DateTime DataCadastro { get; private set; }
-        public DateTime DataAtualizacao { get; private set; }
-        public int IdUsuarioCadastro { get; private set; }
-        public List<ContatoConta> Contatos { get; private set; }
+        public int Id { get; }
+        public string Nome { get; }
+        public string Email { get; }
+        public string Cpf { get; }
+        public decimal? Altura { get; }
+        public string? Biotipo { get; }
+        public DateTime DataNascimento { get; }
+        public DateTime DataCadastro { get; }
+        public DateTime DataAtualizacao { get; }
+        public int IdUsuarioCadastro { get; }
+        public List<ContatoConta> Contatos { get; }
     }
 }
