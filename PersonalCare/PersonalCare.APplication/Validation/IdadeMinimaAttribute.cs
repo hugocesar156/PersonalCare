@@ -15,7 +15,7 @@ namespace PersonalCare.Application.Validation
         {
             var data = Convert.ToDateTime(value);
 
-            if ((DateTime.UtcNow.Year - data.Year) < _anos)
+            if ((DateTime.Now.Year - data.Year) < _anos)
                 return new ValidationResult($"A idade mínima para o cadastro é de {_anos} anos.");
 
             return ValidationResult.Success;
