@@ -48,7 +48,13 @@ namespace PersonalCare.Application.UseCases
         {
             try
             {
-
+                if (!_fichaRepository.DeletarItemFicha(idItemFicha))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao remover treino da ficha",
+                        "Registro de treino para a ficha não encontrado.",
+                        HttpStatusCode.NotFound);
+                }
             }
             catch (PersonalCareException)
             {
@@ -56,7 +62,7 @@ namespace PersonalCare.Application.UseCases
             }
             catch (Exception ex)
             {
-                throw new PersonalCareException("Ocorreu um erro ao inserir registro de ficha", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+                throw new PersonalCareException("Ocorreu um erro ao remover treino da ficha", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 

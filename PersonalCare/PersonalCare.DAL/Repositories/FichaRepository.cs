@@ -40,6 +40,19 @@ namespace PersonalCare.DAL.Repositories
             return null;
         }
 
+        public bool DeletarItemFicha(int idItemFicha)
+        {
+            var entity = _data.ITEM_FICHAs.FirstOrDefault(i => i.ID == idItemFicha);
+
+            if (entity is not null)
+            {
+                _data.Remove(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
         public int Inserir(Ficha request)
         {
             var entity = new FICHA
@@ -82,7 +95,7 @@ namespace PersonalCare.DAL.Repositories
                 GRUPO = request.Grupo,
                 SERIES = request.Series,
                 REPETICOES = request.Repeticoes,
-                ID_TREINO = request.Id,
+                ID_TREINO = request.Treino.Id,
                 ID_FICHA = request.IdFicha
             };
 
