@@ -21,7 +21,7 @@ namespace PersonalCare.Application.UseCases
         {
             try
             {
-                var entity = new Domain.Entities.Treino(request.Id, request.Nome, request.Descricao, new Domain.Entities.CategoriaTreino(request.IdCategoriaTreino, ""));
+                var entity = new Domain.Entities.Treino(request.Id, request.Nome, request.Descricao, new Domain.Entities.CategoriaTreino(request.IdCategoriaTreino));
 
                 if (!_treinoRepository.Atualizar(entity))
                 {
@@ -93,7 +93,7 @@ namespace PersonalCare.Application.UseCases
         {
             try
             {
-                var entity = new Domain.Entities.Treino(0, request.Nome, request.Descricao, new Domain.Entities.CategoriaTreino(request.IdCategoriaTreino, ""));
+                var entity = new Domain.Entities.Treino(request.Nome, request.Descricao, new Domain.Entities.CategoriaTreino(request.IdCategoriaTreino));
 
                 if (_treinoRepository.Inserir(entity) == 0)
                 {

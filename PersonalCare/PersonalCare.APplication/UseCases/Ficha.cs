@@ -44,23 +44,35 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
+        public void DeletarItemFicha(int idItemFicha)
+        {
+            try
+            {
+
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao inserir registro de ficha", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
         public void Inserir(InserirFichaRequest request)
         {
             try
             {
                 var entity = new Domain.Entities.Ficha(
-                    0, 
-                    DateTime.Now, 
                     request.DataValidade, 
                     request.IdConta, 
                     request.IdUsuarioCadastro, 
                     request.ItemFicha.Select(i => new Domain.Entities.ItemFicha(
-                        0, 
                         i.Grupo,
                         i.Series,
                         i.Repeticoes, 
-                        0, 
-                        new Domain.Entities.Treino(i.IdTreino, "", "", new Domain.Entities.CategoriaTreino(0, "")))).ToList());
+                        new Domain.Entities.Treino(i.IdTreino))).ToList());
 
                 if (_fichaRepository.Inserir(entity) == 0)
                 {
@@ -83,8 +95,8 @@ namespace PersonalCare.Application.UseCases
         {
             try
             {
-                var entity = new Domain.Entities.ItemFicha(0, request.Grupo, request.Series, request.Repeticoes, request.IdFicha, 
-                    new Domain.Entities.Treino(request.IdTreino, "", "", new Domain.Entities.CategoriaTreino(0, "")));
+                var entity = new Domain.Entities.ItemFicha(request.Grupo, request.Series, request.Repeticoes, request.IdFicha, 
+                    new Domain.Entities.Treino(request.IdTreino));
 
                 if (_fichaRepository.InserirItemFicha(entity) == 0)
                 {

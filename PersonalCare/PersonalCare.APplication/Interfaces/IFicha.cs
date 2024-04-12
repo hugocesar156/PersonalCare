@@ -8,5 +8,6 @@ namespace PersonalCare.Application.Interfaces
         FichaResponse BuscarFichaConta(int idConta);
         void Inserir(InserirFichaRequest request);
         void InserirItemFicha(InserirItemFichaRequest request);
+        void DeletarItemFicha(int idItemFicha);
     }
 }

@@ -102,7 +102,7 @@ namespace PersonalCare.Application.UseCases
         {
             try
             {
-                var entity = new Domain.Entities.CategoriaTreino(0, request.Nome);
+                var entity = new Domain.Entities.CategoriaTreino(request.Nome);
 
                 if (_categoriaTreinoRepository.Inserir(entity) == 0)
                 {

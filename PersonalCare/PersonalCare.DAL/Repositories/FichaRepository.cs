@@ -44,7 +44,7 @@ namespace PersonalCare.DAL.Repositories
         {
             var entity = new FICHA
             {
-                DATA_CRIACAO = request.DataCriacao,
+                DATA_CRIACAO = DateTime.Now,
                 DATA_VALIDADE = request.DataValidade,
                 ID_CONTA = request.IdConta,
                 ID_USUARIO_CADASTRO = request.IdUsuarioCadastro

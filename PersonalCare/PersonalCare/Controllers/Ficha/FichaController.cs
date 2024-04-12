@@ -71,5 +71,23 @@ namespace PersonalCare.API.Controllers.Ficha
                 return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
             }
         }
+
+        /// <summary>
+        /// Remove um treino para a ficha do clente.
+        /// </summary>
+        [HttpDelete("DeletarItemFicha")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult DeletarItemFicha(int idIetmFicha)
+        {
+            try
+            {
+                _ficha.DeletarItemFicha(idIetmFicha);
+                return StatusCode((int)HttpStatusCode.OK, "Treino removido da ficha com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
     }
 }

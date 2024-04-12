@@ -2,6 +2,14 @@
 {
     public class Ficha
     {
+        public Ficha(DateTime _dataValidade, int _idConta, int _idUsuarioCadastro, List<ItemFicha> _itemFicha)
+        {
+            DataValidade = _dataValidade;
+            IdConta = _idConta;
+            IdUsuarioCadastro = _idUsuarioCadastro;
+            ItemFicha = _itemFicha;
+        }
+
         public Ficha(int _id, DateTime _dataCriacao, DateTime _dataValidade, int _idConta, int _idUsuarioCadastro, List<ItemFicha> _itemFicha)
         {
             Id = _id;

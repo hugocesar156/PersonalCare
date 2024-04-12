@@ -2,6 +2,17 @@
 {
     public class CategoriaTreino
     {
+        public CategoriaTreino(int _id)
+        {
+            Id = _id;
+            Nome = string.Empty;
+        }
+
+        public CategoriaTreino(string _nome)
+        {
+            Nome = _nome;
+        }
+
         public CategoriaTreino(int _id, string _nome)
         {
             Id = _id;
