@@ -27,11 +27,7 @@ namespace PersonalCare.Application.UseCases
                     request.Cpf,
                     request.Altura,
                     request.Biotipo,
-                    request.DataNascimento,
-                    DateTime.MinValue,
-                    DateTime.Now,
-                    0,
-                    new List<Domain.Entities.ContatoConta>());
+                    request.DataNascimento);
 
                 var dadosExistentes = _contaRepository.BuscarDadosExistentes(entity.Cpf, entity.Email, entity.Id);
 
@@ -44,8 +40,6 @@ namespace PersonalCare.Application.UseCases
                             $"O e-mail '{entity.Email}' já está registrado para uma outra conta.",
                         HttpStatusCode.Forbidden);
                 }
-
-                var conta = _contaRepository.Atualizar(entity);
 
                 if (!_contaRepository.Atualizar(entity))
                 {
@@ -69,7 +63,7 @@ namespace PersonalCare.Application.UseCases
         {
             try
             {
-                var entity = new Domain.Entities.ContatoConta(request.Id, request.Nome, request.Numero, request.Ddd, request.Ddi, 0);
+                var entity = new Domain.Entities.ContatoConta(request.Id, request.Nome, request.Numero, request.Ddd, request.Ddi);
 
                 if (!_contaRepository.AtualizarContato(entity))
                 {
@@ -172,17 +166,13 @@ namespace PersonalCare.Application.UseCases
             try
             {
                 var entity = new Domain.Entities.Conta(
-                    0,
                     request.Nome,
                     request.Email,
                     request.Cpf,
                     request.Altura,
                     request.Biotipo,
                     request.DataNascimento,
-                    DateTime.Now,
-                    DateTime.Now,
-                    request.IdUsuarioCadastro,
-                    new List<Domain.Entities.ContatoConta>());
+                    request.IdUsuarioCadastro);
 
                 var dadosExistentes = _contaRepository.BuscarDadosExistentes(entity.Cpf, entity.Email);
 
@@ -200,7 +190,7 @@ namespace PersonalCare.Application.UseCases
 
                 if (request.ContatoConta != null && request.ContatoConta.Any())
                 {
-                    var entities = request.ContatoConta.Select(c => new Domain.Entities.ContatoConta(0, c.Nome, c.Numero, c.Ddd, c.Ddi, idConta)).ToList();
+                    var entities = request.ContatoConta.Select(c => new Domain.Entities.ContatoConta(c.Nome, c.Numero, c.Ddd, c.Ddi, idConta)).ToList();
 
                     if (!_contaRepository.InserirContato(entities))
                     {
@@ -225,7 +215,7 @@ namespace PersonalCare.Application.UseCases
         {
             try
             {
-                var entity = new Domain.Entities.ContatoConta(0, request.Nome, request.Numero, request.Ddd, request.Ddi, request.IdConta);
+                var entity = new Domain.Entities.ContatoConta(request.Nome, request.Numero, request.Ddd, request.Ddi, request.IdConta);
 
                 if (!_contaRepository.InserirContato(entity))
                 {

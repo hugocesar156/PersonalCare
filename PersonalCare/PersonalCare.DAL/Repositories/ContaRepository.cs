@@ -27,7 +27,7 @@ namespace PersonalCare.Domain.Repositories
                 entity.ALTURA = request.Altura;
                 entity.BIOTIPO = request.Biotipo;
                 entity.DATA_NASCIMENTO = request.DataNascimento;
-                entity.DATA_ATUALIZACAO = request.DataAtualizacao;
+                entity.DATA_ATUALIZACAO = DateTime.Now;
 
                 _data.Update(entity);
                 return _data.SaveChanges() > 0;
@@ -134,8 +134,8 @@ namespace PersonalCare.Domain.Repositories
                 ALTURA = request.Altura,
                 BIOTIPO = request.Biotipo,
                 DATA_NASCIMENTO = request.DataNascimento,
-                DATA_CADASTRO = request.DataCadastro,
-                DATA_ATUALIZACAO = request.DataAtualizacao,
+                DATA_CADASTRO = DateTime.Now,
+                DATA_ATUALIZACAO = DateTime.Now,
                 ID_USUARIO_CADASTRO = request.IdUsuarioCadastro
             };
 
