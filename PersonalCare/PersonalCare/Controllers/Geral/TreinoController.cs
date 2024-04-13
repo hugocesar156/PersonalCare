@@ -5,10 +5,11 @@ using PersonalCare.Application.Models.Responses.Treino;
 using PersonalCare.Shared;
 using System.Net;
 
-namespace PersonalCare.API.Controllers.Treino
+namespace PersonalCare.API.Controllers.Geral
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("geral/treino")]
+    [ApiExplorerSettings(GroupName = "geral")]
     public class TreinoController : ControllerBase
     {
         private readonly ITreino _treino;
@@ -21,7 +22,7 @@ namespace PersonalCare.API.Controllers.Treino
         /// <summary>
         /// Atualiza um registro de treino.
         /// </summary>
-        [HttpPut("Atualizar")]
+        [HttpPut("atualizar")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Atualizar(AtualizarTreinoRequest request)
         {
@@ -39,7 +40,7 @@ namespace PersonalCare.API.Controllers.Treino
         /// <summary>
         /// Retorna um registro de treino a partir do ID informado.
         /// </summary>
-        [HttpGet("Buscar/{idTreino}")]
+        [HttpGet("buscar/{idTreino}")]
         [ProducesResponseType(typeof(TreinoResponse), StatusCodes.Status200OK)]
         public IActionResult Buscar(int idTreino)
         {
@@ -57,7 +58,7 @@ namespace PersonalCare.API.Controllers.Treino
         /// <summary>
         /// Deleta um registro de treino a partir do ID informado.
         /// </summary>
-        [HttpDelete("Deletar/{idTreino}")]
+        [HttpDelete("deletar/{idTreino}")]
         [ProducesResponseType(typeof(TreinoResponse), StatusCodes.Status200OK)]
         public IActionResult Deletar(int idTreino)
         {
@@ -75,7 +76,7 @@ namespace PersonalCare.API.Controllers.Treino
         /// <summary>
         /// Insere um registro de treino.
         /// </summary>
-        [HttpPost("Inserir")]
+        [HttpPost("inserir")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Inserir(InserirTreinoRequest request)
         {
@@ -93,7 +94,7 @@ namespace PersonalCare.API.Controllers.Treino
         /// <summary>
         /// Retorna uma lista de registros de treino.
         /// </summary>
-        [HttpGet("Listar")]
+        [HttpGet("listar")]
         [ProducesResponseType(typeof(List<TreinoResponse>), StatusCodes.Status200OK)]
         public IActionResult Listar(int? idCategoriaTreino)
         {

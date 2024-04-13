@@ -5,10 +5,11 @@ using PersonalCare.Application.Models.Responses.Ficha;
 using PersonalCare.Shared;
 using System.Net;
 
-namespace PersonalCare.API.Controllers.Ficha
+namespace PersonalCare.API.Controllers.Geral
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("geral/ficha")]
+    [ApiExplorerSettings(GroupName = "geral")]
     public class FichaController : ControllerBase
     {
         private readonly IFicha _ficha;
@@ -21,7 +22,7 @@ namespace PersonalCare.API.Controllers.Ficha
         /// <summary>
         /// Atualiza um treino para a ficha do clente.
         /// </summary>
-        [HttpPut("AtualizarItemFicha")]
+        [HttpPut("atualizaritemficha")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult AtualizarItemFicha(AtualizarItemFichaRequest request)
         {
@@ -39,7 +40,7 @@ namespace PersonalCare.API.Controllers.Ficha
         /// <summary>
         /// Busca o registro de ficha para uma conta a partir do ID da conta informado.
         /// </summary>
-        [HttpGet("BuscarFichaConta")]
+        [HttpGet("buscarfichaconta")]
         [ProducesResponseType(typeof(FichaResponse), StatusCodes.Status200OK)]
         public IActionResult BuscarFichaConta(int idConta)
         {
@@ -57,7 +58,7 @@ namespace PersonalCare.API.Controllers.Ficha
         /// <summary>
         /// Insere um registro de ficha de treino para um cliente.
         /// </summary>
-        [HttpPost("Inserir")]
+        [HttpPost("inserir")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Inserir(InserirFichaRequest request)
         {
@@ -75,7 +76,7 @@ namespace PersonalCare.API.Controllers.Ficha
         /// <summary>
         /// Insere um novo treino para a ficha do clente.
         /// </summary>
-        [HttpPost("InserirItemFicha")]
+        [HttpPost("inseriritemficha")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult InserirItemFicha(InserirItemFichaRequest request)
         {
@@ -93,7 +94,7 @@ namespace PersonalCare.API.Controllers.Ficha
         /// <summary>
         /// Remove um treino para a ficha do cliente a partir do ID de treino de ficha informado.
         /// </summary>
-        [HttpDelete("DeletarItemFicha")]
+        [HttpDelete("deletaritemficha")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult DeletarItemFicha(int idItemFicha)
         {

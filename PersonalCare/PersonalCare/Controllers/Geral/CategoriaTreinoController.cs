@@ -5,10 +5,11 @@ using PersonalCare.Application.Models.Responses.CategoriaTreino;
 using PersonalCare.Shared;
 using System.Net;
 
-namespace PersonalCare.API.Controllers.CategoriaTreino
+namespace PersonalCare.API.Controllers.Geral
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("geral/categoriatreino")]
+    [ApiExplorerSettings(GroupName = "geral")]
     public class CategoriaTreinoController : ControllerBase
     {
         private readonly ICategoriaTreino _categoriaTreino;
@@ -21,7 +22,7 @@ namespace PersonalCare.API.Controllers.CategoriaTreino
         /// <summary>
         /// Atualiza uma categoria de treino.
         /// </summary>
-        [HttpPut("Atualizar")]
+        [HttpPut("atualizar")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Atualizar(AtualizarCategoriaTreinoRequest request)
         {
@@ -39,7 +40,7 @@ namespace PersonalCare.API.Controllers.CategoriaTreino
         /// <summary>
         /// Retorna uma categoria de treino a partir do ID informado.
         /// </summary>
-        [HttpGet("Buscar/{idCategoriaTreino}")]
+        [HttpGet("buscar/{idCategoriaTreino}")]
         [ProducesResponseType(typeof(CategoriaTreinoResponse), StatusCodes.Status200OK)]
         public IActionResult Buscar(int idCategoriaTreino)
         {
@@ -57,7 +58,7 @@ namespace PersonalCare.API.Controllers.CategoriaTreino
         /// <summary>
         /// Deleta uma categoria de treino a partir do ID informado.
         /// </summary>
-        [HttpDelete("Deletar/{idCategoriaTreino}")]
+        [HttpDelete("deletar/{idCategoriaTreino}")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Deletar(int idCategoriaTreino)
         {
@@ -75,7 +76,7 @@ namespace PersonalCare.API.Controllers.CategoriaTreino
         /// <summary>
         /// Insere uma categoria de treino.
         /// </summary>
-        [HttpPost("Inserir")]
+        [HttpPost("inserir")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Inserir(InserirCategoriaTreinoRequest request)
         {
@@ -93,7 +94,7 @@ namespace PersonalCare.API.Controllers.CategoriaTreino
         /// <summary>
         /// Retona a lista de categorias de treino.
         /// </summary>
-        [HttpGet("Listar")]
+        [HttpGet("listar")]
         [ProducesResponseType(typeof(List<CategoriaTreinoResponse>), StatusCodes.Status200OK)]
         public IActionResult Listar()
         {

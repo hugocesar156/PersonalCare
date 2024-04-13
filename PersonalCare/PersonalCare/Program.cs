@@ -12,22 +12,17 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo
+    options.SwaggerDoc("geral", new OpenApiInfo
     {
         Version = "v1",
-        Title = "PersonalCare API",
-        Description = "API para Gestão de contas e controle de fichas de treino.",
-        //TermsOfService = new Uri("https://example.com/terms"),
-        Contact = new OpenApiContact
-        {
-            Name = "Hugo César Tomaz de Souza",
-            Email = "hugocesar802@gmail.com"
-        },
-        /*License = new OpenApiLicense
-        {
-            Name = "Example License",
-            Url = new Uri("https://example.com/license")
-        }*/
+        Title = "Geral",
+        Description = "Rotas gerais para registros do sistema."
+    });
+    options.SwaggerDoc("acesso", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Acesso",
+        Description = "Rotas de controle de acesso."
     });
 
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -42,7 +37,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/geral/swagger.json", "Geral");
+        options.SwaggerEndpoint("/swagger/acesso/swagger.json", "Acesso");
+    });
 }
 
 app.UseHttpsRedirection();
