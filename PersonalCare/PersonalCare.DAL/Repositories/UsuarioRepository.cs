@@ -13,6 +13,18 @@ namespace PersonalCare.DAL.Repositories
             _data = data;
         }
 
+        public Usuario? BuscarPorEmail(string email)
+        {
+            var entity = _data.USUARIOs.FirstOrDefault(u => u.EMAIL == email);
+
+            if (entity is not null)
+            {
+                return new Usuario(entity.ID, entity.NOME, entity.EMAIL, entity.SENHA, entity.SALT, entity.ATIVO, entity.DATA_CADASTRO, entity.DATA_ATUALIZACAO, entity.DATA_ULTIMO_ACESSO);
+            }
+
+            return null;
+        }
+
         public bool EmailCadastrado(string email)
         {
             var emailExistente = _data.USUARIOs.Select(u => u.EMAIL).FirstOrDefault(u => u == email);

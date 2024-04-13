@@ -10,7 +10,7 @@
             Salt = _salt;
         }
 
-        public Usuario(int _id, string _nome, string _email, string _senha, string _salt, bool _ativo, DateTime _dataCadastro, DateTime _dataAtualizacao, DateTime _dataUltimoAcesso)
+        public Usuario(int _id, string _nome, string _email, string _senha, string _salt, bool _ativo, DateTime _dataCadastro, DateTime _dataAtualizacao, DateTime? _dataUltimoAcesso)
         {
             Id = _id;
             Nome = _nome;  
@@ -31,6 +31,6 @@
         public bool Ativo { get; }
         public DateTime DataCadastro { get; }
         public DateTime DataAtaualizacao { get; }
-        public DateTime DataUltimoAcesso { get; }
+        public DateTime? DataUltimoAcesso { get; }
     }
 }
