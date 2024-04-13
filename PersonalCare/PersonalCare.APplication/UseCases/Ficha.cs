@@ -18,6 +18,30 @@ namespace PersonalCare.Application.UseCases
             _fichaRepository = fichaRepository;
         }
 
+        public void Atualizar(AtualizarFichaRequest request)
+        {
+            try
+            {
+                var entity = new Domain.Entities.Ficha(request.Id, request.DataValidade);
+
+                if (!_fichaRepository.Atualizar(entity))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao atualizar registro de ficha.", 
+                        "Registro de ficha não encontrado.",
+                        HttpStatusCode.NotFound);
+                }
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao atualizar registro de ficha.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
         public void AtualizarItemFicha(AtualizarItemFichaRequest request)
         {
             try
@@ -66,6 +90,28 @@ namespace PersonalCare.Application.UseCases
             catch (Exception ex)
             {
                 throw new PersonalCareException("Ocorreu um erro ao buscar registro de ficha.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public void Deletar(int idFicha)
+        {
+            try
+            {
+                if (!_fichaRepository.Deletar(idFicha))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao deletar registro de ficha.",
+                        "Registro de ficha não encontrado.",
+                        HttpStatusCode.NotFound);
+                }
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao deletar registro de ficha.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 

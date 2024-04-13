@@ -20,6 +20,24 @@ namespace PersonalCare.API.Controllers.Geral
         }
 
         /// <summary>
+        /// Atualiza um registro de ficha do cliente.
+        /// </summary>
+        [HttpPut("atualizar")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult Atualizar(AtualizarFichaRequest request)
+        {
+            try
+            {
+                _ficha.Atualizar(request);
+                return StatusCode((int)HttpStatusCode.OK, "Registro de ficha atualizado com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Atualiza um treino para a ficha do clente.
         /// </summary>
         [HttpPut("atualizaritemficha")]
@@ -40,7 +58,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// <summary>
         /// Busca o registro de ficha para uma conta a partir do ID da conta informado.
         /// </summary>
-        [HttpGet("buscarfichaconta")]
+        [HttpGet("buscarfichaconta/{idConta}")]
         [ProducesResponseType(typeof(FichaResponse), StatusCodes.Status200OK)]
         public IActionResult BuscarFichaConta(int idConta)
         {
@@ -92,9 +110,27 @@ namespace PersonalCare.API.Controllers.Geral
         }
 
         /// <summary>
+        /// Deleta um registro de ficha de cliente a partir do ID informado.
+        /// </summary>
+        [HttpDelete("deletar/{idFicha}")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult Deletar(int idFicha)
+        {
+            try
+            {
+                _ficha.Deletar(idFicha);
+                return StatusCode((int)HttpStatusCode.OK, "Registo de ficha removido com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Remove um treino para a ficha do cliente a partir do ID de treino de ficha informado.
         /// </summary>
-        [HttpDelete("deletaritemficha")]
+        [HttpDelete("deletaritemficha/{idItemFicha}")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult DeletarItemFicha(int idItemFicha)
         {

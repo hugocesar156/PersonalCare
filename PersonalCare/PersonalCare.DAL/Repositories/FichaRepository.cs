@@ -15,6 +15,21 @@ namespace PersonalCare.DAL.Repositories
             _data = data;
         }
 
+        public bool Atualizar(Ficha request)
+        {
+            var entity = _data.FICHAs.FirstOrDefault(f => f.ID == request.Id);
+
+            if (entity is not null)
+            {
+                entity.DATA_VALIDADE = request.DataValidade;
+
+                _data.Update(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
         public bool AtualizarItemFicha(ItemFicha request)
         {
             var entity = _data.ITEM_FICHAs.FirstOrDefault(i => i.ID == request.Id);
@@ -56,6 +71,21 @@ namespace PersonalCare.DAL.Repositories
             }
 
             return null;
+        }
+
+        public bool Deletar(int idFicha)
+        {
+            var entity = _data.FICHAs.Include(f => f.ITEM_FICHAs).FirstOrDefault(i => i.ID == idFicha);
+
+            if (entity is not null)
+            {
+                _data.RemoveRange(entity.ITEM_FICHAs);
+                _data.Remove(entity);
+
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
         }
 
         public bool DeletarItemFicha(int idItemFicha)
