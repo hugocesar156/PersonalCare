@@ -31,11 +31,11 @@ namespace PersonalCare.Application.UseCases
 
                 var dadosExistentes = _contaRepository.BuscarDadosExistentes(entity.Cpf, entity.Email, entity.Id);
 
-                if (!string.IsNullOrEmpty(dadosExistentes.Item1) || !string.IsNullOrEmpty(dadosExistentes.Item2))
+                if (!string.IsNullOrEmpty(dadosExistentes.cpf) || !string.IsNullOrEmpty(dadosExistentes.email))
                 {
                     throw new PersonalCareException(
                         "Ocorreu um erro ao atualizar registro de conta",
-                        entity.Cpf.Equals(dadosExistentes.Item1) ?
+                        entity.Cpf.Equals(dadosExistentes.cpf) ?
                             $"O CPF '{entity.Cpf}' já está registrado para uma outra conta." :
                             $"O e-mail '{entity.Email}' já está registrado para uma outra conta.",
                         HttpStatusCode.Forbidden);

@@ -84,7 +84,7 @@ namespace PersonalCare.Domain.Repositories
             return null;
         }
 
-        public (string, string) BuscarDadosExistentes(string cpf, string email, int idConta = 0)
+        public (string cpf, string email) BuscarDadosExistentes(string cpf, string email, int idConta = 0)
         {
             var entity = _data.CONTAs.FirstOrDefault(c => (idConta == 0 || c.ID != idConta) && (c.CPF == cpf || c.EMAIL == email));
 
