@@ -19,6 +19,24 @@ namespace PersonalCare.API.Controllers.Ficha
         }
 
         /// <summary>
+        /// Atualiza um treino para a ficha do clente.
+        /// </summary>
+        [HttpPut("AtualizarItemFicha")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult AtualizarItemFicha(AtualizarItemFichaRequest request)
+        {
+            try
+            {
+                _ficha.AtualizarItemFicha(request);
+                return StatusCode((int)HttpStatusCode.OK, "Treino atualizado para a ficha com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Busca o registro de ficha para uma conta a partir do ID da conta informado.
         /// </summary>
         [HttpGet("BuscarFichaConta")]

@@ -5,6 +5,7 @@ namespace PersonalCare.Application.Interfaces
 {
     public interface IFicha
     {
+        void AtualizarItemFicha(AtualizarItemFichaRequest request);
         FichaResponse BuscarFichaConta(int idConta);
         void Inserir(InserirFichaRequest request);
         void InserirItemFicha(InserirItemFichaRequest request);

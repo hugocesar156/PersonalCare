@@ -15,6 +15,24 @@ namespace PersonalCare.DAL.Repositories
             _data = data;
         }
 
+        public bool AtualizarItemFicha(ItemFicha request)
+        {
+            var entity = _data.ITEM_FICHAs.FirstOrDefault(i => i.ID == request.Id);
+
+            if (entity is not null)
+            {
+                entity.GRUPO = request.Grupo;
+                entity.SERIES = request.Series;
+                entity.REPETICOES = request.Repeticoes;
+                entity.ID_TREINO = request.Treino.Id;
+
+                _data.Update(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
         public Ficha? BuscarPorConta(int idConta)
         {
             var entity = _data.FICHAs
