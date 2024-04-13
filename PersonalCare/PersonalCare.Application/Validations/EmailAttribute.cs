@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net.Mail;
 
-namespace PersonalCare.Application.Validation
+namespace PersonalCare.Application.Validations
 {
     public class EmailAttribute : ValidationAttribute
     {

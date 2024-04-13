@@ -1,4 +1,4 @@
-﻿using PersonalCare.Application.Validation;
+﻿using PersonalCare.Application.Validations;
 
 namespace PersonalCare.Application.Models.Requests.Usuario
 {

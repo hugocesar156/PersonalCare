@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PersonalCare.Application.Validation
+namespace PersonalCare.Application.Validations
 {
     public class DataFuturaAttribute : ValidationAttribute
     {

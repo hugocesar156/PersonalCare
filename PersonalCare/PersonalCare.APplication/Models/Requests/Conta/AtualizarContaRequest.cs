@@ -1,4 +1,4 @@
-﻿using PersonalCare.Application.Validation;
+﻿using PersonalCare.Application.Validations;
 using System.ComponentModel.DataAnnotations;
 
 namespace PersonalCare.Application.Models.Requests.Conta

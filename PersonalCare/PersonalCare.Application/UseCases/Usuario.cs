@@ -23,7 +23,7 @@ namespace PersonalCare.Application.UseCases
                 if (_usuarioRepository.EmailCadastrado(request.Email))
                 {
                     throw new PersonalCareException(
-                        "Ocorreu um erro ao cadastrar usuário",
+                        "Ocorreu um erro ao cadastrar usuário.",
                         "Email informado já cadastrado para outro usuário.", 
                         HttpStatusCode.Forbidden);
                 }
@@ -34,7 +34,7 @@ namespace PersonalCare.Application.UseCases
                 if (_usuarioRepository.Cadastrar(entity) == 0)
                 {
                     throw new PersonalCareException(
-                        "Ocorreu um erro ao cadastrar usuário", 
+                        "Ocorreu um erro ao cadastrar usuário.", 
                         null, HttpStatusCode.InternalServerError);
                 }
             }
@@ -44,7 +44,7 @@ namespace PersonalCare.Application.UseCases
             }
             catch (Exception ex)
             {
-                throw new PersonalCareException("Ocorreu um erro ao cadastrar usuário", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+                throw new PersonalCareException("Ocorreu um erro ao cadastrar usuário.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
     }
