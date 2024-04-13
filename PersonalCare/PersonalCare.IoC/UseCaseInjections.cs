@@ -13,6 +13,7 @@ namespace PersonalCare.IoC
             services.AddScoped<IConta, Conta>();
             services.AddScoped<IFicha, Ficha>();
             services.AddScoped<ITreino, Treino>();
+            services.AddScoped<IUsuario, Usuario>();
 
             return services;
         }

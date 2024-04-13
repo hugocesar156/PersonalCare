@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PersonalCare.Application.Interfaces;
+using PersonalCare.Application.Models.Requests.Usuario;
+using PersonalCare.Shared;
+using System.Net;
 
 namespace PersonalCare.API.Controllers.Acesso
 {
@@ -7,10 +11,29 @@ namespace PersonalCare.API.Controllers.Acesso
     [ApiExplorerSettings(GroupName = "acesso")]
     public class UsuarioController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Index()
+        private readonly IUsuario _usuario;
+
+        public UsuarioController(IUsuario usuario)
         {
-            return Ok();
+            _usuario = usuario;
+        }
+
+        /// <summary>
+        /// Cadastra um usuário.
+        /// </summary>
+        [HttpPost("cadastrar")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult Cadastrar(CadastrarUsuarioRequest request)
+        {
+            try
+            {
+                _usuario.Cadastrar(request);
+                return StatusCode((int)HttpStatusCode.OK, "Usuário cadastrado com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
         }
     }
 }

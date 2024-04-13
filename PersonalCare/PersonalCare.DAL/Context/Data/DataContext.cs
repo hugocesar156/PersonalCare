@@ -197,8 +197,13 @@ namespace PersonalCare.DAL.Context.Data
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.Property(e => e.SALT)
+                    .HasMaxLength(24)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('')");
+
                 entity.Property(e => e.SENHA)
-                    .HasMaxLength(60)
+                    .HasMaxLength(64)
                     .IsUnicode(false);
             });
 
