@@ -29,13 +29,13 @@ namespace PersonalCare.Application.UseCases
                     request.Biotipo,
                     request.DataNascimento);
 
-                var dadosExistentes = _contaRepository.BuscarDadosExistentes(entity.Cpf, entity.Email, entity.Id);
+                var (cpf, email) = _contaRepository.BuscarDadosExistentes(entity.Cpf, entity.Email, entity.Id);
 
-                if (!string.IsNullOrEmpty(dadosExistentes.cpf) || !string.IsNullOrEmpty(dadosExistentes.email))
+                if (!string.IsNullOrEmpty(cpf) || !string.IsNullOrEmpty(email))
                 {
                     throw new PersonalCareException(
                         "Ocorreu um erro ao atualizar registro de conta",
-                        entity.Cpf.Equals(dadosExistentes.cpf) ?
+                        entity.Cpf.Equals(cpf) ?
                             $"O CPF '{entity.Cpf}' já está registrado para uma outra conta." :
                             $"O e-mail '{entity.Email}' já está registrado para uma outra conta.",
                         HttpStatusCode.Forbidden);
@@ -174,13 +174,13 @@ namespace PersonalCare.Application.UseCases
                     request.DataNascimento,
                     idUsuario);
 
-                var dadosExistentes = _contaRepository.BuscarDadosExistentes(entity.Cpf, entity.Email);
+                var (cpf, email) = _contaRepository.BuscarDadosExistentes(entity.Cpf, entity.Email);
 
-                if (!string.IsNullOrEmpty(dadosExistentes.cpf) || !string.IsNullOrEmpty(dadosExistentes.email))
+                if (!string.IsNullOrEmpty(cpf) || !string.IsNullOrEmpty(email))
                 {
                     throw new PersonalCareException(
                         "Ocorreu um erro ao inserir registro de conta",
-                        entity.Cpf.Equals(dadosExistentes.cpf) ?
+                        entity.Cpf.Equals(cpf) ?
                             $"O CPF '{entity.Cpf}' já está registrado para uma outra conta." :
                             $"O e-mail '{entity.Email}' já está registrado para uma outra conta.",
                         HttpStatusCode.Forbidden);
