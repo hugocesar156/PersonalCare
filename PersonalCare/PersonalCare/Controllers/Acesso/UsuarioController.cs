@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PersonalCare.API.Authorization;
-using PersonalCare.API.Permissoes;
 using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Usuario;
 using PersonalCare.Application.Models.Responses.Usuario;
