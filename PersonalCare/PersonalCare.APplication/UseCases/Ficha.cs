@@ -137,14 +137,14 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
-        public void Inserir(InserirFichaRequest request)
+        public void Inserir(InserirFichaRequest request, int idUsuario)
         {
             try
             {
                 var entity = new Domain.Entities.Ficha(
                     request.DataValidade, 
-                    request.IdConta, 
-                    request.IdUsuarioCadastro, 
+                    request.IdConta,
+                    idUsuario, 
                     request.ItemFicha.Select(i => new Domain.Entities.ItemFicha(
                         i.Grupo,
                         i.Series,

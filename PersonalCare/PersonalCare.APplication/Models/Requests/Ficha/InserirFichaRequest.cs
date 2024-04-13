@@ -16,9 +16,6 @@ namespace PersonalCare.Application.Models.Requests.Ficha
         public int IdConta { get; set; }
 
         [Obrigatorio]
-        public int IdUsuarioCadastro { get; set; }
-
-        [Obrigatorio]
         public List<ItemFichaRequest> ItemFicha { get; set; }
     }
 }

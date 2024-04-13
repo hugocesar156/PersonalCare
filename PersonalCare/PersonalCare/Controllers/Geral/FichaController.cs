@@ -82,7 +82,7 @@ namespace PersonalCare.API.Controllers.Geral
         {
             try
             {
-                _ficha.Inserir(request);
+                _ficha.Inserir(request, int.Parse(HttpContext.User.Claims.First().Value));
                 return StatusCode((int)HttpStatusCode.OK, "Registro de ficha inserido com sucesso.");
             }
             catch (PersonalCareException ex)

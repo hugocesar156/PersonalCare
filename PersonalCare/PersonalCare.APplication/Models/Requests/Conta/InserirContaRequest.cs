@@ -21,9 +21,6 @@ namespace PersonalCare.Application.Models.Requests.Conta
         [Obrigatorio, IdadeMinima(14)]
         public DateTime DataNascimento { get; set; }
 
-        [Obrigatorio]
-        public int IdUsuarioCadastro { get; set; }
-
         public List<ContaContatoRequest>? ContatoConta { get; set; }
     }
 }

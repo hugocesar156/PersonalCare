@@ -161,7 +161,7 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
-        public void Inserir(InserirContaRequest request)
+        public void Inserir(InserirContaRequest request, int idUsuario)
         {
             try
             {
@@ -172,15 +172,15 @@ namespace PersonalCare.Application.UseCases
                     request.Altura,
                     request.Biotipo,
                     request.DataNascimento,
-                    request.IdUsuarioCadastro);
+                    idUsuario);
 
                 var dadosExistentes = _contaRepository.BuscarDadosExistentes(entity.Cpf, entity.Email);
 
-                if (!string.IsNullOrEmpty(dadosExistentes.Item1) || !string.IsNullOrEmpty(dadosExistentes.Item2))
+                if (!string.IsNullOrEmpty(dadosExistentes.cpf) || !string.IsNullOrEmpty(dadosExistentes.email))
                 {
                     throw new PersonalCareException(
                         "Ocorreu um erro ao inserir registro de conta",
-                        entity.Cpf.Equals(dadosExistentes.Item1) ?
+                        entity.Cpf.Equals(dadosExistentes.cpf) ?
                             $"O CPF '{entity.Cpf}' já está registrado para uma outra conta." :
                             $"O e-mail '{entity.Email}' já está registrado para uma outra conta.",
                         HttpStatusCode.Forbidden);

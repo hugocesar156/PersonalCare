@@ -118,7 +118,7 @@ namespace PersonalCare.API.Controllers.Geral
         {
             try
             {
-                _conta.Inserir(request);
+                _conta.Inserir(request, int.Parse(HttpContext.User.Claims.First().Value));
                 return StatusCode((int)HttpStatusCode.OK, "Registro de conta inserido com sucesso.");
             }
             catch (PersonalCareException ex)
