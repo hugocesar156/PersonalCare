@@ -12,7 +12,7 @@ namespace PersonalCare.DAL.Context
 {
     public partial class DataContextBase : DbContext
     {
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DataContextBase(DbContextOptions<DataContextBase> options, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
