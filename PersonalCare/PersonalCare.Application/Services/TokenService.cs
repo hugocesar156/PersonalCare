@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Shared;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,12 +15,20 @@ namespace PersonalCare.Application.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(signingKey);
 
+            var permissoes = new Dictionary<string, List<string>>();
+
+            foreach (var grupo in usuario.Permissoes.GroupBy(up => up.Entidade))
+            {
+                permissoes.Add(grupo.Key.Nome, grupo.Select(p => p.Acao.Nome).ToList());
+            }
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(PersonalCareClaims.ID_USUARIO, usuario.Id.ToString()),
-                    new Claim(PersonalCareClaims.ID_EMPRESA, idEmpresa)
+                    new Claim(PersonalCareClaims.ID_EMPRESA, idEmpresa),
+                    new Claim(PersonalCareClaims.PERMISSOES, JsonConvert.SerializeObject(permissoes))
                 }),
                 Expires = DateTime.Now.AddDays(1), 
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

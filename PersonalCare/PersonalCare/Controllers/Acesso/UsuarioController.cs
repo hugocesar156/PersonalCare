@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PersonalCare.API.Permissoes;
 using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Usuario;
 using PersonalCare.Application.Models.Responses.Usuario;
@@ -62,7 +63,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Cadastra um usuário.
         /// </summary>
         [HttpPost("cadastrar")]
-        [Authorize]
+        [Authorize, UsuarioPermissao(UsuarioPermissao.Entidade.Treino, UsuarioPermissao.Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Cadastrar(CadastrarUsuarioRequest request)
         {
