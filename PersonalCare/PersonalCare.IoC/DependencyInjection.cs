@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using PersonalCare.DAL.Context.Data;
+using PersonalCare.DAL.Context;
+using Microsoft.AspNetCore.Http;
 
 namespace PersonalCare.IoC
 {
@@ -9,7 +10,9 @@ namespace PersonalCare.IoC
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("PersonalDatabase")), ServiceLifetime.Transient);
+            services.AddDbContext<DataContextAcesso>(options => options.UseSqlServer(configuration.GetConnectionString("PersonalCareAcesso") ?? string.Empty), ServiceLifetime.Transient);
+            services.AddDbContext<DataContextBase>(options => options.UseSqlServer(configuration.GetConnectionString("PersonalCareBase") ?? string.Empty), ServiceLifetime.Transient);
+            services.AddDbContext<DataContextEmpresarial>(options => options.UseSqlServer(configuration.GetConnectionString("PersonalCareEmpresarial") ?? string.Empty), ServiceLifetime.Transient);
 
             services.AddUseCases(configuration);
             services.AddRepositories(configuration);

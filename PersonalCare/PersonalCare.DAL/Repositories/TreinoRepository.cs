@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PersonalCare.DAL.Context.Data;
-using PersonalCare.DAL.Models.Data;
+using PersonalCare.DAL.Context;
+using PersonalCare.DAL.Models.Base;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 
@@ -8,8 +8,8 @@ namespace PersonalCare.DAL.Repositories
 {
     public class TreinoRepository : ITreinoRepository
     {
-        private readonly DataContext _data;
-        public TreinoRepository(DataContext data)
+        private readonly DataContextBase _data;
+        public TreinoRepository(DataContextBase data)
         {
             _data = data;
         }

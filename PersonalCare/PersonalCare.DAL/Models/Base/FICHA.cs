@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PersonalCare.DAL.Models.Data
+namespace PersonalCare.DAL.Models.Base
 {
     public partial class FICHA
     {
@@ -17,7 +17,6 @@ namespace PersonalCare.DAL.Models.Data
         public int ID_USUARIO_CADASTRO { get; set; }
 
         public virtual CONTum ID_CONTANavigation { get; set; } = null!;
-        public virtual USUARIO ID_USUARIO_CADASTRONavigation { get; set; } = null!;
         public virtual ICollection<ITEM_FICHA> ITEM_FICHAs { get; set; }
     }
 }

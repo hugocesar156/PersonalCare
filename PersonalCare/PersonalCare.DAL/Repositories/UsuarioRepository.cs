@@ -1,5 +1,5 @@
-﻿using PersonalCare.DAL.Context.Data;
-using PersonalCare.DAL.Models.Data;
+﻿using PersonalCare.DAL.Context;
+using PersonalCare.DAL.Models.Acesso;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 
@@ -7,8 +7,8 @@ namespace PersonalCare.DAL.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        private readonly DataContext _data;
-        public UsuarioRepository(DataContext data)
+        private readonly DataContextAcesso _data;
+        public UsuarioRepository(DataContextAcesso data)
         {
             _data = data;
         }

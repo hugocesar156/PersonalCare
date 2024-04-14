@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PersonalCare.DAL.Models.Data
+namespace PersonalCare.DAL.Models.Base
 {
     public partial class CONTATO_CONTum
     {

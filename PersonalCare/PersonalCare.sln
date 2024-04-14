@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalCare.DAL", "Persona
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalCare.Domain", "PersonalCare.Domain\PersonalCare.Domain.csproj", "{0D435E1C-8073-4E44-993A-AB6195BAF0D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalCare.Shared", "PersonalCare.Shared\PersonalCare.Shared.csproj", "{D4CD596D-5BB9-4407-8D70-364BF84D7F67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalCare.Shared", "PersonalCare.Shared\PersonalCare.Shared.csproj", "{D4CD596D-5BB9-4407-8D70-364BF84D7F67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

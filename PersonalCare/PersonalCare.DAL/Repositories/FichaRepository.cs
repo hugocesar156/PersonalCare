@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PersonalCare.DAL.Context.Data;
-using PersonalCare.DAL.Models.Data;
+using PersonalCare.DAL.Context;
+using PersonalCare.DAL.Models.Base;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 
@@ -8,9 +8,9 @@ namespace PersonalCare.DAL.Repositories
 {
     public class FichaRepository : IFichaRepository
     {
-        private readonly DataContext _data;
+        private readonly DataContextBase _data;
 
-        public FichaRepository(DataContext data)
+        public FichaRepository(DataContextBase data)
         {
             _data = data;
         }

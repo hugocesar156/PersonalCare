@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PersonalCare.DAL.Models.Data
+namespace PersonalCare.DAL.Models.Base
 {
     public partial class CONTum
     {
@@ -22,7 +22,6 @@ namespace PersonalCare.DAL.Models.Data
         public DateTime DATA_ATUALIZACAO { get; set; }
         public int ID_USUARIO_CADASTRO { get; set; }
 
-        public virtual USUARIO ID_USUARIO_CADASTRONavigation { get; set; } = null!;
         public virtual ICollection<CONTATO_CONTum> CONTATO_CONTa { get; set; }
         public virtual ICollection<FICHA> FICHAs { get; set; }
     }

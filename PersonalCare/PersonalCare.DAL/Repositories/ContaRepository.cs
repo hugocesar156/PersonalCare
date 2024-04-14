@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PersonalCare.DAL.Context.Data;
-using PersonalCare.DAL.Models.Data;
+using PersonalCare.DAL.Context;
+using PersonalCare.DAL.Models.Base;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 
@@ -8,9 +8,9 @@ namespace PersonalCare.Domain.Repositories
 {
     public class ContaRepository : IContaRepository
     {
-        private readonly DataContext _data;
+        private readonly DataContextBase _data;
 
-        public ContaRepository(DataContext data)
+        public ContaRepository(DataContextBase data)
         {
             _data = data;
         }

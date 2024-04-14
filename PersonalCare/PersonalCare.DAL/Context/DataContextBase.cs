@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using PersonalCare.DAL.Models.Data;
+using PersonalCare.DAL.Models.Base;
 
-namespace PersonalCare.DAL.Context.Data
+namespace PersonalCare.DAL.Context
 {
-    public partial class DataContext : DbContext
+    public partial class DataContextBase : DbContext
     {
-        public DataContext()
-        {
-        }
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DataContext(DbContextOptions<DataContext> options)
+        public DataContextBase(DbContextOptions<DataContextBase> options, IHttpContextAccessor httpContextAccessor)
             : base(options)
         {
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public virtual DbSet<CATEGORIA_TREINO> CATEGORIA_TREINOs { get; set; } = null!;
@@ -23,14 +24,13 @@ namespace PersonalCare.DAL.Context.Data
         public virtual DbSet<FICHA> FICHAs { get; set; } = null!;
         public virtual DbSet<ITEM_FICHA> ITEM_FICHAs { get; set; } = null!;
         public virtual DbSet<TREINO> TREINOs { get; set; } = null!;
-        public virtual DbSet<USUARIO> USUARIOs { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=HUGO-PC\\SQLEXPRESS;Initial Catalog=db_personal_empresa;persist security info=True;user id=HUGO-PC\\hugoc;TrustServerCertificate=True;MultipleActiveResultSets=True;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Data Source=HUGO-PC\\SQLEXPRESS;Initial Catalog=db_personalcare_base;persist security info=True;user id=HUGO-PC\\hugoc;TrustServerCertificate=True;MultipleActiveResultSets=True;Trusted_Connection=True;");
             }
         }
 
@@ -106,12 +106,6 @@ namespace PersonalCare.DAL.Context.Data
                 entity.Property(e => e.NOME)
                     .HasMaxLength(100)
                     .IsUnicode(false);
-
-                entity.HasOne(d => d.ID_USUARIO_CADASTRONavigation)
-                    .WithMany(p => p.CONTa)
-                    .HasForeignKey(d => d.ID_USUARIO_CADASTRO)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__CONTA__ID_USUARI__5AEE82B9");
             });
 
             modelBuilder.Entity<FICHA>(entity =>
@@ -127,12 +121,6 @@ namespace PersonalCare.DAL.Context.Data
                     .HasForeignKey(d => d.ID_CONTA)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__FICHA__ID_CONTA__619B8048");
-
-                entity.HasOne(d => d.ID_USUARIO_CADASTRONavigation)
-                    .WithMany(p => p.FICHAs)
-                    .HasForeignKey(d => d.ID_USUARIO_CADASTRO)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__FICHA__ID_USUARI__60A75C0F");
             });
 
             modelBuilder.Entity<ITEM_FICHA>(entity =>
@@ -174,37 +162,6 @@ namespace PersonalCare.DAL.Context.Data
                     .HasForeignKey(d => d.ID_CATEGORIA_TREINO)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__TREINO__ID_CATEG__66603565");
-            });
-
-            modelBuilder.Entity<USUARIO>(entity =>
-            {
-                entity.ToTable("USUARIO");
-
-                entity.HasIndex(e => e.EMAIL, "UQ__USUARIO__161CF72476382ED4")
-                    .IsUnique();
-
-                entity.Property(e => e.DATA_ATUALIZACAO).HasColumnType("datetime");
-
-                entity.Property(e => e.DATA_CADASTRO).HasColumnType("datetime");
-
-                entity.Property(e => e.DATA_ULTIMO_ACESSO).HasColumnType("datetime");
-
-                entity.Property(e => e.EMAIL)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.NOME)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.SALT)
-                    .HasMaxLength(24)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.SENHA)
-                    .HasMaxLength(64)
-                    .IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);

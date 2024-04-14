@@ -1,5 +1,5 @@
-﻿using PersonalCare.DAL.Context.Data;
-using PersonalCare.DAL.Models.Data;
+﻿using PersonalCare.DAL.Context;
+using PersonalCare.DAL.Models.Base;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 
@@ -7,9 +7,9 @@ namespace PersonalCare.DAL.Repositories
 {
     public class CategoriaTreinoRepository : ICategoriaTreinoRepository
     {
-        private readonly DataContext _data;
+        private readonly DataContextBase _data;
 
-        public CategoriaTreinoRepository(DataContext data)
+        public CategoriaTreinoRepository(DataContextBase data)
         {
             _data = data;
         }

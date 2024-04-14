@@ -7,10 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Context\Corporativo\" />
+    <Compile Remove="Context\Corporativo\**" />
+    <EmbeddedResource Remove="Context\Corporativo\**" />
+    <None Remove="Context\Corporativo\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.28" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.28">
       <PrivateAssets>all</PrivateAssets>
