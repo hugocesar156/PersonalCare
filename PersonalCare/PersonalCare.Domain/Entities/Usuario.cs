@@ -9,9 +9,10 @@
             Senha = _senha;
             Salt = _salt;
             IdEmpresa = _idEmpresa;
+            Permissoes = new List<PermissaoUsuario>();
         }
 
-        public Usuario(int _id, string _nome, string _email, string _senha, string _salt, bool _ativo, string _idEmpresa, DateTime _dataCadastro, DateTime _dataAtualizacao, DateTime? _dataUltimoAcesso)
+        public Usuario(int _id, string _nome, string _email, string _senha, string _salt, bool _ativo, string _idEmpresa, DateTime _dataCadastro, DateTime _dataAtualizacao, DateTime? _dataUltimoAcesso, List<PermissaoUsuario> _permissoes)
         {
             Id = _id;
             Nome = _nome;  
@@ -23,6 +24,7 @@
             DataCadastro = _dataCadastro;
             DataAtaualizacao = _dataAtualizacao;
             DataUltimoAcesso = _dataUltimoAcesso;
+            Permissoes = _permissoes;
         }
 
         public int Id { get; }
@@ -35,5 +37,6 @@
         public DateTime DataCadastro { get; }
         public DateTime DataAtaualizacao { get; }
         public DateTime? DataUltimoAcesso { get; }
+        public List<PermissaoUsuario> Permissoes { get; set; }
     }
 }

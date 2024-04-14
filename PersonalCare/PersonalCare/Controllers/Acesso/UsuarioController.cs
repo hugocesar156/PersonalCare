@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Usuario;
 using PersonalCare.Application.Models.Responses.Usuario;
@@ -18,6 +19,25 @@ namespace PersonalCare.API.Controllers.Acesso
         public UsuarioController(IUsuario usuario)
         {
             _usuario = usuario;
+        }
+
+        /// <summary>
+        /// Adiciona permissões do sistema para um usuário.
+        /// </summary>
+        [HttpPost("adicionarpermissoes")]
+        [Authorize]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult AdicionarPermissoes(AdicionarPermissaoRequest request)
+        {
+            try
+            {
+                _usuario.AdicionarPermissoes(request, HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
+                return StatusCode((int)HttpStatusCode.OK, "As permissões de usuário foram atualizadas.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
         }
 
         /// <summary>
@@ -42,6 +62,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Cadastra um usuário.
         /// </summary>
         [HttpPost("cadastrar")]
+        [Authorize]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Cadastrar(CadastrarUsuarioRequest request)
         {

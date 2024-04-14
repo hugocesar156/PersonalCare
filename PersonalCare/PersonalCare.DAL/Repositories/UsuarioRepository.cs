@@ -1,6 +1,6 @@
-﻿using PersonalCare.DAL.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonalCare.DAL.Context;
 using PersonalCare.DAL.Models.Acesso;
-using PersonalCare.DAL.Models.Empresarial;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 
@@ -14,13 +14,75 @@ namespace PersonalCare.DAL.Repositories
             _data = data;
         }
 
+        public bool AdicionarPermissoes(List<PermissaoUsuario> request)
+        {
+            var usuario = _data.USUARIOs.FirstOrDefault(u => u.ID == request[0].IdUsuario);
+
+            if (usuario is not null)
+            {
+                var entities = new List<USUARIO_PERMISSAO>();
+
+                foreach (var item in request)
+                {
+                    entities.Add(new USUARIO_PERMISSAO
+                    {
+                        ID_USUARIO = item.IdUsuario,
+                        ID_ENTIDADE = item.Entidade.Id,
+                        ID_ACAO = item.Acao.Id
+                    });
+                }
+
+                _data.AddRange(entities);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
+        public Usuario? Buscar(int idUsuario, string idEmpresa)
+        {
+            var entity = _data.USUARIOs.Include(u => u.USUARIO_PERMISSAOs).FirstOrDefault(u => u.ID == idUsuario && u.ID_EMPRESA == idEmpresa);
+
+            if (entity is not null)
+            {
+                return new Usuario(
+                    entity.ID,
+                    entity.NOME, 
+                    entity.EMAIL, 
+                    entity.SENHA, 
+                    entity.SALT, 
+                    entity.ATIVO, 
+                    entity.ID_EMPRESA, 
+                    entity.DATA_CADASTRO,
+                    entity.DATA_ATUALIZACAO, 
+                    entity.DATA_ULTIMO_ACESSO,
+                    entity.USUARIO_PERMISSAOs.Select(u => new PermissaoUsuario(
+                        u.ID_USUARIONavigation.ID,
+                        new Entidade((byte)u.ID_ENTIDADE),
+                        new Acao((byte)u.ID_ACAO))).ToList());
+            }
+
+            return null;
+        }
+
         public Usuario? BuscarPorEmail(string email, string idEmpresa)
         {
             var entity = _data.USUARIOs.FirstOrDefault(u => u.EMAIL == email && u.ID_EMPRESA == idEmpresa);
 
             if (entity is not null)
             {
-                return new Usuario(entity.ID, entity.NOME, entity.EMAIL, entity.SENHA, entity.SALT, entity.ATIVO, entity.ID_EMPRESA, entity.DATA_CADASTRO, entity.DATA_ATUALIZACAO, entity.DATA_ULTIMO_ACESSO);
+                return new Usuario(
+                    entity.ID,
+                    entity.NOME, 
+                    entity.EMAIL,
+                    entity.SENHA, 
+                    entity.SALT, 
+                    entity.ATIVO, 
+                    entity.ID_EMPRESA,
+                    entity.DATA_CADASTRO,
+                    entity.DATA_ATUALIZACAO, 
+                    entity.DATA_ULTIMO_ACESSO,
+                    new List<PermissaoUsuario>());
             }
 
             return null;
@@ -50,6 +112,11 @@ namespace PersonalCare.DAL.Repositories
             _data.SaveChanges();
 
             return entity.ID;
+        }
+
+        public List<PermissaoUsuario> ListarPermissoes(int idUsuario)
+        {
+            throw new NotImplementedException();
         }
     }
 }

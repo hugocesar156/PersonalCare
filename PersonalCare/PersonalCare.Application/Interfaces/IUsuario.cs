@@ -5,6 +5,7 @@ namespace PersonalCare.Application.Interfaces
 {
     public interface IUsuario
     {
+        void AdicionarPermissoes(AdicionarPermissaoRequest request, string idEmpresa);
         AutenticarResponse Autenticar(AutenticarRequest request);
         void Cadastrar(CadastrarUsuarioRequest request, string idEmpresa);
     }
