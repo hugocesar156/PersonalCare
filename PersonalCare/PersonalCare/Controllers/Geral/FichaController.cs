@@ -4,6 +4,7 @@ using PersonalCare.Application.Models.Requests.Ficha;
 using PersonalCare.Application.Models.Responses.Ficha;
 using PersonalCare.Shared;
 using System.Net;
+using System.Security.Claims;
 
 namespace PersonalCare.API.Controllers.Geral
 {
@@ -82,7 +83,7 @@ namespace PersonalCare.API.Controllers.Geral
         {
             try
             {
-                _ficha.Inserir(request, int.Parse(HttpContext.User.Claims.First().Value));
+                _ficha.Inserir(request, int.Parse(HttpContext.User.FindFirstValue(PersonalCareClaims.ID_USUARIO)));
                 return StatusCode((int)HttpStatusCode.OK, "Registro de ficha inserido com sucesso.");
             }
             catch (PersonalCareException ex)

@@ -4,6 +4,8 @@ using PersonalCare.Application.Models.Requests.Conta;
 using PersonalCare.Application.Models.Responses.Conta;
 using PersonalCare.Shared;
 using System.Net;
+using System.Runtime.CompilerServices;
+using System.Security.Claims;
 
 namespace PersonalCare.API.Controllers.Geral
 {
@@ -118,7 +120,7 @@ namespace PersonalCare.API.Controllers.Geral
         {
             try
             {
-                _conta.Inserir(request, int.Parse(HttpContext.User.Claims.First().Value));
+                _conta.Inserir(request, int.Parse(HttpContext.User.FindFirstValue(PersonalCareClaims.ID_USUARIO)));
                 return StatusCode((int)HttpStatusCode.OK, "Registro de conta inserido com sucesso.");
             }
             catch (PersonalCareException ex)
