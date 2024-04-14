@@ -4,6 +4,7 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 using PersonalCare.DAL.Models.Base;
 using PersonalCare.Shared;
 
@@ -11,11 +12,13 @@ namespace PersonalCare.DAL.Context
 {
     public partial class DataContextBase : DbContext
     {
+        private IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DataContextBase(DbContextOptions<DataContextBase> options, IHttpContextAccessor httpContextAccessor)
+        public DataContextBase(DbContextOptions<DataContextBase> options, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
             : base(options)
         {
+            _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -28,7 +31,8 @@ namespace PersonalCare.DAL.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer($"Data Source=HUGO-PC\\SQLEXPRESS;Initial Catalog=db_personalcare_-{_httpContextAccessor.HttpContext.User.FindFirst(PersonalCareClaims.ID_EMPRESA)?.Value};persist security info=True;user id=HUGO-PC\\hugoc;TrustServerCertificate=True;MultipleActiveResultSets=True;Trusted_Connection=True;");
+            var connectionString = _configuration.GetConnectionString("PersonalCareBase").Replace("db_personalcare_base", $"db_personalcare_-{_httpContextAccessor.HttpContext.User.FindFirst(PersonalCareClaims.ID_EMPRESA)?.Value}");
+            optionsBuilder.UseSqlServer(connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
