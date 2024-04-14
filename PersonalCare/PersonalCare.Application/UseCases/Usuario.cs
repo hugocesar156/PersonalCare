@@ -30,7 +30,7 @@ namespace PersonalCare.Application.UseCases
                 {
                     if (CriptografiaService.VerificarSenha(request.Senha, entity.Salt, entity.Senha))
                     {
-                        return new AutenticarResponse(entity.Nome, TokenService.GerarToken(entity, _configuration["JWTSigningKey"]));
+                        return new AutenticarResponse(entity.Nome, TokenService.GerarToken(entity, request.IdEmpresa, _configuration["JWTSigningKey"]));
                     }
 
                     throw new PersonalCareException(

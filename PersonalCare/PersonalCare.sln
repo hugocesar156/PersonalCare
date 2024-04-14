@@ -5,8 +5,6 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalCare.API", "PersonalCare\PersonalCare.API.csproj", "{038F718A-0D6B-44C3-80CC-0EE90F491AEA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalCare.Application", "PersonalCare.APplication\PersonalCare.Application.csproj", "{2B391F92-8392-4DC6-9E9F-031C53A5BF02}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalCare.IoC", "PersonalCare.IoC\PersonalCare.IoC.csproj", "{6287C19F-1746-426B-A49E-313F6AA5F8EC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalCare.DAL", "PersonalCare.DAL\PersonalCare.DAL.csproj", "{EA2866F7-20E8-4F21-9A4F-AAD9A2E8B64E}"
@@ -14,6 +12,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalCare.Domain", "PersonalCare.Domain\PersonalCare.Domain.csproj", "{0D435E1C-8073-4E44-993A-AB6195BAF0D9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalCare.Shared", "PersonalCare.Shared\PersonalCare.Shared.csproj", "{D4CD596D-5BB9-4407-8D70-364BF84D7F67}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalCare.Application", "PersonalCare.Application\PersonalCare.Application.csproj", "{62E0E477-BC03-4488-A9EB-F593018CBC94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,6 @@ Global
 		{038F718A-0D6B-44C3-80CC-0EE90F491AEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{038F718A-0D6B-44C3-80CC-0EE90F491AEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{038F718A-0D6B-44C3-80CC-0EE90F491AEA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B391F92-8392-4DC6-9E9F-031C53A5BF02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B391F92-8392-4DC6-9E9F-031C53A5BF02}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B391F92-8392-4DC6-9E9F-031C53A5BF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B391F92-8392-4DC6-9E9F-031C53A5BF02}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6287C19F-1746-426B-A49E-313F6AA5F8EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6287C19F-1746-426B-A49E-313F6AA5F8EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6287C19F-1746-426B-A49E-313F6AA5F8EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{D4CD596D-5BB9-4407-8D70-364BF84D7F67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4CD596D-5BB9-4407-8D70-364BF84D7F67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4CD596D-5BB9-4407-8D70-364BF84D7F67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62E0E477-BC03-4488-A9EB-F593018CBC94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62E0E477-BC03-4488-A9EB-F593018CBC94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62E0E477-BC03-4488-A9EB-F593018CBC94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62E0E477-BC03-4488-A9EB-F593018CBC94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

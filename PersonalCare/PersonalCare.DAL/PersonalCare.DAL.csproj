@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PersonalCare.Domain\PersonalCare.Domain.csproj" />
+    <ProjectReference Include="..\PersonalCare.Shared\PersonalCare.Shared.csproj" />
   </ItemGroup>
 
 </Project>

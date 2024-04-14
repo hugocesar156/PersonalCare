@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using PersonalCare.DAL.Models.Base;
+using PersonalCare.Shared;
 
 namespace PersonalCare.DAL.Context
 {
@@ -27,11 +28,7 @@ namespace PersonalCare.DAL.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=HUGO-PC\\SQLEXPRESS;Initial Catalog=db_personalcare_base;persist security info=True;user id=HUGO-PC\\hugoc;TrustServerCertificate=True;MultipleActiveResultSets=True;Trusted_Connection=True;");
-            }
+            optionsBuilder.UseSqlServer($"Data Source=HUGO-PC\\SQLEXPRESS;Initial Catalog=db_personalcare_-{_httpContextAccessor.HttpContext.User.FindFirst(PersonalCareClaims.ID_EMPRESA)?.Value};persist security info=True;user id=HUGO-PC\\hugoc;TrustServerCertificate=True;MultipleActiveResultSets=True;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

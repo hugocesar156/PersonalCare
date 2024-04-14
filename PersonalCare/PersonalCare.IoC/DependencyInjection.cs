@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using PersonalCare.DAL.Context;
-using Microsoft.AspNetCore.Http;
 
 namespace PersonalCare.IoC
 {
