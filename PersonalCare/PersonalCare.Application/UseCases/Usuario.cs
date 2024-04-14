@@ -24,7 +24,7 @@ namespace PersonalCare.Application.UseCases
         {
             try 
             {
-                var entity = _usuarioRepository.BuscarPorEmail(request.Email);
+                var entity = _usuarioRepository.BuscarPorEmail(request.Email, request.IdEmpresa);
 
                 if (entity is not null)
                 {
@@ -54,11 +54,11 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
-        public void Cadastrar(CadastrarUsuarioRequest request)
+        public void Cadastrar(CadastrarUsuarioRequest request, string idEmpresa)
         {
             try
             {
-                if (_usuarioRepository.EmailCadastrado(request.Email))
+                if (_usuarioRepository.EmailCadastrado(request.Email, idEmpresa))
                 {
                     throw new PersonalCareException(
                         "Ocorreu um erro ao cadastrar usuário.",
@@ -67,7 +67,7 @@ namespace PersonalCare.Application.UseCases
                 }
 
                 var (senha, salt) = CriptografiaService.CriptografarSenha(request.Senha);
-                var entity = new Domain.Entities.Usuario(request.Nome, request.Email, senha, salt);
+                var entity = new Domain.Entities.Usuario(request.Nome, request.Email, senha, salt, idEmpresa);
 
                 if (_usuarioRepository.Cadastrar(entity) == 0)
                 {

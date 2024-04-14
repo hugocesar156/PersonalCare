@@ -6,6 +6,6 @@ namespace PersonalCare.Application.Interfaces
     public interface IUsuario
     {
         AutenticarResponse Autenticar(AutenticarRequest request);
-        void Cadastrar(CadastrarUsuarioRequest request);
+        void Cadastrar(CadastrarUsuarioRequest request, string idEmpresa);
     }
 }

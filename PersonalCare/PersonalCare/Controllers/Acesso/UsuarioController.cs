@@ -4,6 +4,7 @@ using PersonalCare.Application.Models.Requests.Usuario;
 using PersonalCare.Application.Models.Responses.Usuario;
 using PersonalCare.Shared;
 using System.Net;
+using System.Security.Claims;
 
 namespace PersonalCare.API.Controllers.Acesso
 {
@@ -46,7 +47,7 @@ namespace PersonalCare.API.Controllers.Acesso
         {
             try
             {
-                _usuario.Cadastrar(request);
+                _usuario.Cadastrar(request, HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
                 return StatusCode((int)HttpStatusCode.OK, "Usuário cadastrado com sucesso.");
             }
             catch (PersonalCareException ex)
