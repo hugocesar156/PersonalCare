@@ -68,6 +68,11 @@ namespace PersonalCare.DAL.Context
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.ID_EMPRESA)
+                    .HasMaxLength(36)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('')");
+
                 entity.Property(e => e.NOME)
                     .HasMaxLength(100)
                     .IsUnicode(false);

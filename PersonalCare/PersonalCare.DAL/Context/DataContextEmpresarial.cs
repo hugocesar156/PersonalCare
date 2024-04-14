@@ -36,7 +36,7 @@ namespace PersonalCare.DAL.Context
             {
                 entity.ToTable("EMPRESA");
 
-                entity.HasIndex(e => e.GUID, "UQ__EMPRESA__15B69B8F7A52F2AA")
+                entity.HasIndex(e => e.GUID, "UQ__EMPRESA__15B69B8FC15D65FC")
                     .IsUnique();
 
                 entity.Property(e => e.BAIRRO)
@@ -56,7 +56,7 @@ namespace PersonalCare.DAL.Context
                     .IsUnicode(false);
 
                 entity.Property(e => e.GUID)
-                    .HasMaxLength(200)
+                    .HasMaxLength(36)
                     .IsUnicode(false);
 
                 entity.Property(e => e.LOGRADOURO)
@@ -104,7 +104,7 @@ namespace PersonalCare.DAL.Context
                     .WithMany(p => p.EMPRESA_CONTATOs)
                     .HasForeignKey(d => d.ID_EMPRESA)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__EMPRESA_C__ID_EM__4CA06362");
+                    .HasConstraintName("FK__EMPRESA_C__ID_EM__5FB337D6");
             });
 
             modelBuilder.Entity<EMPRESA_MIDIASOCIAL>(entity =>
@@ -123,7 +123,7 @@ namespace PersonalCare.DAL.Context
                     .WithMany(p => p.EMPRESA_MIDIASOCIALs)
                     .HasForeignKey(d => d.ID_EMPRESA)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__EMPRESA_M__ID_EM__4F7CD00D");
+                    .HasConstraintName("FK__EMPRESA_M__ID_EM__628FA481");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -19,6 +19,7 @@ namespace PersonalCare.DAL.Models.Acesso
         public DateTime DATA_CADASTRO { get; set; }
         public DateTime DATA_ATUALIZACAO { get; set; }
         public DateTime? DATA_ULTIMO_ACESSO { get; set; }
+        public string ID_EMPRESA { get; set; } = null!;
 
         public virtual ICollection<USUARIO_PERMISSAO> USUARIO_PERMISSAOs { get; set; }
     }
