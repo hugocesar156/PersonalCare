@@ -4,34 +4,20 @@ using Newtonsoft.Json;
 using PersonalCare.Shared;
 using System.Net;
 using System.Security.Claims;
+using static PersonalCare.Shared.PersonalCareEnums;
 
-namespace PersonalCare.API.Permissoes
+namespace PersonalCare.Application.Permissoes
 {
-    public class UsuarioPermissao : Attribute, IAuthorizationFilter
+    [AttributeUsage(AttributeTargets.Method)]
+    public class PermissaoAttribute : Attribute, IAuthorizationFilter
     {
         private readonly Entidade _entidade;
         private readonly Acao _acao;
 
-        public UsuarioPermissao(Entidade entidade, Acao acao)
+        public PermissaoAttribute(Entidade entidade, Acao acao)
         {
             _entidade = entidade;
             _acao = acao;
-        }
-
-        public enum Entidade
-        {
-            Conta,
-            Ficha,
-            CategoriaTreino,
-            Treino
-        }
-
-        public enum Acao
-        {
-            Atualizar, 
-            Deletar,
-            Inserir,
-            Visualizar
         }
 
         public void OnAuthorization(AuthorizationFilterContext context)

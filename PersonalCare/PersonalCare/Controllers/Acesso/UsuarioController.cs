@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PersonalCare.API.Permissoes;
 using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Usuario;
 using PersonalCare.Application.Models.Responses.Usuario;
+using PersonalCare.Application.Permissoes;
 using PersonalCare.Shared;
 using System.Net;
 using System.Security.Claims;
+using static PersonalCare.Shared.PersonalCareEnums;
 
 namespace PersonalCare.API.Controllers.Acesso
 {
@@ -63,7 +64,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Cadastra um usuário.
         /// </summary>
         [HttpPost("cadastrar")]
-        [Authorize, UsuarioPermissao(UsuarioPermissao.Entidade.Treino, UsuarioPermissao.Acao.Atualizar)]
+        [Authorize, Permissao(Entidade.Usuario, Acao.Inserir)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Cadastrar(CadastrarUsuarioRequest request)
         {
