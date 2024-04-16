@@ -1,8 +1,8 @@
 ﻿namespace PersonalCare.Application.Models.Responses.Conta
 {
-    public class ContatoConta
+    public class ContatoContaResponse
     {
-        public ContatoConta(int _id, string nome, string _numero, string _ddd, string _ddi, int _idConta)
+        public ContatoContaResponse(int _id, string nome, string _numero, string _ddd, string _ddi, int _idConta)
         {
             Id = _id;
             Nome = nome;

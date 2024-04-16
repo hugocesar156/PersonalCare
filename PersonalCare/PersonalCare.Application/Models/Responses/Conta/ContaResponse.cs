@@ -11,7 +11,7 @@
             Altura = _altuta;
             Biotipo = _biotipo;
             DataNascimento = _dataNascimento;
-            ContatoConta = _contatoConta.Select(x => new ContatoConta(
+            ContatoConta = _contatoConta.Select(x => new ContatoContaResponse(
                 x.Id, x.Nome, x.Numero, x.Ddd, x.Ddi, x.IdConta)).ToList();
         }
 
@@ -22,6 +22,6 @@
         public decimal? Altura { get; }
         public string? Biotipo { get; }
         public DateTime DataNascimento { get; }
-        public List<ContatoConta> ContatoConta { get; }
+        public List<ContatoContaResponse> ContatoConta { get; }
     }
 }
