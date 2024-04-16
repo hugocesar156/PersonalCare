@@ -7,6 +7,7 @@ namespace PersonalCare.Application.Interfaces
     {
         void AdicionarPermissoes(AdicionarPermissaoRequest request, string idEmpresa);
         AutenticarResponse Autenticar(AutenticarRequest request);
+        UsuarioResponse Buscar(int idUsuario, string idEmpresa);
         void Cadastrar(CadastrarUsuarioRequest request, string idEmpresa);
         void RemoverPermissoes(RemoverPermissaoRequest request, string idEmpresa);
     }

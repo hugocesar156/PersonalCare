@@ -61,6 +61,25 @@ namespace PersonalCare.API.Controllers.Acesso
         }
 
         /// <summary>
+        /// Busca um registro de usuário a partir do ID informado.
+        /// </summary>
+        [HttpGet("buscar/{idUsuario}")]
+        [Authorize, Permissao(Entidade.Usuario, Acao.Visualizar)]
+        [ProducesResponseType(typeof(UsuarioResponse), StatusCodes.Status200OK)]
+        public IActionResult Buscar(int idUsuario)
+        {
+            try
+            {
+                var usuario = _usuario.Buscar(idUsuario, HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
+                return StatusCode((int)HttpStatusCode.OK, usuario);
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Cadastra um usuário.
         /// </summary>
         [HttpPost("cadastrar")]

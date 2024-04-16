@@ -60,7 +60,7 @@ namespace PersonalCare.DAL.Repositories
                     entity.DATA_ATUALIZACAO, 
                     entity.DATA_ULTIMO_ACESSO,
                     entity.USUARIO_PERMISSAOs.Select(u => new PermissaoUsuario(
-                        u.ID_USUARIONavigation.ID,
+                        u.ID, entity.ID,
                         new Entidade((byte)u.ID_ENTIDADE, u.ID_ENTIDADENavigation.NOME),
                         new Acao((byte)u.ID_ACAO, u.ID_ACAONavigation.NOME))).ToList());
             }
@@ -89,7 +89,7 @@ namespace PersonalCare.DAL.Repositories
                     entity.DATA_ATUALIZACAO, 
                     entity.DATA_ULTIMO_ACESSO,
                     entity.USUARIO_PERMISSAOs.Select(u => new PermissaoUsuario(
-                        u.ID_USUARIONavigation.ID,
+                        u.ID, entity.ID,
                         new Entidade((byte)u.ID_ENTIDADE, u.ID_ENTIDADENavigation.NOME),
                         new Acao((byte)u.ID_ACAO, u.ID_ACAONavigation.NOME))).ToList());
             }
@@ -121,11 +121,6 @@ namespace PersonalCare.DAL.Repositories
             _data.SaveChanges();
 
             return entity.ID;
-        }
-
-        public List<PermissaoUsuario> ListarPermissoes(int idUsuario)
-        {
-            throw new NotImplementedException();
         }
 
         public bool RemoverPermissoes(List<int> permissoes)

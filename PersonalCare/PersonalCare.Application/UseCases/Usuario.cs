@@ -105,6 +105,32 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
+        public UsuarioResponse Buscar(int idUsuario, string idEmpresa)
+        {
+            try
+            {
+                var entity = _usuarioRepository.Buscar(idUsuario, idEmpresa);
+
+                if (entity is not null)
+                {
+                    return new UsuarioResponse(entity.Id, entity.Nome, entity.Email, entity.Ativo, entity.Permissoes);
+                }
+
+                throw new PersonalCareException(
+                    "Ocorreu um erro ao buscar registro de usuário.",
+                    "Registro de usuário não foi encontrado no servidor", 
+                    HttpStatusCode.NotFound);
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao buscar registro de usuário.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
         public void Cadastrar(CadastrarUsuarioRequest request, string idEmpresa)
         {
             try
