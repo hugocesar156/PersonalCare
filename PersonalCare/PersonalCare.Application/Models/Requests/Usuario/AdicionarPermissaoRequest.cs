@@ -4,10 +4,10 @@
     {
         public AdicionarPermissaoRequest()
         {
-            Permissoes = new List<Permissao>();
+            Permissoes = new List<PermissaoRequest>();
         }
 
         public int IdUsuario { get; set; }
-        public List<Permissao> Permissoes { get; set; }
+        public List<PermissaoRequest> Permissoes { get; set; }
     }
 }

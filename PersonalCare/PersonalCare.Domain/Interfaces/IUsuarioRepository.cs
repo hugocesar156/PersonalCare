@@ -10,5 +10,6 @@ namespace PersonalCare.Domain.Interfaces
         int Cadastrar(Usuario request);
         bool EmailCadastrado(string email, string idEmpresa);
         List<PermissaoUsuario> ListarPermissoes(int idUsuario);
+        bool RemoverPermissoes(List<int> permissoes);
     }
 }

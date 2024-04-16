@@ -127,5 +127,18 @@ namespace PersonalCare.DAL.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public bool RemoverPermissoes(List<int> permissoes)
+        {
+            var entities = _data.USUARIO_PERMISSAOs.Where(up => permissoes.Contains(up.ID));
+
+            if (entities.Any())
+            {
+                _data.RemoveRange(entities);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
     }
 }

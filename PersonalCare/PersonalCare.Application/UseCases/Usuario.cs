@@ -136,5 +136,45 @@ namespace PersonalCare.Application.UseCases
                 throw new PersonalCareException("Ocorreu um erro ao cadastrar usuário.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
+
+        public void RemoverPermissoes(RemoverPermissaoRequest request, string idEmpresa)
+        {
+            try
+            {
+                var usuario = _usuarioRepository.Buscar(request.IdUsuario, idEmpresa);
+
+                if (usuario is not null)
+                {
+                    if (usuario.Permissoes.FirstOrDefault(up => !request.Permissoes.Contains(up.Id)) is not null)
+                    {
+                        throw new PersonalCareException(
+                            "Ocorreu um erro ao atualizar as permissões do usuário.",
+                            "Uma ou mais permissoes informadas não fazem parte das permissões do usuário.",
+                            HttpStatusCode.Forbidden);
+                    }
+
+                    if (!_usuarioRepository.RemoverPermissoes(request.Permissoes))
+                    {
+                        throw new PersonalCareException(
+                            "Ocorreu um erro ao atualizar as permissões do usuário.",
+                            null, HttpStatusCode.InternalServerError);
+                    }
+                }
+                else
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao atualizar as permissões do usuário.",
+                        "Registro de usuário não encontrado.",
+                        HttpStatusCode.NotFound);
+
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao atualizar as permissões do usuário.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
     }
 }

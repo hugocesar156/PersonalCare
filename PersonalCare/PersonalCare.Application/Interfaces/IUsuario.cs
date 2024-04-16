@@ -8,5 +8,6 @@ namespace PersonalCare.Application.Interfaces
         void AdicionarPermissoes(AdicionarPermissaoRequest request, string idEmpresa);
         AutenticarResponse Autenticar(AutenticarRequest request);
         void Cadastrar(CadastrarUsuarioRequest request, string idEmpresa);
+        void RemoverPermissoes(RemoverPermissaoRequest request, string idEmpresa);
     }
 }

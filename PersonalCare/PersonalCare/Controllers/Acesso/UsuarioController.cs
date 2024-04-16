@@ -27,7 +27,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Adiciona permissões do sistema para um usuário.
         /// </summary>
         [HttpPost("adicionarpermissoes")]
-        [Authorize]
+        [Authorize, Permissao(Entidade.Usuario, Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult AdicionarPermissoes(AdicionarPermissaoRequest request)
         {
@@ -72,6 +72,25 @@ namespace PersonalCare.API.Controllers.Acesso
             {
                 _usuario.Cadastrar(request, HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
                 return StatusCode((int)HttpStatusCode.OK, "Usuário cadastrado com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
+        /// Remove permissões do sistema para um usuário.
+        /// </summary>
+        [HttpDelete("removerpermissoes")]
+        [Authorize, Permissao(Entidade.Usuario, Acao.Atualizar)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult RemoverPermissoes(RemoverPermissaoRequest request)
+        {
+            try
+            {
+                _usuario.RemoverPermissoes(request, HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
+                return StatusCode((int)HttpStatusCode.OK, "As permissões de usuário foram atualizadas.");
             }
             catch (PersonalCareException ex)
             {
