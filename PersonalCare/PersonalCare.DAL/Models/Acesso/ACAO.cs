@@ -7,12 +7,12 @@ namespace PersonalCare.DAL.Models.Acesso
     {
         public ACAO()
         {
-            USUARIO_PERMISSAOs = new HashSet<USUARIO_PERMISSAO>();
+            PERMISSAOs = new HashSet<PERMISSAO>();
         }
 
         public int ID { get; set; }
         public string NOME { get; set; } = null!;
 
-        public virtual ICollection<USUARIO_PERMISSAO> USUARIO_PERMISSAOs { get; set; }
+        public virtual ICollection<PERMISSAO> PERMISSAOs { get; set; }
     }
 }

@@ -8,7 +8,7 @@
             Nome = _nome;
             Email = _email;
             Ativo = ativo;
-            Permissoes = _permissoes.Select(up => new PermissaoResponse(up.Id, up.Entidade, up.Acao)).ToList();
+            Permissoes = _permissoes.Select(up => new PermissaoResponse(up.Id, up.Permissao.Nome, up.Permissao.Descricao)).ToList();
         }
 
         public int Id { get; }

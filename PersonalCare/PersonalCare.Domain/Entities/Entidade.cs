@@ -2,6 +2,11 @@
 {
     public class Entidade
     {
+        public Entidade()
+        {
+            Nome = string.Empty;
+        }
+
         public Entidade(byte _id)
         {
             Id = _id;

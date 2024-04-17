@@ -29,12 +29,11 @@ namespace PersonalCare.Application.UseCases
 
                 if (usuario is not null)
                 {
-                    var entity = request.Permissoes.Select(p => new PermissaoUsuario(request.IdUsuario,
-                        new Entidade(p.IdEntidade), new Acao(p.IdAcao))).ToList();
+                    var entity = request.Permissoes.Select(p => new PermissaoUsuario(request.IdUsuario, new Permissao(p))).ToList();
 
                     usuario.Permissoes.ForEach(up =>
                     {
-                        var permissao = entity.FirstOrDefault(p => p.Entidade.Id == up.Entidade.Id && p.Acao.Id == up.Acao.Id);
+                        var permissao = entity.FirstOrDefault(p => p.Id == up.Id);
 
                         if (permissao is not null)
                             entity.Remove(permissao);

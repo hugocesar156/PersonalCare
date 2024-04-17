@@ -19,6 +19,7 @@ namespace PersonalCare.DAL.Context
 
         public virtual DbSet<ACAO> ACAOs { get; set; } = null!;
         public virtual DbSet<ENTIDADE> ENTIDADEs { get; set; } = null!;
+        public virtual DbSet<PERMISSAO> PERMISSAOs { get; set; } = null!;
         public virtual DbSet<USUARIO> USUARIOs { get; set; } = null!;
         public virtual DbSet<USUARIO_PERMISSAO> USUARIO_PERMISSAOs { get; set; } = null!;
 
@@ -40,6 +41,31 @@ namespace PersonalCare.DAL.Context
                 entity.Property(e => e.NOME)
                     .HasMaxLength(20)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<PERMISSAO>(entity =>
+            {
+                entity.ToTable("PERMISSAO");
+
+                entity.Property(e => e.DESCRICAO)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.NOME)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.ID_ACAONavigation)
+                    .WithMany(p => p.PERMISSAOs)
+                    .HasForeignKey(d => d.ID_ACAO)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__PERMISSAO__ID_AC__59FA5E80");
+
+                entity.HasOne(d => d.ID_ENTIDADENavigation)
+                    .WithMany(p => p.PERMISSAOs)
+                    .HasForeignKey(d => d.ID_ENTIDADE)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__PERMISSAO__ID_EN__59063A47");
             });
 
             modelBuilder.Entity<USUARIO>(entity =>
@@ -81,23 +107,17 @@ namespace PersonalCare.DAL.Context
             {
                 entity.ToTable("USUARIO_PERMISSAO");
 
-                entity.HasOne(d => d.ID_ACAONavigation)
+                entity.HasOne(d => d.ID_PERMISSAONavigation)
                     .WithMany(p => p.USUARIO_PERMISSAOs)
-                    .HasForeignKey(d => d.ID_ACAO)
+                    .HasForeignKey(d => d.ID_PERMISSAO)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__USUARIO_P__ID_AC__4222D4EF");
-
-                entity.HasOne(d => d.ID_ENTIDADENavigation)
-                    .WithMany(p => p.USUARIO_PERMISSAOs)
-                    .HasForeignKey(d => d.ID_ENTIDADE)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__USUARIO_P__ID_EN__412EB0B6");
+                    .HasConstraintName("FK__USUARIO_P__ID_PE__5DCAEF64");
 
                 entity.HasOne(d => d.ID_USUARIONavigation)
                     .WithMany(p => p.USUARIO_PERMISSAOs)
                     .HasForeignKey(d => d.ID_USUARIO)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__USUARIO_P__ID_AC__403A8C7D");
+                    .HasConstraintName("FK__USUARIO_P__ID_US__5CD6CB2B");
             });
 
             OnModelCreatingPartial(modelBuilder);

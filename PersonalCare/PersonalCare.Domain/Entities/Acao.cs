@@ -2,6 +2,11 @@
 {
     public class Acao
     {
+        public Acao()
+        {
+            Nome = string.Empty;
+        }
+
         public Acao(byte _id)
         {
             Id = _id;

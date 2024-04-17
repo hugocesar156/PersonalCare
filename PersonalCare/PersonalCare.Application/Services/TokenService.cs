@@ -17,9 +17,9 @@ namespace PersonalCare.Application.Services
 
             var permissoes = new Dictionary<string, List<string>>();
 
-            foreach (var grupo in usuario.Permissoes.GroupBy(up => up.Entidade))
+            foreach (var entidade in usuario.Permissoes.Select(up => up.Permissao).GroupBy(p => p.Entidade.Nome))
             {
-                permissoes.Add(grupo.Key.Nome, grupo.Select(p => p.Acao.Nome).ToList());
+                permissoes.Add(entidade.Key, entidade.Select(p => p.Acao.Nome).ToList());
             }
 
             var tokenDescriptor = new SecurityTokenDescriptor

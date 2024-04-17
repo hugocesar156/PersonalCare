@@ -1,18 +1,16 @@
-﻿using PersonalCare.Domain.Entities;
-
-namespace PersonalCare.Application.Models.Responses.Usuario
+﻿namespace PersonalCare.Application.Models.Responses.Usuario
 {
     public class PermissaoResponse
     {
-        public PermissaoResponse(int _id, Entidade _entiade, Acao _acao)
+        public PermissaoResponse(int _id, string _nome, string? _descricao)
         {
             Id = _id;
-            Entidade = new EntidadeResponse(_entiade.Id, _entiade.Nome);
-            Acao = new AcaoResponse(_acao.Id, _acao.Nome);
+            Nome = _nome;
+            Descricao = _descricao;
         }
 
         public int Id { get; }
-        public EntidadeResponse Entidade { get; }
-        public AcaoResponse Acao { get; }
+        public string Nome { get; }
+        public string? Descricao { get; }
     }
 }

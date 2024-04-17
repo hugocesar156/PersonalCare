@@ -27,8 +27,7 @@ namespace PersonalCare.DAL.Repositories
                     entities.Add(new USUARIO_PERMISSAO
                     {
                         ID_USUARIO = item.IdUsuario,
-                        ID_ENTIDADE = item.Entidade.Id,
-                        ID_ACAO = item.Acao.Id
+                        ID_PERMISSAO = item.Id
                     });
                 }
 
@@ -42,8 +41,12 @@ namespace PersonalCare.DAL.Repositories
         public Usuario? Buscar(int idUsuario, string idEmpresa)
         {
             var entity = _data.USUARIOs
-                .Include(u => u.USUARIO_PERMISSAOs).ThenInclude(u => u.ID_ENTIDADENavigation)
-                .Include(u => u.USUARIO_PERMISSAOs).ThenInclude(u => u.ID_ACAONavigation)
+                .Include(u => u.USUARIO_PERMISSAOs)
+                    .ThenInclude(up => up.ID_PERMISSAONavigation)
+                        .ThenInclude(p => p.ID_ENTIDADENavigation)
+                .Include(u => u.USUARIO_PERMISSAOs)
+                    .ThenInclude(up => up.ID_PERMISSAONavigation)
+                        .ThenInclude(p => p.ID_ACAONavigation)
                 .FirstOrDefault(u => u.ID == idUsuario && u.ID_EMPRESA == idEmpresa);
 
             if (entity is not null)
@@ -59,10 +62,12 @@ namespace PersonalCare.DAL.Repositories
                     entity.DATA_CADASTRO,
                     entity.DATA_ATUALIZACAO, 
                     entity.DATA_ULTIMO_ACESSO,
-                    entity.USUARIO_PERMISSAOs.Select(u => new PermissaoUsuario(
-                        u.ID, entity.ID,
-                        new Entidade((byte)u.ID_ENTIDADE, u.ID_ENTIDADENavigation.NOME),
-                        new Acao((byte)u.ID_ACAO, u.ID_ACAONavigation.NOME))).ToList());
+                    entity.USUARIO_PERMISSAOs.Select(up => new PermissaoUsuario(up.ID, entity.ID, new Permissao(
+                        up.ID_PERMISSAONavigation.ID,
+                        up.ID_PERMISSAONavigation.NOME,
+                        up.ID_PERMISSAONavigation.DESCRICAO,
+                        new Entidade((byte)up.ID_PERMISSAONavigation.ID_ENTIDADENavigation.ID, up.ID_PERMISSAONavigation.ID_ENTIDADENavigation.NOME),
+                        new Acao((byte)up.ID_PERMISSAONavigation.ID_ACAONavigation.ID, up.ID_PERMISSAONavigation.ID_ACAONavigation.NOME)))).ToList());
             }
 
             return null;
@@ -71,27 +76,33 @@ namespace PersonalCare.DAL.Repositories
         public Usuario? BuscarPorEmail(string email, string idEmpresa)
         {
             var entity = _data.USUARIOs
-                .Include(u => u.USUARIO_PERMISSAOs).ThenInclude(u => u.ID_ENTIDADENavigation)
-                .Include(u => u.USUARIO_PERMISSAOs).ThenInclude(u => u.ID_ACAONavigation)
+                .Include(u => u.USUARIO_PERMISSAOs)
+                    .ThenInclude(up => up.ID_PERMISSAONavigation)
+                        .ThenInclude(p => p.ID_ENTIDADENavigation)
+                .Include(u => u.USUARIO_PERMISSAOs)
+                    .ThenInclude(up => up.ID_PERMISSAONavigation)
+                        .ThenInclude(p => p.ID_ACAONavigation)
                 .FirstOrDefault(u => u.EMAIL == email && u.ID_EMPRESA == idEmpresa);
 
             if (entity is not null)
             {
                 return new Usuario(
                     entity.ID,
-                    entity.NOME, 
+                    entity.NOME,
                     entity.EMAIL,
-                    entity.SENHA, 
-                    entity.SALT, 
-                    entity.ATIVO, 
+                    entity.SENHA,
+                    entity.SALT,
+                    entity.ATIVO,
                     entity.ID_EMPRESA,
                     entity.DATA_CADASTRO,
-                    entity.DATA_ATUALIZACAO, 
+                    entity.DATA_ATUALIZACAO,
                     entity.DATA_ULTIMO_ACESSO,
-                    entity.USUARIO_PERMISSAOs.Select(u => new PermissaoUsuario(
-                        u.ID, entity.ID,
-                        new Entidade((byte)u.ID_ENTIDADE, u.ID_ENTIDADENavigation.NOME),
-                        new Acao((byte)u.ID_ACAO, u.ID_ACAONavigation.NOME))).ToList());
+                    entity.USUARIO_PERMISSAOs.Select(up => new PermissaoUsuario(up.ID, entity.ID, new Permissao(
+                        up.ID_PERMISSAONavigation.ID,
+                        up.ID_PERMISSAONavigation.NOME,
+                        up.ID_PERMISSAONavigation.DESCRICAO,
+                        new Entidade((byte)up.ID_PERMISSAONavigation.ID_ENTIDADENavigation.ID, up.ID_PERMISSAONavigation.ID_ENTIDADENavigation.NOME),
+                        new Acao((byte)up.ID_PERMISSAONavigation.ID_ACAONavigation.ID, up.ID_PERMISSAONavigation.ID_ACAONavigation.NOME)))).ToList());
             }
 
             return null;

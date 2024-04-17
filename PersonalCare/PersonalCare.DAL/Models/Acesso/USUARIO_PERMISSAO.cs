@@ -7,11 +7,9 @@ namespace PersonalCare.DAL.Models.Acesso
     {
         public int ID { get; set; }
         public int ID_USUARIO { get; set; }
-        public int ID_ENTIDADE { get; set; }
-        public int ID_ACAO { get; set; }
+        public int ID_PERMISSAO { get; set; }
 
-        public virtual ACAO ID_ACAONavigation { get; set; } = null!;
-        public virtual ENTIDADE ID_ENTIDADENavigation { get; set; } = null!;
+        public virtual PERMISSAO ID_PERMISSAONavigation { get; set; } = null!;
         public virtual USUARIO ID_USUARIONavigation { get; set; } = null!;
     }
 }
