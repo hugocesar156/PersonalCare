@@ -6,6 +6,7 @@ using PersonalCare.Application.Services;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 using PersonalCare.Shared;
+using System.Linq;
 using System.Net;
 
 namespace PersonalCare.Application.UseCases
@@ -33,7 +34,7 @@ namespace PersonalCare.Application.UseCases
 
                     usuario.Permissoes.ForEach(up =>
                     {
-                        var permissao = entity.FirstOrDefault(p => p.Id == up.Id);
+                        var permissao = entity.FirstOrDefault(p => p.Permissao.Id == up.Permissao.Id);
 
                         if (permissao is not null)
                             entity.Remove(permissao);
@@ -47,12 +48,7 @@ namespace PersonalCare.Application.UseCases
                             HttpStatusCode.Forbidden);
                     }
 
-                    if (!_usuarioRepository.AdicionarPermissoes(entity))
-                    {
-                        throw new PersonalCareException(
-                            "Ocorreu um erro ao atualizar as permissões do usuário.",
-                            null, HttpStatusCode.InternalServerError);
-                    }
+                    _usuarioRepository.AdicionarPermissoes(entity);
                 }
                 else 
                     throw new PersonalCareException(
@@ -109,7 +105,7 @@ namespace PersonalCare.Application.UseCases
         {
             try
             {
-                var entity = _usuarioRepository.Buscar(idUsuario, idEmpresa);
+                var entity = _usuarioRepository.Buscar(idUsuario, idEmpresa); 
 
                 if (entity is not null)
                 {
@@ -146,12 +142,7 @@ namespace PersonalCare.Application.UseCases
                 var (senha, salt) = CriptografiaService.CriptografarSenha(request.Senha);
                 var entity = new Domain.Entities.Usuario(request.Nome, request.Email, senha, salt, idEmpresa);
 
-                if (_usuarioRepository.Cadastrar(entity) == 0)
-                {
-                    throw new PersonalCareException(
-                        "Ocorreu um erro ao cadastrar usuário.", 
-                        null, HttpStatusCode.InternalServerError);
-                }
+                _usuarioRepository.Cadastrar(entity);
             }
             catch (PersonalCareException)
             {
@@ -171,27 +162,24 @@ namespace PersonalCare.Application.UseCases
 
                 if (usuario is not null)
                 {
-                    if (usuario.Permissoes.FirstOrDefault(up => !request.Permissoes.Contains(up.Id)) is not null)
+                    request.Permissoes.ForEach(p =>
                     {
-                        throw new PersonalCareException(
-                            "Ocorreu um erro ao atualizar as permissões do usuário.",
-                            "Uma ou mais permissoes informadas não fazem parte das permissões do usuário.",
-                            HttpStatusCode.Forbidden);
-                    }
+                        if (!usuario.Permissoes.Select(up => up.Id).Contains(p))
+                        {
+                            throw new PersonalCareException(
+                                "Ocorreu um erro ao atualizar as permissões do usuário.",
+                                "Uma ou mais permissoes informadas não fazem parte das permissões do usuário.",
+                                HttpStatusCode.Forbidden);
+                        }
+                    });
 
-                    if (!_usuarioRepository.RemoverPermissoes(request.Permissoes))
-                    {
-                        throw new PersonalCareException(
-                            "Ocorreu um erro ao atualizar as permissões do usuário.",
-                            null, HttpStatusCode.InternalServerError);
-                    }
+                    _usuarioRepository.RemoverPermissoes(request.IdUsuario, request.Permissoes);
                 }
                 else
                     throw new PersonalCareException(
                         "Ocorreu um erro ao atualizar as permissões do usuário.",
                         "Registro de usuário não encontrado.",
                         HttpStatusCode.NotFound);
-
             }
             catch (PersonalCareException)
             {

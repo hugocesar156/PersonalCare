@@ -27,7 +27,7 @@ namespace PersonalCare.DAL.Repositories
                     entities.Add(new USUARIO_PERMISSAO
                     {
                         ID_USUARIO = item.IdUsuario,
-                        ID_PERMISSAO = item.Id
+                        ID_PERMISSAO = item.Permissao.Id
                     });
                 }
 
@@ -147,9 +147,9 @@ namespace PersonalCare.DAL.Repositories
             }
         }
 
-        public bool RemoverPermissoes(List<int> permissoes)
+        public bool RemoverPermissoes(int idUsuario, List<int> permissoes)
         {
-            var entities = _data.USUARIO_PERMISSAOs.Where(up => permissoes.Contains(up.ID));
+            var entities = _data.USUARIO_PERMISSAOs.Where(up => idUsuario == up.ID_USUARIO && permissoes.Contains(up.ID_PERMISSAO));
 
             if (entities.Any())
             {
