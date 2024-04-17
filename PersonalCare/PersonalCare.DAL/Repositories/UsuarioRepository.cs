@@ -123,6 +123,19 @@ namespace PersonalCare.DAL.Repositories
             return entity.ID;
         }
 
+        public void RegistrarAcesso(int idUsuario)
+        {
+            var entity = _data.USUARIOs.FirstOrDefault(u => u.ID == idUsuario);
+
+            if (entity is not null)
+            {
+                entity.DATA_ULTIMO_ACESSO = DateTime.Now;
+
+                _data.Update(entity);
+                _data.SaveChanges();
+            }
+        }
+
         public bool RemoverPermissoes(List<int> permissoes)
         {
             var entities = _data.USUARIO_PERMISSAOs.Where(up => permissoes.Contains(up.ID));

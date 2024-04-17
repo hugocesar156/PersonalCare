@@ -81,6 +81,7 @@ namespace PersonalCare.Application.UseCases
                 {
                     if (CriptografiaService.VerificarSenha(request.Senha, entity.Salt, entity.Senha))
                     {
+                        _usuarioRepository.RegistrarAcesso(entity.Id);
                         return new AutenticarResponse(entity.Nome, TokenService.GerarToken(entity, request.IdEmpresa, _configuration["JWTSigningKey"]));
                     }
 
