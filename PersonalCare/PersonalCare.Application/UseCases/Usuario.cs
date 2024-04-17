@@ -6,7 +6,6 @@ using PersonalCare.Application.Services;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 using PersonalCare.Shared;
-using System.Linq;
 using System.Net;
 
 namespace PersonalCare.Application.UseCases
@@ -76,8 +75,16 @@ namespace PersonalCare.Application.UseCases
                 {
                     if (CriptografiaService.VerificarSenha(request.Senha, entity.Salt, entity.Senha))
                     {
-                        _usuarioRepository.RegistrarAcesso(entity.Id);
-                        return new AutenticarResponse(entity.Nome, TokenService.GerarToken(entity, request.IdEmpresa, _configuration["JWTSigningKey"]));
+                        if (entity.Ativo)
+                        {
+                            _usuarioRepository.RegistrarAcesso(entity.Id);
+                            return new AutenticarResponse(entity.Nome, TokenService.GerarToken(entity, request.IdEmpresa, _configuration["JWTSigningKey"]));
+                        }
+
+                        throw new PersonalCareException(
+                            "Ocorreu um erro ao autenticar usuário.",
+                            "Usuário não está ativo na base, entre em contato com os responsáveis para informações.",
+                            HttpStatusCode.Forbidden);
                     }
 
                     throw new PersonalCareException(
