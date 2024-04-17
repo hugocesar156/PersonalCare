@@ -151,12 +151,7 @@ namespace PersonalCare.Application.UseCases
                         i.Repeticoes, 
                         new Domain.Entities.Treino(i.IdTreino))).ToList());
 
-                if (_fichaRepository.Inserir(entity) == 0)
-                {
-                    throw new PersonalCareException(
-                        "Ocorreu um erro ao inserir registro de ficha.",
-                        null, HttpStatusCode.InternalServerError);
-                }
+                _fichaRepository.Inserir(entity);
             }
             catch (PersonalCareException)
             {
@@ -175,12 +170,7 @@ namespace PersonalCare.Application.UseCases
                 var entity = new Domain.Entities.ItemFicha(request.Grupo, request.Series, request.Repeticoes, request.IdFicha, 
                     new Domain.Entities.Treino(request.IdTreino));
 
-                if (_fichaRepository.InserirItemFicha(entity) == 0)
-                {
-                    throw new PersonalCareException(
-                       "Ocorreu um erro ao inserir novo item para a ficha de treino",
-                       null, HttpStatusCode.InternalServerError);
-                }
+                _fichaRepository.InserirItemFicha(entity);
             }
             catch (PersonalCareException)
             {

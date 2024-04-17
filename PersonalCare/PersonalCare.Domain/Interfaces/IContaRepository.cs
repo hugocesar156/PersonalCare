@@ -13,6 +13,6 @@ namespace PersonalCare.Domain.Interfaces
         int Inserir(Conta request);
         bool InserirContato(ContatoConta request);
         bool InserirContato(List<ContatoConta> request);
-        List<Conta>? Listar();
+        List<Conta> Listar();
     }
 }

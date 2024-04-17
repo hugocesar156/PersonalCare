@@ -103,13 +103,7 @@ namespace PersonalCare.Application.UseCases
             try
             {
                 var entity = new Domain.Entities.CategoriaTreino(request.Nome);
-
-                if (_categoriaTreinoRepository.Inserir(entity) == 0)
-                {
-                    throw new PersonalCareException(
-                        "Ocorreu um erro ao inserir categoria de treino.", 
-                        null, HttpStatusCode.InternalServerError);
-                }
+                _categoriaTreinoRepository.Inserir(entity);
             }
             catch (PersonalCareException)
             {

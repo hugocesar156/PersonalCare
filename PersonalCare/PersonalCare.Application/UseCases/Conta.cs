@@ -191,14 +191,7 @@ namespace PersonalCare.Application.UseCases
                 if (request.ContatoConta != null && request.ContatoConta.Any())
                 {
                     var entities = request.ContatoConta.Select(c => new Domain.Entities.ContatoConta(c.Nome, c.Numero, c.Ddd, c.Ddi, idConta)).ToList();
-
-                    if (!_contaRepository.InserirContato(entities))
-                    {
-                        throw new PersonalCareException(
-                            "Ocorreu um erro ao inserir registro de conta", 
-                            "Cadastro incompleto, falha ao salvar contato(s) da conta.",
-                            HttpStatusCode.InternalServerError);
-                    }
+                    _contaRepository.InserirContato(entities);
                 }
             }
             catch (PersonalCareException)
@@ -240,13 +233,7 @@ namespace PersonalCare.Application.UseCases
             try
             {
                 var contas = _contaRepository.Listar();
-
-                if (contas is not null)
-                {
-                    return contas.Select(c => new ContaResponse(c.Id, c.Nome, c.Email, c.Cpf, c.Altura, c.Biotipo, c.DataNascimento, c.Contatos)).ToList();
-                }
-
-                return new List<ContaResponse>();
+                return contas.Select(c => new ContaResponse(c.Id, c.Nome, c.Email, c.Cpf, c.Altura, c.Biotipo, c.DataNascimento, c.Contatos)).ToList();
             }
             catch (PersonalCareException)
             {

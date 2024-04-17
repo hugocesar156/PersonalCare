@@ -187,13 +187,11 @@ namespace PersonalCare.Domain.Repositories
            return _data.SaveChanges() > 0;
         }
 
-        public List<Conta>? Listar()
+        public List<Conta> Listar()
         {
             var entities = _data.CONTAs.ToList();
 
-            if (entities is not null && entities.Count > 0)
-            {
-                return entities.Select(c =>
+            return entities.Select(c =>
                 new Conta(
                     c.ID,
                     c.NOME,
@@ -206,9 +204,6 @@ namespace PersonalCare.Domain.Repositories
                     c.DATA_ATUALIZACAO,
                     c.ID_USUARIO_CADASTRO,
                     new List<ContatoConta>())).ToList();
-            }
-
-            return null;
         }
     }
 }
