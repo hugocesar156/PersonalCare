@@ -134,6 +134,18 @@ namespace PersonalCare.DAL.Repositories
             return entity.ID;
         }
 
+        public List<Permissao> ListarPermissoes()
+        {
+            var entities = _data.PERMISSAOs
+                .Include(p => p.ID_ENTIDADENavigation)
+                .Include(p => p.ID_ACAONavigation)
+                .OrderBy(p => p.NOME).ToList();
+
+            return entities.Select(p => new Permissao(p.ID, p.NOME, p.DESCRICAO,
+                new Entidade((byte)p.ID_ENTIDADENavigation.ID, p.ID_ENTIDADENavigation.NOME),
+                new Acao((byte)p.ID_ACAONavigation.ID, p.ID_ACAONavigation.NOME))).ToList();
+        }
+
         public void RegistrarAcesso(int idUsuario)
         {
             var entity = _data.USUARIOs.FirstOrDefault(u => u.ID == idUsuario);

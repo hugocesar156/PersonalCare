@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Usuario;
+using PersonalCare.Application.Models.Responses.Usuario;
 using PersonalCare.Application.Permissoes;
 using PersonalCare.Shared;
 using System.Net;
@@ -35,6 +36,25 @@ namespace PersonalCare.API.Controllers.Acesso
             {
                 _usuario.AdicionarPermissoes(request, HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
                 return StatusCode((int)HttpStatusCode.OK, "As permissões de usuário foram atualizadas.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
+        /// Lista as permissões do sistema.
+        /// </summary>
+        [HttpGet("listar")]
+        [Permissao(Entidade.Usuario, Acao.Atualizar)]
+        [ProducesResponseType(typeof(PermissaoResponse), StatusCodes.Status200OK)]
+        public IActionResult Listar()
+        {
+            try
+            {
+                var permissoes = _usuario.ListarPermissoes();
+                return StatusCode((int)HttpStatusCode.OK, permissoes);
             }
             catch (PersonalCareException ex)
             {

@@ -1,4 +1,6 @@
-﻿namespace PersonalCare.Application.Models.Responses.Usuario
+﻿using System.Text.Json.Serialization;
+
+namespace PersonalCare.Application.Models.Responses.Usuario
 {
     public class PermissaoResponse
     {

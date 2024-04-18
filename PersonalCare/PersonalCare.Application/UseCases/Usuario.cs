@@ -161,6 +161,23 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
+        public List<PermissaoResponse> ListarPermissoes()
+        {
+            try
+            {
+                var entities = _usuarioRepository.ListarPermissoes();
+                return entities.Select(p => new PermissaoResponse(p.Id, p.Nome, p.Descricao)).ToList();
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao listar as permissões do sistema.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
         public void RemoverPermissoes(RemoverPermissaoRequest request, string idEmpresa)
         {
             try
