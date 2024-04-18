@@ -10,6 +10,7 @@ using static PersonalCare.Shared.PersonalCareEnums;
 
 namespace PersonalCare.API.Controllers.Acesso
 {
+    [Authorize]
     [ApiController]
     [Route("acesso/permissao")]
     [ApiExplorerSettings(GroupName = "acesso")]
@@ -26,7 +27,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Adiciona permissões do sistema para um usuário.
         /// </summary>
         [HttpPost("adicionar")]
-        [Authorize, Permissao(Entidade.Usuario, Acao.Atualizar)]
+        [Permissao(Entidade.Usuario, Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Adicionar(AdicionarPermissaoRequest request)
         {
@@ -45,7 +46,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Remove permissões do sistema para um usuário.
         /// </summary>
         [HttpDelete("remover")]
-        [Authorize, Permissao(Entidade.Usuario, Acao.Atualizar)]
+        [Permissao(Entidade.Usuario, Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Remover(RemoverPermissaoRequest request)
         {

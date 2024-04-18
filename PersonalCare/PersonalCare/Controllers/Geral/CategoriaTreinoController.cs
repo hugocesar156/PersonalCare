@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.CategoriaTreino;
 using PersonalCare.Application.Models.Responses.CategoriaTreino;
+using PersonalCare.Application.Permissoes;
 using PersonalCare.Shared;
 using System.Net;
+using static PersonalCare.Shared.PersonalCareEnums;
 
 namespace PersonalCare.API.Controllers.Geral
 {
+    [Authorize]
     [ApiController]
     [Route("geral/categoriatreino")]
     [ApiExplorerSettings(GroupName = "geral")]
@@ -23,6 +27,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Atualiza uma categoria de treino.
         /// </summary>
         [HttpPut("atualizar")]
+        [Permissao(Entidade.CategoriaTreino, Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Atualizar(AtualizarCategoriaTreinoRequest request)
         {
@@ -41,6 +46,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Retorna uma categoria de treino a partir do ID informado.
         /// </summary>
         [HttpGet("buscar/{idCategoriaTreino}")]
+        [Permissao(Entidade.CategoriaTreino, Acao.Visualizar)]
         [ProducesResponseType(typeof(CategoriaTreinoResponse), StatusCodes.Status200OK)]
         public IActionResult Buscar(int idCategoriaTreino)
         {
@@ -59,6 +65,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Deleta uma categoria de treino a partir do ID informado.
         /// </summary>
         [HttpDelete("deletar/{idCategoriaTreino}")]
+        [Permissao(Entidade.CategoriaTreino, Acao.Deletar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Deletar(int idCategoriaTreino)
         {
@@ -77,6 +84,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Insere uma categoria de treino.
         /// </summary>
         [HttpPost("inserir")]
+        [Permissao(Entidade.CategoriaTreino, Acao.Inserir)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Inserir(InserirCategoriaTreinoRequest request)
         {
@@ -95,6 +103,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Retona a lista de categorias de treino.
         /// </summary>
         [HttpGet("listar")]
+        [Permissao(Entidade.CategoriaTreino, Acao.Visualizar)]
         [ProducesResponseType(typeof(List<CategoriaTreinoResponse>), StatusCodes.Status200OK)]
         public IActionResult Listar()
         {
