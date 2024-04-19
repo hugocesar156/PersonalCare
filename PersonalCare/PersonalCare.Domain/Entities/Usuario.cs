@@ -12,6 +12,21 @@
             Permissoes = new List<PermissaoUsuario>();
         }
 
+        public Usuario(int _id, string _nome, string _email, bool _ativo, DateTime _dataCadastro, DateTime _dataAtualizacao, DateTime? _dataUltimoAcesso)
+        {
+            Id = _id;
+            Nome = _nome;
+            Email = _email;
+            Ativo = _ativo;
+            Senha = string.Empty;
+            Salt = string.Empty;
+            IdEmpresa = string.Empty;
+            DataCadastro = _dataCadastro;
+            DataAtaualizacao = _dataAtualizacao;
+            DataUltimoAcesso = _dataUltimoAcesso;
+            Permissoes = new List<PermissaoUsuario>();
+        }
+
         public Usuario(int _id, string _nome, string _email, string _senha, string _salt, bool _ativo, string _idEmpresa, DateTime _dataCadastro, DateTime _dataAtualizacao, DateTime? _dataUltimoAcesso, List<PermissaoUsuario> _permissoes)
         {
             Id = _id;

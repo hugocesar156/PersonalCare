@@ -134,6 +134,12 @@ namespace PersonalCare.DAL.Repositories
             return entity.ID;
         }
 
+        public List<Usuario> Listar(string idEmpresa)
+        {
+            var entities = _data.USUARIOs.Where(u => u.ID_EMPRESA == idEmpresa).ToList();
+            return entities.Select(u => new Usuario(u.ID, u.NOME, u.EMAIL, u.ATIVO, u.DATA_CADASTRO, u.DATA_ATUALIZACAO, u.DATA_ULTIMO_ACESSO)).ToList();
+        }
+
         public List<Permissao> ListarPermissoes()
         {
             var entities = _data.PERMISSAOs

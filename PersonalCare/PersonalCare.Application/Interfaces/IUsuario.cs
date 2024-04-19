@@ -9,6 +9,7 @@ namespace PersonalCare.Application.Interfaces
         AutenticarResponse Autenticar(AutenticarRequest request);
         UsuarioResponse Buscar(int idUsuario, string idEmpresa);
         void Cadastrar(CadastrarUsuarioRequest request, string idEmpresa);
+        List<ListarUsuarioResponse> Listar(string idEmpresa);
         List<PermissaoResponse> ListarPermissoes();
         void RemoverPermissoes(RemoverPermissaoRequest request, string idEmpresa);
     }

@@ -78,5 +78,24 @@ namespace PersonalCare.API.Controllers.Acesso
                 return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
             }
         }
+
+        /// <summary>
+        /// Retorna uma lista de usuários.
+        /// </summary>
+        [HttpGet("listar")]
+        [Authorize, Permissao(Entidade.Usuario, Acao.Visualizar)]
+        [ProducesResponseType(typeof(List<ListarUsuarioResponse>), StatusCodes.Status200OK)]
+        public IActionResult Listar()
+        {
+            try
+            {
+                var usuarios = _usuario.Listar(HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
+                return StatusCode((int)HttpStatusCode.OK, usuarios);
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
     }
 }

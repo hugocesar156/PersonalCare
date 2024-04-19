@@ -116,7 +116,7 @@ namespace PersonalCare.Application.UseCases
 
                 if (entity is not null)
                 {
-                    return new UsuarioResponse(entity.Id, entity.Nome, entity.Email, entity.Ativo, entity.Permissoes);
+                    return new UsuarioResponse(entity.Id, entity.Nome, entity.Email, entity.Ativo, entity.DataCadastro, entity.DataAtaualizacao, entity.DataUltimoAcesso, entity.Permissoes);
                 }
 
                 throw new PersonalCareException(
@@ -158,6 +158,23 @@ namespace PersonalCare.Application.UseCases
             catch (Exception ex)
             {
                 throw new PersonalCareException("Ocorreu um erro ao cadastrar usuário.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public List<ListarUsuarioResponse> Listar(string idEmpresa)
+        {
+            try
+            {
+                var entities = _usuarioRepository.Listar(idEmpresa);
+                return entities.Select(u => new ListarUsuarioResponse(u.Id, u.Nome, u.Email, u.Ativo, u.DataCadastro, u.DataAtaualizacao, u.DataUltimoAcesso)).ToList();
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao listar registro de usuários.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 
