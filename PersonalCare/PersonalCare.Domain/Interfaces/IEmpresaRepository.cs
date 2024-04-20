@@ -4,6 +4,6 @@ namespace PersonalCare.Domain.Interfaces
 {
     public interface IEmpresaRepository
     {
-        EmailEmpresa? BuscarEmail(string idEmpresa);
+        Empresa? Buscar(string idEmpresa);
     }
 }

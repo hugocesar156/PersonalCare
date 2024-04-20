@@ -8,7 +8,10 @@ namespace PersonalCare.Application.Services
     {
         public static void EnviarEmail(EmailEmpresa remetente, string destinatario, string assunto, string corpo)
         {
-            var mensagem = new MailMessage(remetente.Email, destinatario, assunto, corpo);
+            var mensagem = new MailMessage(remetente.Email, destinatario, assunto, corpo)
+            {
+                IsBodyHtml = true
+            };
 
             var smtpClient = new SmtpClient(remetente.Smtp)
             {

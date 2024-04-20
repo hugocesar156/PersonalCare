@@ -14,13 +14,13 @@ namespace PersonalCare.DAL.Repositories
             _data = data;
         }
 
-        public EmailEmpresa? BuscarEmail(string idEmpresa)
+        public Empresa? Buscar(string idEmpresa)
         {
             var entity = _data.EMPRESAs.Include(e => e.EMPRESA_EMAILs).FirstOrDefault(e => e.GUID == idEmpresa);
 
             if (entity is not null && entity.EMPRESA_EMAILs.Any())
             {
-                return entity.EMPRESA_EMAILs.Select(e => new EmailEmpresa(e.ID, e.EMAIL, e.SENHA, e.SMTP, e.PORTA, e.SSL, e.ID_EMPRESA)).FirstOrDefault();
+                return new Empresa(entity.ID, entity.NOME_FANTASIA, entity.EMPRESA_EMAILs.Select(e => new EmailEmpresa(e.ID, e.EMAIL, e.SENHA, e.SMTP, e.PORTA, e.SSL, e.ID_EMPRESA)).FirstOrDefault());
             }
 
             return null;
