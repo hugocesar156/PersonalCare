@@ -2,6 +2,17 @@
 {
     public class Usuario
     {
+        public Usuario(int _id, string _senha, string _salt, string _idEmpresa)
+        {
+            Id = _id;
+            Nome = string.Empty;
+            Email = string.Empty;
+            Senha = _senha;
+            Salt = _salt;
+            IdEmpresa = _idEmpresa;
+            Permissoes = new List<PermissaoUsuario>();
+
+        }
         public Usuario(int _id, string _nome, string _email, bool _ativo, string _idEmpresa)
         {
             Id = _id;

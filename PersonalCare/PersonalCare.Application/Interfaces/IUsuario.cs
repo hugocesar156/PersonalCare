@@ -6,6 +6,7 @@ namespace PersonalCare.Application.Interfaces
     public interface IUsuario
     {
         void AdicionarPermissoes(AdicionarPermissaoRequest request, string idEmpresa);
+        void AlterarSenha(AlterarSenhaRequest request, int idUsuario, string idEmpresa);
         void Atualizar(AtualizarUsuarioRequest request, string idEmpresa);
         AutenticarResponse Autenticar(AutenticarRequest request);
         UsuarioResponse Buscar(int idUsuario, string idEmpresa);

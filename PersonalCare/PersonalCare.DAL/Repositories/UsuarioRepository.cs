@@ -39,9 +39,26 @@ namespace PersonalCare.DAL.Repositories
             return false;
         }
 
-        public bool Atualizar(Usuario request, string idEmpresa)
+        public bool AlterarSenha(Usuario request)
         {
-            var entity = _data.USUARIOs.FirstOrDefault(u => u.ID == request.Id && u.ID_EMPRESA == idEmpresa);
+            var entity = _data.USUARIOs.FirstOrDefault(u => u.ID == request.Id && u.ID_EMPRESA == request.IdEmpresa);
+
+            if (entity is not null)
+            {
+                entity.SENHA = request.Senha;
+                entity.SALT = request.Salt;
+                entity.DATA_ATUALIZACAO = DateTime.Now;
+
+                _data.Update(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
+        public bool Atualizar(Usuario request)
+        {
+            var entity = _data.USUARIOs.FirstOrDefault(u => u.ID == request.Id && u.ID_EMPRESA == request.IdEmpresa);
 
             if (entity is not null)
             {

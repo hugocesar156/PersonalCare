@@ -24,6 +24,28 @@ namespace PersonalCare.API.Controllers.Acesso
         }
 
         /// <summary>
+        /// Altera a senha do usuário autenticado.
+        /// </summary>
+        [HttpPut("alterarsenha")]
+        [Authorize]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult AlterarSenha(AlterarSenhaRequest request)
+        {
+            try
+            {
+                _usuario.AlterarSenha(request, 
+                    int.Parse(HttpContext.User.FindFirstValue(PersonalCareClaims.ID_USUARIO)), 
+                    HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
+
+                return StatusCode((int)HttpStatusCode.OK, "Registro de usuário atualizado com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Atualiza um registro de usuário.
         /// </summary>
         [HttpPut("atualizar")]

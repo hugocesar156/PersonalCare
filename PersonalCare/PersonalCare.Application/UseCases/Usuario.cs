@@ -65,6 +65,41 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
+        public void AlterarSenha(AlterarSenhaRequest request, int idUsuario, string idEmpresa)
+        {
+            try
+            {
+                var usuario = _usuarioRepository.Buscar(idUsuario, idEmpresa);
+
+                if (usuario is not null)
+                {
+                    var (senha, salt) = CriptografiaService.CriptografarSenha(request.Senha);
+
+                    var entity = new Domain.Entities.Usuario(idUsuario, senha, salt, idEmpresa);
+
+                    if (!_usuarioRepository.AlterarSenha(entity))
+                    {
+                        throw new PersonalCareException(
+                            "Ocorreu um erro ao alterar senha do usuário.",
+                            null, HttpStatusCode.InternalServerError);
+                    }
+                }
+                else
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao alterar senha do usuário.", 
+                        "Registro de usuário não encontrado.", 
+                        HttpStatusCode.NotFound);
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao alterar senha do usuário.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
         public void Atualizar(AtualizarUsuarioRequest request, string idEmpresa)
         {
             try
@@ -79,7 +114,7 @@ namespace PersonalCare.Application.UseCases
 
                 var entity = new Domain.Entities.Usuario(request.Id, request.Nome, request.Email, request.Ativo, idEmpresa);
 
-                if (!_usuarioRepository.Atualizar(entity, idEmpresa))
+                if (!_usuarioRepository.Atualizar(entity))
                 {
                     throw new PersonalCareException(
                         "Ocorreu um erro ao atualizar dados usuário.",

@@ -5,7 +5,8 @@ namespace PersonalCare.Domain.Interfaces
     public interface IUsuarioRepository
     {
         bool AdicionarPermissoes(List<PermissaoUsuario> request);
-        bool Atualizar(Usuario request, string idEmpresa);
+        bool AlterarSenha(Usuario request);
+        bool Atualizar(Usuario request);
         Usuario? Buscar(int idUsuario, string idEmpresa);
         Usuario? BuscarPorEmail(string email, string idEmpresa);
         int Cadastrar(Usuario request);
