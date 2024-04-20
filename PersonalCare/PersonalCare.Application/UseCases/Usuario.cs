@@ -264,8 +264,7 @@ namespace PersonalCare.Application.UseCases
 
                     if (empresa is not null && empresa.Email is not null)
                     {
-                        var codigoVerificacao = EmailService.GerarCodigoVerificacao();
-                        var template = TemplateService.TemplateRedefinicaoSenha(empresa.NomeFantasia, codigoVerificacao);
+                        var (template, codigoVerificacao) = TemplateService.TemplateRedefinicaoSenha(empresa.NomeFantasia);
 
                         EmailService.EnviarEmail(empresa.Email, request.Email, "Redefinição de senha de usuário", template);
 

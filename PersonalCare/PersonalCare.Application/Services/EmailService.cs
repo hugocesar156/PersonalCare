@@ -22,17 +22,5 @@ namespace PersonalCare.Application.Services
 
             smtpClient.Send(mensagem);
         }
-
-        public static string GerarCodigoVerificacao()
-        {
-            var codigo = string.Empty;
-
-            for (var i = 0; i < 5; i++)
-            {
-                codigo += new Random().Next(0, 9);
-            }
-
-            return codigo;
-        }
     }
 }
