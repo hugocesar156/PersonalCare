@@ -4,7 +4,7 @@ namespace PersonalCare.Application.Models.Requests.Usuario
 {
     public class RedefinicaoSenhaRequest
     {
-        [Obrigatorio, Email, TamanhoMaximo(50)]
+        [Obrigatorio, Email]
         public string Email { get; set; }
 
         [Obrigatorio]
