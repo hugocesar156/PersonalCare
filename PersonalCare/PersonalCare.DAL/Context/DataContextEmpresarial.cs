@@ -19,6 +19,7 @@ namespace PersonalCare.DAL.Context
 
         public virtual DbSet<EMPRESA> EMPRESAs { get; set; } = null!;
         public virtual DbSet<EMPRESA_CONTATO> EMPRESA_CONTATOs { get; set; } = null!;
+        public virtual DbSet<EMPRESA_EMAIL> EMPRESA_EMAILs { get; set; } = null!;
         public virtual DbSet<EMPRESA_MIDIASOCIAL> EMPRESA_MIDIASOCIALs { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -96,6 +97,29 @@ namespace PersonalCare.DAL.Context
                     .HasForeignKey(d => d.ID_EMPRESA)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__EMPRESA_C__ID_EM__5FB337D6");
+            });
+
+            modelBuilder.Entity<EMPRESA_EMAIL>(entity =>
+            {
+                entity.ToTable("EMPRESA_EMAIL");
+
+                entity.Property(e => e.EMAIL)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SENHA)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SMTP)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.ID_EMPRESANavigation)
+                    .WithMany(p => p.EMPRESA_EMAILs)
+                    .HasForeignKey(d => d.ID_EMPRESA)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__EMPRESA_E__ID_EM__6FE99F9F");
             });
 
             modelBuilder.Entity<EMPRESA_MIDIASOCIAL>(entity =>

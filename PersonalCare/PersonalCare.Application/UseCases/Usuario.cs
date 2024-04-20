@@ -13,11 +13,13 @@ namespace PersonalCare.Application.UseCases
     public class Usuario : IUsuario
     {
         private readonly IConfiguration _configuration;
+        private readonly IEmpresaRepository _empresaRepository;
         private readonly IUsuarioRepository _usuarioRepository;
 
-        public Usuario(IConfiguration configuration, IUsuarioRepository usuarioRepository)
+        public Usuario(IConfiguration configuration, IEmpresaRepository empresaRepository, IUsuarioRepository usuarioRepository)
         {
             _configuration = configuration;
+            _empresaRepository = empresaRepository;
             _usuarioRepository = usuarioRepository;
         }
 
@@ -247,6 +249,47 @@ namespace PersonalCare.Application.UseCases
             catch (Exception ex)
             {
                 throw new PersonalCareException("Ocorreu um erro ao deletar registro de usuário.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public void EnviarEmailRedefinicaoSenha(RedefinicaoSenhaRequest request)
+        {
+            try
+            {
+                var usuario = _usuarioRepository.BuscarPorEmail(request.Email, request.IdEmpresa);
+
+                if (usuario is not null)
+                {
+                    var emailEmpresa = _empresaRepository.BuscarEmail(request.IdEmpresa);
+
+                    if (emailEmpresa is not null)
+                    {
+                        var codigoVerificacao = EmailService.GerarCodigoVerificacao();
+
+                        EmailService.EnviarEmail(emailEmpresa, request.Email, "Redefinição de senha de usuário", $"Email para redefinição de senha de usuário. Código: {codigoVerificacao}");
+
+                        var entity = new RedefinicaoSenhaUsuario(usuario.Id, codigoVerificacao);
+                        _usuarioRepository.RegistrarEnvioRedeficicaoSenha(entity);
+                    }
+                    else
+                        throw new PersonalCareException(
+                            "Ocorreu um erro ao enviar email de redefinição de senha de usuário.",
+                            "As configurações da empresa não estão definidas corretamente para realizar a ação, entre em contato com os responsáveis.",
+                            HttpStatusCode.InternalServerError);
+                }
+                else
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao enviar email de redefinição de senha de usuário.", 
+                        "Email não encontrado no sistema", 
+                        HttpStatusCode.NotFound);
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao enviar email de redefinição de senha de usuário.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 

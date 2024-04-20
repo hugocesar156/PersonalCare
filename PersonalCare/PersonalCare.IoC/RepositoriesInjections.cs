@@ -12,6 +12,7 @@ namespace PersonalCare.IoC
         {
             services.AddScoped<ICategoriaTreinoRepository, CategoriaTreinoRepository>();
             services.AddScoped<IContaRepository, ContaRepository>();
+            services.AddScoped<IEmpresaRepository, EmpresaRepository>();
             services.AddScoped<IFichaRepository, FichaRepository>();
             services.AddScoped<ITreinoRepository, TreinoRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();

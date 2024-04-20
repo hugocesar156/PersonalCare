@@ -216,6 +216,19 @@ namespace PersonalCare.DAL.Repositories
             }
         }
 
+        public void RegistrarEnvioRedeficicaoSenha(RedefinicaoSenhaUsuario request)
+        {
+            var entity = new USUARIO_REDEFINICAO_SENHA
+            {
+                ID_USUARIO = request.IdUsuario,
+                CODIGO = request.Codigo,
+                DATA_PEDIDO = DateTime.Now
+            };
+
+            _data.Add(entity);  
+            _data.SaveChanges();
+        }
+
         public bool RemoverPermissoes(int idUsuario, List<int> permissoes)
         {
             var entities = _data.USUARIO_PERMISSAOs.Where(up => idUsuario == up.ID_USUARIO && permissoes.Contains(up.ID_PERMISSAO));

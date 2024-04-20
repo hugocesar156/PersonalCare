@@ -12,6 +12,7 @@ namespace PersonalCare.Application.Interfaces
         UsuarioResponse Buscar(int idUsuario, string idEmpresa);
         void Cadastrar(CadastrarUsuarioRequest request, string idEmpresa);
         void Deletar(int idUsuario, string idEmpresa);
+        void EnviarEmailRedefinicaoSenha(RedefinicaoSenhaRequest request);
         List<ListarUsuarioResponse> Listar(string idEmpresa);
         List<PermissaoResponse> ListarPermissoes();
         void RemoverPermissoes(RemoverPermissaoRequest request, string idEmpresa);

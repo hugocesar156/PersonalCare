@@ -22,6 +22,7 @@ namespace PersonalCare.DAL.Context
         public virtual DbSet<PERMISSAO> PERMISSAOs { get; set; } = null!;
         public virtual DbSet<USUARIO> USUARIOs { get; set; } = null!;
         public virtual DbSet<USUARIO_PERMISSAO> USUARIO_PERMISSAOs { get; set; } = null!;
+        public virtual DbSet<USUARIO_REDEFINICAO_SENHA> USUARIO_REDEFINICAO_SENHAs { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -111,13 +112,30 @@ namespace PersonalCare.DAL.Context
                     .WithMany(p => p.USUARIO_PERMISSAOs)
                     .HasForeignKey(d => d.ID_PERMISSAO)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__USUARIO_P__ID_PE__5DCAEF64");
+                    .HasConstraintName("FK__USUARIO_P__ID_PE__628FA481");
 
                 entity.HasOne(d => d.ID_USUARIONavigation)
                     .WithMany(p => p.USUARIO_PERMISSAOs)
                     .HasForeignKey(d => d.ID_USUARIO)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__USUARIO_P__ID_US__5CD6CB2B");
+                    .HasConstraintName("FK__USUARIO_P__ID_US__619B8048");
+            });
+
+            modelBuilder.Entity<USUARIO_REDEFINICAO_SENHA>(entity =>
+            {
+                entity.ToTable("USUARIO_REDEFINICAO_SENHA");
+
+                entity.Property(e => e.CODIGO)
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DATA_PEDIDO).HasColumnType("datetime");
+
+                entity.HasOne(d => d.ID_USUARIONavigation)
+                    .WithMany(p => p.USUARIO_REDEFINICAO_SENHAs)
+                    .HasForeignKey(d => d.ID_USUARIO)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__USUARIO_R__ID_US__6FE99F9F");
             });
 
             OnModelCreatingPartial(modelBuilder);

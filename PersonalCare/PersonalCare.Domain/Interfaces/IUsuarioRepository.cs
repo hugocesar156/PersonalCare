@@ -15,6 +15,7 @@ namespace PersonalCare.Domain.Interfaces
         List<Usuario> Listar(string idEmpresa);
         List<Permissao> ListarPermissoes();
         void RegistrarAcesso(int idUsuario);
+        void RegistrarEnvioRedeficicaoSenha(RedefinicaoSenhaUsuario request);
         bool RemoverPermissoes(int idUsuario, List<int> permissoes);
     }
 }

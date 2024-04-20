@@ -8,6 +8,7 @@ namespace PersonalCare.DAL.Models.Acesso
         public USUARIO()
         {
             USUARIO_PERMISSAOs = new HashSet<USUARIO_PERMISSAO>();
+            USUARIO_REDEFINICAO_SENHAs = new HashSet<USUARIO_REDEFINICAO_SENHA>();
         }
 
         public int ID { get; set; }
@@ -22,5 +23,6 @@ namespace PersonalCare.DAL.Models.Acesso
         public string ID_EMPRESA { get; set; } = null!;
 
         public virtual ICollection<USUARIO_PERMISSAO> USUARIO_PERMISSAOs { get; set; }
+        public virtual ICollection<USUARIO_REDEFINICAO_SENHA> USUARIO_REDEFINICAO_SENHAs { get; set; }
     }
 }

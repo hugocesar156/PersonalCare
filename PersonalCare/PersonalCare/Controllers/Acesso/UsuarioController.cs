@@ -140,6 +140,24 @@ namespace PersonalCare.API.Controllers.Acesso
         }
 
         /// <summary>
+        /// Envia um email para redefinição de senha de usuário.
+        /// </summary>
+        [HttpPost("enviaremailredefinicaosenha")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult EnviarEmailRedefinicaoSenha(RedefinicaoSenhaRequest request)
+        {
+            try
+            {
+                _usuario.EnviarEmailRedefinicaoSenha(request);
+                return StatusCode((int)HttpStatusCode.OK, "Verificação de redefinição de senha enviada ao email informado.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Retorna uma lista de usuários.
         /// </summary>
         [HttpGet("listar")]

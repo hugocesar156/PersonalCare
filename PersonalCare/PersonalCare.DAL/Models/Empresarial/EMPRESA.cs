@@ -8,6 +8,7 @@ namespace PersonalCare.DAL.Models.Empresarial
         public EMPRESA()
         {
             EMPRESA_CONTATOs = new HashSet<EMPRESA_CONTATO>();
+            EMPRESA_EMAILs = new HashSet<EMPRESA_EMAIL>();
             EMPRESA_MIDIASOCIALs = new HashSet<EMPRESA_MIDIASOCIAL>();
         }
 
@@ -24,6 +25,7 @@ namespace PersonalCare.DAL.Models.Empresarial
         public string UF { get; set; } = null!;
 
         public virtual ICollection<EMPRESA_CONTATO> EMPRESA_CONTATOs { get; set; }
+        public virtual ICollection<EMPRESA_EMAIL> EMPRESA_EMAILs { get; set; }
         public virtual ICollection<EMPRESA_MIDIASOCIAL> EMPRESA_MIDIASOCIALs { get; set; }
     }
 }
