@@ -9,6 +9,7 @@ namespace PersonalCare.DAL.Repositories
     public class UsuarioRepository : IUsuarioRepository
     {
         private readonly DataContextAcesso _data;
+
         public UsuarioRepository(DataContextAcesso data)
         {
             _data = data;
@@ -32,6 +33,24 @@ namespace PersonalCare.DAL.Repositories
                 }
 
                 _data.AddRange(entities);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
+        public bool Atualizar(Usuario request, string idEmpresa)
+        {
+            var entity = _data.USUARIOs.FirstOrDefault(u => u.ID == request.Id && u.ID_EMPRESA == idEmpresa);
+
+            if (entity is not null)
+            {
+                entity.NOME = request.Nome;
+                entity.EMAIL = request.Email;
+                entity.ATIVO = request.Ativo;
+                entity.DATA_ATUALIZACAO = DateTime.Now;
+
+                _data.Update(entity);
                 return _data.SaveChanges() > 0;
             }
 
@@ -108,9 +127,9 @@ namespace PersonalCare.DAL.Repositories
             return null;
         }
 
-        public bool EmailCadastrado(string email, string idEmpresa)
+        public bool EmailCadastrado(string email, string idEmpresa, int idUsuario = 0)
         {
-            var entity = _data.USUARIOs.FirstOrDefault(u => u.EMAIL == email && u.ID_EMPRESA == idEmpresa);
+            var entity = _data.USUARIOs.FirstOrDefault(u => ((idUsuario == 0 && u.EMAIL == email) || (u.EMAIL == email && u.ID != idUsuario)) && u.ID_EMPRESA == idEmpresa);
             return entity is not null;
         }
 

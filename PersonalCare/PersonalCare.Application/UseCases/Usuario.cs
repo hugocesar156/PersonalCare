@@ -65,6 +65,38 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
+        public void Atualizar(AtualizarUsuarioRequest request, string idEmpresa)
+        {
+            try
+            {
+                if (_usuarioRepository.EmailCadastrado(request.Email, idEmpresa, request.Id))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao atualizar dados usuário.",
+                        "Email informado já cadastrado para outro usuário.",
+                        HttpStatusCode.Forbidden);
+                }
+
+                var entity = new Domain.Entities.Usuario(request.Id, request.Nome, request.Email, request.Ativo, idEmpresa);
+
+                if (!_usuarioRepository.Atualizar(entity, idEmpresa))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao atualizar dados usuário.",
+                        "Registro de usuário não encontrado.",
+                        HttpStatusCode.NotFound);
+                }
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao atualizar dados usuário.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
         public AutenticarResponse Autenticar(AutenticarRequest request)
         {
             try 

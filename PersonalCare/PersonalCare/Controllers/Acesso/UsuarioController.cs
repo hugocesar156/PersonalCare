@@ -24,6 +24,25 @@ namespace PersonalCare.API.Controllers.Acesso
         }
 
         /// <summary>
+        /// Atualiza um registro de usuário.
+        /// </summary>
+        [HttpPut("atualizar")]
+        [Authorize, Permissao(Entidade.Usuario, Acao.Atualizar)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult Atualizar(AtualizarUsuarioRequest request)
+        {
+            try
+            {
+                _usuario.Atualizar(request, HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
+                return StatusCode((int)HttpStatusCode.OK, "Registro de usuário atualizado com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Autentica um usuário.
         /// </summary>
         [HttpPost("autenticar")]
