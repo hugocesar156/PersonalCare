@@ -10,7 +10,7 @@ namespace PersonalCare.Application.Services
 {
     public class TokenService
     {
-        public static string GerarToken(Usuario usuario, string idEmpresa, string signingKey)
+        public static string GerarTokenAutenticacao(Usuario usuario, string idEmpresa, string signingKey)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(signingKey);
@@ -31,6 +31,27 @@ namespace PersonalCare.Application.Services
                     new Claim(PersonalCareClaims.PERMISSOES, JsonConvert.SerializeObject(permissoes))
                 }),
                 Expires = DateTime.Now.AddDays(1), 
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
+        public static string GerarTokenRedefinicaoSenha(int idUsuario, string idEmpresa, string signingKey)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(signingKey);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(PersonalCareClaims.ID_USUARIO, idUsuario.ToString()),
+                    new Claim(PersonalCareClaims.ID_EMPRESA, idEmpresa)
+                }),
+                Expires = DateTime.Now.AddMinutes(10),
+                NotBefore = DateTime.Now,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 

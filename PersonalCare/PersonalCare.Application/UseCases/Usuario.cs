@@ -147,7 +147,7 @@ namespace PersonalCare.Application.UseCases
                         if (entity.Ativo)
                         {
                             _usuarioRepository.RegistrarAcesso(entity.Id);
-                            return new AutenticarResponse(entity.Nome, TokenService.GerarToken(entity, request.IdEmpresa, _configuration["JWTSigningKey"]));
+                            return new AutenticarResponse(entity.Nome, TokenService.GerarTokenAutenticacao(entity, request.IdEmpresa, _configuration["JWTSigningKey"]));
                         }
 
                         throw new PersonalCareException(
@@ -361,6 +361,41 @@ namespace PersonalCare.Application.UseCases
             catch (Exception ex)
             {
                 throw new PersonalCareException("Ocorreu um erro ao atualizar as permissões do usuário.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public ValidarCodigoResponse ValidarCodigoVerificacao(ValidarCodigoRequest request)
+        {
+            try
+            {
+                var usuario = _usuarioRepository.BuscarPorEmail(request.Email, request.IdEmpresa);
+
+                if (usuario is not null)
+                {
+                    if (_usuarioRepository.ValidarCodigoVerificacao(usuario.Id, request.Codigo))
+                    {
+                        var token = TokenService.GerarTokenRedefinicaoSenha(usuario.Id, request.IdEmpresa, _configuration["JWTSigningKey"]);
+                        return new ValidarCodigoResponse(token, DateTime.Now.AddMinutes(10));
+                    }
+                    else
+                        throw new PersonalCareException(
+                            "Ocorreu um erro durante a validação.",
+                            "O código de verificação não foi validado.", 
+                            HttpStatusCode.InternalServerError);
+                }
+                else
+                    throw new PersonalCareException(
+                        "Ocorreu um erro durante a validação.", 
+                        "Registro de usuário não encontrado.", 
+                        HttpStatusCode.NotFound);
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro durante a validação.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
     }

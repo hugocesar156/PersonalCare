@@ -135,7 +135,7 @@ namespace PersonalCare.DAL.Context
                     .WithMany(p => p.USUARIO_REDEFINICAO_SENHAs)
                     .HasForeignKey(d => d.ID_USUARIO)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__USUARIO_R__ID_US__6FE99F9F");
+                    .HasConstraintName("FK__USUARIO_R__ID_US__72C60C4A");
             });
 
             OnModelCreatingPartial(modelBuilder);

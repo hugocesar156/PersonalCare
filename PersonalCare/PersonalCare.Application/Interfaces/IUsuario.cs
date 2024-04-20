@@ -16,5 +16,6 @@ namespace PersonalCare.Application.Interfaces
         List<ListarUsuarioResponse> Listar(string idEmpresa);
         List<PermissaoResponse> ListarPermissoes();
         void RemoverPermissoes(RemoverPermissaoRequest request, string idEmpresa);
+        ValidarCodigoResponse ValidarCodigoVerificacao(ValidarCodigoRequest request);
     }
 }

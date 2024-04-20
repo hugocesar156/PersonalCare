@@ -9,6 +9,7 @@ namespace PersonalCare.DAL.Models.Acesso
         public int ID_USUARIO { get; set; }
         public string CODIGO { get; set; } = null!;
         public DateTime DATA_PEDIDO { get; set; }
+        public bool VALIDADO { get; set; }
 
         public virtual USUARIO ID_USUARIONavigation { get; set; } = null!;
     }

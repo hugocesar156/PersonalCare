@@ -175,5 +175,24 @@ namespace PersonalCare.API.Controllers.Acesso
                 return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
             }
         }
+
+        /// <summary>
+        /// Valida o código de verificação para alteração de senha de usuário, 
+        /// após a validação é gerado um token de acesso para redefinição de senha com um prazo de 10 minutos.
+        /// </summary>
+        [HttpPost("validarcodigoverificacao")]
+        [ProducesResponseType(typeof(ValidarCodigoResponse), StatusCodes.Status200OK)]
+        public IActionResult ValidarCodigoVerificacao(ValidarCodigoRequest request)
+        {
+            try
+            {
+                var tokenRedefinicao = _usuario.ValidarCodigoVerificacao(request);
+                return StatusCode((int)HttpStatusCode.OK, tokenRedefinicao);
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
     }
 }

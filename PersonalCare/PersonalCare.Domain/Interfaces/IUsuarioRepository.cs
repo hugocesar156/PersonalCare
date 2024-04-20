@@ -17,5 +17,6 @@ namespace PersonalCare.Domain.Interfaces
         void RegistrarAcesso(int idUsuario);
         void RegistrarEnvioRedeficicaoSenha(RedefinicaoSenhaUsuario request);
         bool RemoverPermissoes(int idUsuario, List<int> permissoes);
+        bool ValidarCodigoVerificacao(int idUsuario, string codigo);
     }
 }

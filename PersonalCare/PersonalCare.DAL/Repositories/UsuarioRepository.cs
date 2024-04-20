@@ -222,6 +222,7 @@ namespace PersonalCare.DAL.Repositories
             {
                 ID_USUARIO = request.IdUsuario,
                 CODIGO = request.Codigo,
+                VALIDADO = false,
                 DATA_PEDIDO = DateTime.Now
             };
 
@@ -236,6 +237,23 @@ namespace PersonalCare.DAL.Repositories
             if (entities.Any())
             {
                 _data.RemoveRange(entities);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
+        public bool ValidarCodigoVerificacao(int idUsuario, string codigo)
+        {
+            var entity = _data.USUARIO_REDEFINICAO_SENHAs
+                .OrderByDescending(ur => ur.DATA_PEDIDO)
+                .FirstOrDefault(ur => ur.ID_USUARIO == idUsuario && ur.CODIGO == codigo && !ur.VALIDADO && ur.DATA_PEDIDO.AddMinutes(10) >= DateTime.Now);
+
+            if (entity is not null)
+            {
+                entity.VALIDADO = true;
+
+                _data.Update(entity);
                 return _data.SaveChanges() > 0;
             }
 
