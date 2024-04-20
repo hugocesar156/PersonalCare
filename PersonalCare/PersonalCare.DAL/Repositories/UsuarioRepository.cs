@@ -153,6 +153,21 @@ namespace PersonalCare.DAL.Repositories
             return entity.ID;
         }
 
+        public bool Deletar(int idUsuario, string idEmpresa)
+        {
+            var entity = _data.USUARIOs.Include(u => u.USUARIO_PERMISSAOs).FirstOrDefault(u => u.ID == idUsuario && u.ID_EMPRESA == idEmpresa);
+
+            if (entity is not null)
+            {
+                _data.RemoveRange(entity.USUARIO_PERMISSAOs);
+                _data.Remove(entity);
+
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
         public List<Usuario> Listar(string idEmpresa)
         {
             var entities = _data.USUARIOs.Where(u => u.ID_EMPRESA == idEmpresa).ToList();

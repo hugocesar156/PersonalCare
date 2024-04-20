@@ -193,6 +193,28 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
+        public void Deletar(int idUsuario, string idEmpresa)
+        {
+            try
+            {
+                if (!_usuarioRepository.Deletar(idUsuario, idEmpresa))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao deletar registro de usuário.", 
+                        "Registro de usuário não encontrado.", 
+                        HttpStatusCode.NotFound);
+                }
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao deletar registro de usuário.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
         public List<ListarUsuarioResponse> Listar(string idEmpresa)
         {
             try

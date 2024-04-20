@@ -99,6 +99,25 @@ namespace PersonalCare.API.Controllers.Acesso
         }
 
         /// <summary>
+        /// Delta um registro de um usuário a partir do ID informado.
+        /// </summary>
+        [HttpDelete("deletar/{idUsuario}")]
+        [Authorize, Permissao(Entidade.Usuario, Acao.Deletar)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult Deletar(int idUsuario)
+        {
+            try
+            {
+                _usuario.Deletar(idUsuario, HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
+                return StatusCode((int)HttpStatusCode.OK, "Registro de usuário deletado com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Retorna uma lista de usuários.
         /// </summary>
         [HttpGet("listar")]

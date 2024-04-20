@@ -9,10 +9,11 @@ namespace PersonalCare.Domain.Interfaces
         Usuario? Buscar(int idUsuario, string idEmpresa);
         Usuario? BuscarPorEmail(string email, string idEmpresa);
         int Cadastrar(Usuario request);
+        bool Deletar(int idUsuario, string idEmpresa);
         bool EmailCadastrado(string email, string idEmpresa, int idUsuario = 0);
-        void RegistrarAcesso(int idUsuario);
         List<Usuario> Listar(string idEmpresa);
         List<Permissao> ListarPermissoes();
+        void RegistrarAcesso(int idUsuario);
         bool RemoverPermissoes(int idUsuario, List<int> permissoes);
     }
 }
