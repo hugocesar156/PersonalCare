@@ -4,16 +4,16 @@
     </head>
     <body style="font-family: Arial, Helvetica, sans-serif">
         <div>
-            <p style="font-weight: bold; display: inline;">{{NOME_EMPRESA}} | Personal Care</p> 
+            <p style="font-weight: bold; display: inline;">{{NOME_EMPRESA}} | Personal Care</p> <br />
             Responsável pela ficha: <p style="font-weight: bold; display: inline;">{{USUARIO_FICHA}}</p> <br />
             Criada em: <p style="font-weight: bold; display: inline;">{{DATA_CRIACAO}}</p> <br />
             Vence em: <p style="font-weight: bold; display: inline;">{{DATA_VENCIMENTO}}
         </div>
-        <div style="margin-top: 15px;">
+        <div style="margin: 15px 0px;">
             Olá, <p style="display: inline;">{{NOME_CONTA}}</p>. <br />
             Aqui está sua ficha de treino, esperamos que com ela você alcance seus objetivos! 
         </div>
-        <div style="width: 50%; margin-left: 25%;">
+        <div style="width: 50%;">
             {{GRUPOS}}
         </div>
         <div>
@@ -21,14 +21,3 @@
         </div>
     </body>
 </html>
-
-<style>
-    table, tr, th, td {
-        border: 1px solid;
-        text-align: center;
-    }
-
-    th {
-        padding: 0px 5px;
-    }
-</style>
