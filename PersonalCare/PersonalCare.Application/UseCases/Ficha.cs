@@ -162,7 +162,9 @@ namespace PersonalCare.Application.UseCases
                         if (conta is not null)
                         {
                             var template = TemplateService.TemplateFicha(ficha, conta.Nome, usuario?.Nome ?? string.Empty, empresa.NomeFantasia);
-                            EmailService.EnviarEmail(empresa.Email, conta.Email, "Envio de ficha de treino.", template);
+                            var (nomeArquivo, arquivo) = ConversorService.ConvertToPDF(template, $"ficha_{conta.Nome}");
+
+                            EmailService.EnviarEmail(empresa.Email, conta.Email, "Envio de ficha de treino.", template, new Dictionary<string, byte[]> { { nomeArquivo, arquivo } });
                         }
                     }
                     else

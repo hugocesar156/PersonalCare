@@ -266,7 +266,7 @@ namespace PersonalCare.Application.UseCases
                     {
                         var (template, codigoVerificacao) = TemplateService.TemplateRedefinicaoSenha(empresa.NomeFantasia);
 
-                        EmailService.EnviarEmail(empresa.Email, request.Email, "Redefinição de senha de usuário", template);
+                        EmailService.EnviarEmail(empresa.Email, request.Email, "Redefinição de senha de usuário", template, null);
 
                         var entity = new RedefinicaoSenhaUsuario(usuario.Id, codigoVerificacao);
                         _usuarioRepository.RegistrarEnvioRedeficicaoSenha(entity);
