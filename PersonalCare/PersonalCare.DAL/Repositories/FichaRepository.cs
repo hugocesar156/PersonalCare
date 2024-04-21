@@ -48,6 +48,31 @@ namespace PersonalCare.DAL.Repositories
             return false;
         }
 
+        public Ficha? Buscar(int idFicha)
+        {
+            var entity = _data.FICHAs
+                .Include(f => f.ITEM_FICHAs)
+                .ThenInclude(i => i.ID_TREINONavigation.ID_CATEGORIA_TREINONavigation)
+                .OrderByDescending(f => f.DATA_CRIACAO)
+                .FirstOrDefault(f => f.ID == idFicha);
+
+            if (entity is not null)
+            {
+                return new Ficha(
+                    entity.ID, entity.DATA_CRIACAO, entity.DATA_CRIACAO, entity.ID_CONTA, entity.ID_USUARIO_CADASTRO,
+                    entity.ITEM_FICHAs.Select(i => new ItemFicha(i.ID, i.GRUPO, (byte)i.SERIES, (byte)i.REPETICOES, i.ID_FICHA,
+                    new Treino(
+                        i.ID_TREINONavigation.ID,
+                        i.ID_TREINONavigation.NOME,
+                        i.ID_TREINONavigation.DESCRICAO,
+                        new CategoriaTreino(
+                            i.ID_TREINONavigation.ID_CATEGORIA_TREINONavigation.ID,
+                            i.ID_TREINONavigation.ID_CATEGORIA_TREINONavigation.NOME)))).ToList());
+            }
+
+            return null;
+        }
+
         public Ficha? BuscarPorConta(int idConta)
         {
             var entity = _data.FICHAs

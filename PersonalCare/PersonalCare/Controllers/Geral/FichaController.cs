@@ -82,6 +82,25 @@ namespace PersonalCare.API.Controllers.Geral
         }
 
         /// <summary>
+        /// Envia a ficha de treino para o email da conta.
+        /// </summary>
+        [HttpPost("enviarfichaporemail/{idFicha}")]
+        [Permissao(Entidade.Ficha, Acao.Inserir)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult EnviarFichaPorEmail(int idFicha)
+        {
+            try
+            {
+                _ficha.EnviarFichaPorEmail(idFicha, HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
+                return StatusCode((int)HttpStatusCode.OK, "Ficha de treino enviada ao email da conta com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Insere um registro de ficha de treino para um cliente.
         /// </summary>
         [HttpPost("inserir")]

@@ -1,0 +1,34 @@
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body style="font-family: Arial, Helvetica, sans-serif">
+        <div>
+            <p style="font-weight: bold; display: inline;">{{NOME_EMPRESA}} | Personal Care</p> 
+            Responsável pela ficha: <p style="font-weight: bold; display: inline;">{{USUARIO_FICHA}}</p> <br />
+            Criada em: <p style="font-weight: bold; display: inline;">{{DATA_CRIACAO}}</p> <br />
+            Vence em: <p style="font-weight: bold; display: inline;">{{DATA_VENCIMENTO}}
+        </div>
+        <div style="margin-top: 15px;">
+            Olá, <p style="display: inline;">{{NOME_CONTA}}</p>. <br />
+            Aqui está sua ficha de treino, esperamos que com ela você alcance seus objetivos! 
+        </div>
+        <div style="width: 50%; margin-left: 25%;">
+            {{GRUPOS}}
+        </div>
+        <div>
+            Em caso de dúvidas sobre sua ficha de treinamento, ente em contato com o resposável para mais detalhes.
+        </div>
+    </body>
+</html>
+
+<style>
+    table, tr, th, td {
+        border: 1px solid;
+        text-align: center;
+    }
+
+    th {
+        padding: 0px 5px;
+    }
+</style>

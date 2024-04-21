@@ -8,9 +8,10 @@ namespace PersonalCare.Application.Interfaces
         void Atualizar(AtualizarFichaRequest request);
         void AtualizarItemFicha(AtualizarItemFichaRequest request);
         FichaResponse BuscarFichaConta(int idConta);
-        void Inserir(InserirFichaRequest request, int idUsuario);
-        void InserirItemFicha(InserirItemFichaRequest request);
         void Deletar(int idFicha);
         void DeletarItemFicha(int idItemFicha);
+        void EnviarFichaPorEmail(int idFicha, string idEmpresa);
+        void Inserir(InserirFichaRequest request, int idUsuario);
+        void InserirItemFicha(InserirItemFichaRequest request);
     }
 }

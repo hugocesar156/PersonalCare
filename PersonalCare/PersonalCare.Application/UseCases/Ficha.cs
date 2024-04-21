@@ -3,6 +3,7 @@ using PersonalCare.Application.Models.Requests.Ficha;
 using PersonalCare.Application.Models.Responses.CategoriaTreino;
 using PersonalCare.Application.Models.Responses.Ficha;
 using PersonalCare.Application.Models.Responses.Treino;
+using PersonalCare.Application.Services;
 using PersonalCare.Domain.Interfaces;
 using PersonalCare.Shared;
 using System.Net;
@@ -11,11 +12,17 @@ namespace PersonalCare.Application.UseCases
 {
     public class Ficha : IFicha
     {
+        private readonly IContaRepository _contaRepository;
+        private readonly IEmpresaRepository _empresaRepository;
         private readonly IFichaRepository _fichaRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
 
-        public Ficha(IFichaRepository fichaRepository)
+        public Ficha(IContaRepository contaRepository, IEmpresaRepository empresaRepository, IFichaRepository fichaRepository, IUsuarioRepository usuarioRepository)
         {
+            _contaRepository = contaRepository;
+            _empresaRepository = empresaRepository;
             _fichaRepository = fichaRepository;
+            _usuarioRepository = usuarioRepository;
         }
 
         public void Atualizar(AtualizarFichaRequest request)
@@ -134,6 +141,49 @@ namespace PersonalCare.Application.UseCases
             catch (Exception ex)
             {
                 throw new PersonalCareException("Ocorreu um erro ao remover treino da ficha.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public void EnviarFichaPorEmail(int idFicha, string idEmpresa)
+        {
+            try
+            {
+                var ficha = _fichaRepository.Buscar(idFicha);
+
+                if (ficha is not null)
+                {
+                    var empresa = _empresaRepository.Buscar(idEmpresa);
+
+                    if (empresa is not null && empresa.Email is not null)
+                    {
+                        var conta = _contaRepository.Buscar(ficha.IdConta);
+                        var usuario = _usuarioRepository.Buscar(ficha.IdUsuarioCadastro, idEmpresa);
+
+                        if (conta is not null)
+                        {
+                            var template = TemplateService.TemplateFicha(ficha, conta.Nome, usuario?.Nome ?? string.Empty, empresa.NomeFantasia);
+                            EmailService.EnviarEmail(empresa.Email, conta.Email, "Envio de ficha de treino.", template);
+                        }
+                    }
+                    else
+                        throw new PersonalCareException(
+                            "Ocorreu um erro ao enviar ficha por email.",
+                            "As configurações da empresa não estão definidas corretamente para realizar a ação, entre em contato com os responsáveis.",
+                            HttpStatusCode.InternalServerError);
+                }
+                else
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao enviar ficha por email.", 
+                        "Registro de ficha não encontrado.", 
+                        HttpStatusCode.NotFound);
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao enviar ficha por email.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 
