@@ -13,6 +13,9 @@ namespace PersonalCare.Domain.Interfaces
         int Inserir(Conta request);
         bool InserirContato(ContatoConta request);
         bool InserirContato(List<ContatoConta> request);
+        bool InserirHorarioTreino(HorarioContaTreino request);
         List<Conta> Listar();
+        HorarioContaTreino? VerificaDisponibilidadeHorario(int idConta);
+        HorarioContaTreino? VerificaDisponibilidadeHorario(TimeSpan horaInicio, TimeSpan horaFim, int idUsuario);
     }
 }

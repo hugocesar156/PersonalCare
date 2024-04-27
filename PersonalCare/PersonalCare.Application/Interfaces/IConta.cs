@@ -12,6 +12,7 @@ namespace PersonalCare.Application.Interfaces
         void DeletarContato(int idContato);
         void Inserir(InserirContaRequest request, int idUsuario);
         void InserirContato(InserirContaContatoRequest request);
+        void InserirHorarioTreino(InserirHorarioTreinoRequest request);
         List<ContaResponse> Listar();
     }
 }

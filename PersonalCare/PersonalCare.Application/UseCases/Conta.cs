@@ -1,6 +1,7 @@
 ﻿using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Conta;
 using PersonalCare.Application.Models.Responses.Conta;
+using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 using PersonalCare.Shared;
 using System.Net;
@@ -225,6 +226,45 @@ namespace PersonalCare.Application.UseCases
             catch (Exception ex)
             {
                 throw new PersonalCareException("Ocorreu um erro ao adicionar contato para a conta.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public void InserirHorarioTreino(InserirHorarioTreinoRequest request)
+        {
+            try
+            {
+                var horarioUsuario = _contaRepository.VerificaDisponibilidadeHorario(request.HoraInicioTimeSpan, request.HoraFimTimeSpan, request.IdUsuario);
+
+                if (horarioUsuario is not null)
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao inserir horário de treino.",
+                        $"Já existe um horário definido para o usuário entre " +
+                        $"{horarioUsuario.HoraInicio.ToString()[..5]} e {horarioUsuario.HoraFim.ToString()[..5]}",
+                        HttpStatusCode.Forbidden);
+                }
+
+                var horarioConta = _contaRepository.VerificaDisponibilidadeHorario(request.IdConta);
+
+                if (horarioConta is not null)
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao inserir horário de treino.",
+                        $"Já existe um horário definido para a conta entre " +
+                        $"{horarioConta.HoraInicio.ToString()[..5]} e {horarioConta.HoraFim.ToString()[..5]}",
+                        HttpStatusCode.Forbidden);
+                }
+
+                var entity = new HorarioContaTreino(request.HoraInicioTimeSpan, request.HoraFimTimeSpan, request.IdConta, request.IdUsuario);
+                _contaRepository.InserirHorarioTreino(entity);
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao inserir horário de treino.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 

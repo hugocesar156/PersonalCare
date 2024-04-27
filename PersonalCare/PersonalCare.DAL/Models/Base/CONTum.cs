@@ -9,6 +9,7 @@ namespace PersonalCare.DAL.Models.Base
         {
             CONTATO_CONTa = new HashSet<CONTATO_CONTum>();
             FICHAs = new HashSet<FICHA>();
+            HORARIO_CONTA_TREINOs = new HashSet<HORARIO_CONTA_TREINO>();
         }
 
         public int ID { get; set; }
@@ -24,5 +25,6 @@ namespace PersonalCare.DAL.Models.Base
 
         public virtual ICollection<CONTATO_CONTum> CONTATO_CONTa { get; set; }
         public virtual ICollection<FICHA> FICHAs { get; set; }
+        public virtual ICollection<HORARIO_CONTA_TREINO> HORARIO_CONTA_TREINOs { get; set; }
     }
 }
