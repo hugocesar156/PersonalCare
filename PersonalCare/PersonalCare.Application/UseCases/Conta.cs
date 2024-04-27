@@ -64,7 +64,7 @@ namespace PersonalCare.Application.UseCases
         {
             try
             {
-                var entity = new Domain.Entities.ContatoConta(request.Id, request.Nome, request.Numero, request.Ddd, request.Ddi);
+                var entity = new ContatoConta(request.Id, request.Nome, request.Numero, request.Ddd, request.Ddi);
 
                 if (!_contaRepository.AtualizarContato(entity))
                 {
@@ -81,6 +81,39 @@ namespace PersonalCare.Application.UseCases
             catch (Exception ex)
             {
                 throw new PersonalCareException("Ocorreu um erro ao atualizar contato do registro de conta.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public void AtualizarHorarioTreino(AtualizarHorarioTreinoRequest request)
+        {
+            try
+            {
+                var horarioUsuario = _contaRepository.VerificaDisponibilidadeHorario(request.HoraInicioTimeSpan, request.HoraFimTimeSpan, request.IdUsuario);
+
+                if (horarioUsuario is not null)
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao inserir horário de treino.",
+                        $"Já existe um horário definido para o usuário entre " +
+                        $"{horarioUsuario.HoraInicio.ToString()[..5]} e {horarioUsuario.HoraFim.ToString()[..5]}",
+                        HttpStatusCode.Forbidden);
+                }
+
+                if (!_contaRepository.AtualizarHorarioTreino(new HorarioContaTreino(request.Id, request.HoraInicioTimeSpan, request.HoraFimTimeSpan, request.IdUsuario)))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao atualizar horário de treino.",
+                        "Registro de horário de treino não encontrado para concluir a ação.",
+                        HttpStatusCode.NotFound);
+                }
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao atualizar horário de treino.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 

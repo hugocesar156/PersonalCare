@@ -10,6 +10,14 @@
             IdUsuario = _idUsuario;
         }
 
+        public HorarioContaTreino(int _id, TimeSpan _horaInicio, TimeSpan _horaFim, int _idUsuario)
+        {
+            Id = _id;
+            HoraInicio = _horaInicio;
+            HoraFim = _horaFim;
+            IdUsuario = _idUsuario;
+        }
+
         public HorarioContaTreino(int _id, TimeSpan _horaInicio, TimeSpan _horaFim, int _idConta, int _idUsuario)
         {
             Id = _id;

@@ -7,6 +7,7 @@ namespace PersonalCare.Application.Interfaces
     {
         void Atualizar(AtualizarContaRequest request);
         void AtualizarContato(AtualizarContaContatoRequest request);
+        void AtualizarHorarioTreino(AtualizarHorarioTreinoRequest request);
         ContaResponse Buscar(int idConta);
         void Deletar(int idConta);
         void DeletarContato(int idContato);

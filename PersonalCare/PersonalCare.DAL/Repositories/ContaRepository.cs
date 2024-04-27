@@ -54,6 +54,23 @@ namespace PersonalCare.Domain.Repositories
             return false;
         }
 
+        public bool AtualizarHorarioTreino(HorarioContaTreino request)
+        {
+            var entity = _data.HORARIO_CONTA_TREINOs.FirstOrDefault(h => h.ID == request.Id);
+
+            if (entity is not null)
+            {
+                entity.HORA_INICIO = request.HoraInicio;
+                entity.HORA_FIM = request.HoraFim;
+                entity.ID_USUARIO = request.IdUsuario;
+
+                _data.Update(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
         public Conta? Buscar(int idConta)
         {
             var entity = _data.CONTAs.Include(c => c.CONTATO_CONTa).FirstOrDefault(c => c.ID == idConta);
