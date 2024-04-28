@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalCare.Application.Interfaces;
-using PersonalCare.Application.Models.Requests.Conta;
+using PersonalCare.Application.Models.Requests.HorarioTreino;
+using PersonalCare.Application.Models.Responses.HorarioTreino;
 using PersonalCare.Application.Permissoes;
 using PersonalCare.Shared;
 using System.Net;
+using System.Security.Claims;
 using static PersonalCare.Shared.PersonalCareEnums;
 
 namespace PersonalCare.API.Controllers.Geral
@@ -15,11 +17,30 @@ namespace PersonalCare.API.Controllers.Geral
     [ApiExplorerSettings(GroupName = "geral")]
     public class HorarioTreinoController : ControllerBase
     {
-        private readonly IConta _conta;
+        private readonly IHorarioTreinoConta _horarioTreinoConta;
 
-        public HorarioTreinoController(IConta conta)
+        public HorarioTreinoController(IHorarioTreinoConta horarioTreinoConta)
         {
-            _conta = conta;
+            _horarioTreinoConta = horarioTreinoConta;
+        }
+
+        /// <summary>
+        /// Busca o horário de treino para a conta a partir do ID informado.
+        /// </summary>
+        [HttpGet("buscarporconta/{idConta}")]
+        [Permissao(Entidade.HorarioTreino, Acao.Visualizar)]
+        [ProducesResponseType(typeof(HorarioTreinoContaResponse), StatusCodes.Status200OK)]
+        public IActionResult BuscarPorConta(int idConta)
+        {
+            try
+            {
+                var horarioTreino = _horarioTreinoConta.Buscar(idConta, HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
+                return StatusCode((int)HttpStatusCode.OK, horarioTreino);
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
         }
 
         /// <summary>
@@ -32,7 +53,7 @@ namespace PersonalCare.API.Controllers.Geral
         {
             try
             {
-                _conta.AtualizarHorarioTreino(request);
+                _horarioTreinoConta.Atualizar(request);
                 return StatusCode((int)HttpStatusCode.OK, "Horário de treino para a conta atualizado com sucesso.");
             }
             catch (PersonalCareException ex)
@@ -51,7 +72,7 @@ namespace PersonalCare.API.Controllers.Geral
         {
             try
             {
-                _conta.DeletarHorarioTreino(idHorarioTreino);
+                _horarioTreinoConta.Deletar(idHorarioTreino);
                 return StatusCode((int)HttpStatusCode.OK, "Horário de treino para a conta removido com sucesso.");
             }
             catch (PersonalCareException ex)
@@ -70,7 +91,7 @@ namespace PersonalCare.API.Controllers.Geral
         {
             try
             {
-                _conta.InserirHorarioTreino(request);
+                _horarioTreinoConta.Inserir(request);
                 return StatusCode((int)HttpStatusCode.OK, "Horário de treino para a conta definido com sucesso.");
             }
             catch (PersonalCareException ex)

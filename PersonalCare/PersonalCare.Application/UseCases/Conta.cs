@@ -1,6 +1,8 @@
 ﻿using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Conta;
+using PersonalCare.Application.Models.Requests.HorarioTreino;
 using PersonalCare.Application.Models.Responses.Conta;
+using PersonalCare.Application.Models.Responses.HorarioTreino;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 using PersonalCare.Shared;
@@ -84,39 +86,6 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
-        public void AtualizarHorarioTreino(AtualizarHorarioTreinoRequest request)
-        {
-            try
-            {
-                var horarioUsuario = _contaRepository.VerificaDisponibilidadeHorario(request.HoraInicioTimeSpan, request.HoraFimTimeSpan, request.IdUsuario);
-
-                if (horarioUsuario is not null)
-                {
-                    throw new PersonalCareException(
-                        "Ocorreu um erro ao inserir horário de treino.",
-                        $"Já existe um horário definido para o usuário entre " +
-                        $"{horarioUsuario.HoraInicio.ToString()[..5]} e {horarioUsuario.HoraFim.ToString()[..5]}",
-                        HttpStatusCode.Forbidden);
-                }
-
-                if (!_contaRepository.AtualizarHorarioTreino(new HorarioContaTreino(request.Id, request.HoraInicioTimeSpan, request.HoraFimTimeSpan, request.IdUsuario)))
-                {
-                    throw new PersonalCareException(
-                        "Ocorreu um erro ao atualizar horário de treino.",
-                        "Registro de horário de treino não encontrado para concluir a ação.",
-                        HttpStatusCode.NotFound);
-                }
-            }
-            catch (PersonalCareException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new PersonalCareException("Ocorreu um erro ao atualizar horário de treino.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
-            }
-        }
-
         public ContaResponse Buscar(int idConta)
         {
             try
@@ -195,28 +164,6 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
-        public void DeletarHorarioTreino(int idHorarioTreino)
-        {
-            try
-            {
-                if (!_contaRepository.DeletarHorarioTreino(idHorarioTreino))
-                {
-                    throw new PersonalCareException(
-                        "Ocorreu um erro ao deletar horário de treino.",
-                        "Registro de horário de treino não encontrado.",
-                        HttpStatusCode.NotFound);
-                }
-            }
-            catch (PersonalCareException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new PersonalCareException("Ocorreu um erro ao deletar horário de treino.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
-            }
-        }
-
         public void Inserir(InserirContaRequest request, int idUsuario)
         {
             try
@@ -281,45 +228,6 @@ namespace PersonalCare.Application.UseCases
             catch (Exception ex)
             {
                 throw new PersonalCareException("Ocorreu um erro ao adicionar contato para a conta.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
-            }
-        }
-
-        public void InserirHorarioTreino(InserirHorarioTreinoRequest request)
-        {
-            try
-            {
-                var horarioUsuario = _contaRepository.VerificaDisponibilidadeHorario(request.HoraInicioTimeSpan, request.HoraFimTimeSpan, request.IdUsuario);
-
-                if (horarioUsuario is not null)
-                {
-                    throw new PersonalCareException(
-                        "Ocorreu um erro ao inserir horário de treino.",
-                        $"Já existe um horário definido para o usuário entre " +
-                        $"{horarioUsuario.HoraInicio.ToString()[..5]} e {horarioUsuario.HoraFim.ToString()[..5]}",
-                        HttpStatusCode.Forbidden);
-                }
-
-                var horarioConta = _contaRepository.VerificaDisponibilidadeHorario(request.IdConta);
-
-                if (horarioConta is not null)
-                {
-                    throw new PersonalCareException(
-                        "Ocorreu um erro ao inserir horário de treino.",
-                        $"Já existe um horário definido para a conta entre " +
-                        $"{horarioConta.HoraInicio.ToString()[..5]} e {horarioConta.HoraFim.ToString()[..5]}",
-                        HttpStatusCode.Forbidden);
-                }
-
-                var entity = new HorarioContaTreino(request.HoraInicioTimeSpan, request.HoraFimTimeSpan, request.IdConta, request.IdUsuario);
-                _contaRepository.InserirHorarioTreino(entity);
-            }
-            catch (PersonalCareException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new PersonalCareException("Ocorreu um erro ao inserir horário de treino.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 

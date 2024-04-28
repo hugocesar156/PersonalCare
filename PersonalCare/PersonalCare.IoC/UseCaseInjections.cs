@@ -12,6 +12,7 @@ namespace PersonalCare.IoC
             services.AddScoped<ICategoriaTreino, CategoriaTreino>();
             services.AddScoped<IConta, Conta>();
             services.AddScoped<IFicha, Ficha>();
+            services.AddScoped<IHorarioTreinoConta, HorarioTreinoConta>();
             services.AddScoped<ITreino, Treino>();
             services.AddScoped<IUsuario, Usuario>();
 

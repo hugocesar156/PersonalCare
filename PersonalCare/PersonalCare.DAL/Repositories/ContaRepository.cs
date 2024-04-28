@@ -54,23 +54,6 @@ namespace PersonalCare.Domain.Repositories
             return false;
         }
 
-        public bool AtualizarHorarioTreino(HorarioContaTreino request)
-        {
-            var entity = _data.HORARIO_CONTA_TREINOs.FirstOrDefault(h => h.ID == request.Id);
-
-            if (entity is not null)
-            {
-                entity.HORA_INICIO = request.HoraInicio;
-                entity.HORA_FIM = request.HoraFim;
-                entity.ID_USUARIO = request.IdUsuario;
-
-                _data.Update(entity);
-                return _data.SaveChanges() > 0;
-            }
-
-            return false;
-        }
-
         public Conta? Buscar(int idConta)
         {
             var entity = _data.CONTAs.Include(c => c.CONTATO_CONTa).FirstOrDefault(c => c.ID == idConta);
@@ -131,19 +114,6 @@ namespace PersonalCare.Domain.Repositories
         public bool DeletarContato(int idContato)
         {
             var entity = _data.CONTATO_CONTAs.FirstOrDefault(c => c.ID == idContato);
-
-            if (entity is not null)
-            {
-                _data.Remove(entity);
-                return _data.SaveChanges() > 0;
-            }
-
-            return false;
-        }
-
-        public bool DeletarHorarioTreino(int idHorarioTreino)
-        {
-            var entity = _data.HORARIO_CONTA_TREINOs.FirstOrDefault(h => h.ID == idHorarioTreino);
 
             if (entity is not null)
             {
@@ -217,20 +187,6 @@ namespace PersonalCare.Domain.Repositories
            return _data.SaveChanges() > 0;
         }
 
-        public bool InserirHorarioTreino(HorarioContaTreino request)
-        {
-            var entity = new HORARIO_CONTA_TREINO
-            {
-                HORA_INICIO = request.HoraInicio,
-                HORA_FIM = request.HoraFim,
-                ID_CONTA = request.IdConta,
-                ID_USUARIO = request.IdUsuario
-            };
-
-            _data.Add(entity);
-            return _data.SaveChanges() > 0;
-        }
-
         public List<Conta> Listar()
         {
             var entities = _data.CONTAs.ToList();
@@ -248,31 +204,6 @@ namespace PersonalCare.Domain.Repositories
                     c.DATA_ATUALIZACAO,
                     c.ID_USUARIO_CADASTRO,
                     new List<ContatoConta>())).ToList();
-        }
-
-        public HorarioContaTreino? VerificaDisponibilidadeHorario(int idConta)
-        {
-            var entity = _data.HORARIO_CONTA_TREINOs.FirstOrDefault(h => h.ID_CONTA == idConta);
-
-            if (entity is not null)
-            {
-                return new HorarioContaTreino(entity.ID, entity.HORA_INICIO, entity.HORA_FIM, entity.ID_CONTA, entity.ID_USUARIO);
-            }
-
-            return null;
-        }
-
-        public HorarioContaTreino? VerificaDisponibilidadeHorario(TimeSpan horaInicio, TimeSpan horaFim, int idUsuario)
-        {
-            var entity = _data.HORARIO_CONTA_TREINOs.FirstOrDefault(h => h.ID_USUARIO == idUsuario &&
-            ((h.HORA_INICIO >= horaInicio && h.HORA_FIM <= horaInicio) || (h.HORA_INICIO >= horaFim && h.HORA_FIM <= horaFim)));
-
-            if (entity is not null)
-            {
-                return new HorarioContaTreino(entity.ID, entity.HORA_INICIO, entity.HORA_FIM, entity.ID_CONTA, entity.ID_USUARIO);
-            }
-
-            return null;
         }
     }
 }

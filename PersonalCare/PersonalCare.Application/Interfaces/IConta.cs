@@ -7,14 +7,11 @@ namespace PersonalCare.Application.Interfaces
     {
         void Atualizar(AtualizarContaRequest request);
         void AtualizarContato(AtualizarContaContatoRequest request);
-        void AtualizarHorarioTreino(AtualizarHorarioTreinoRequest request);
         ContaResponse Buscar(int idConta);
         void Deletar(int idConta);
         void DeletarContato(int idContato);
-        void DeletarHorarioTreino(int idHorarioTreino);
         void Inserir(InserirContaRequest request, int idUsuario);
         void InserirContato(InserirContaContatoRequest request);
-        void InserirHorarioTreino(InserirHorarioTreinoRequest request);
         List<ContaResponse> Listar();
     }
 }

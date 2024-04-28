@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
-namespace PersonalCare.Application.Models.Requests.Conta
+namespace PersonalCare.Application.Models.Requests.HorarioTreino
 {
     public abstract class HorarioTreinoRequest
     {
