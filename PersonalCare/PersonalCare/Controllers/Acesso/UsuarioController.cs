@@ -121,7 +121,7 @@ namespace PersonalCare.API.Controllers.Acesso
         }
 
         /// <summary>
-        /// Delta um registro de um usuário a partir do ID informado.
+        /// Deleta um registro de um usuário a partir do ID informado.
         /// </summary>
         [HttpDelete("deletar/{idUsuario}")]
         [Authorize, Permissao(Entidade.Usuario, Acao.Deletar)]
