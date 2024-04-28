@@ -139,6 +139,25 @@ namespace PersonalCare.API.Controllers.Geral
         }
 
         /// <summary>
+        /// Deleta um horário de treino para a conta a partir do ID informado.
+        /// </summary>
+        [HttpDelete("deletarhorariotreino/{idHorarioTreino}")]
+        [Permissao(Entidade.Conta, Acao.Atualizar)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult DeletarHorarioTreino(int idHorarioTreino)
+        {
+            try
+            {
+                _conta.DeletarHorarioTreino(idHorarioTreino);
+                return StatusCode((int)HttpStatusCode.OK, "Horário de treino para a conta removido com sucesso.");
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Insere um registro de conta.
         /// </summary>
         [HttpPost("inserir")]

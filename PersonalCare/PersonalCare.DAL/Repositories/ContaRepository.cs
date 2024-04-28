@@ -141,6 +141,19 @@ namespace PersonalCare.Domain.Repositories
             return false;
         }
 
+        public bool DeletarHorarioTreino(int idHorarioTreino)
+        {
+            var entity = _data.HORARIO_CONTA_TREINOs.FirstOrDefault(h => h.ID == idHorarioTreino);
+
+            if (entity is not null)
+            {
+                _data.Remove(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
         public int Inserir(Conta request)
         {
             var entity = new CONTum

@@ -11,6 +11,7 @@ namespace PersonalCare.Domain.Interfaces
         (string cpf, string email) BuscarDadosExistentes(string cpf, string email, int idConta = 0);
         bool Deletar(int idConta);
         bool DeletarContato(int idContato);
+        bool DeletarHorarioTreino(int idHorarioTreino);
         int Inserir(Conta request);
         bool InserirContato(ContatoConta request);
         bool InserirContato(List<ContatoConta> request);

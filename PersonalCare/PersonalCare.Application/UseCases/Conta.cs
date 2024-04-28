@@ -195,6 +195,28 @@ namespace PersonalCare.Application.UseCases
             }
         }
 
+        public void DeletarHorarioTreino(int idHorarioTreino)
+        {
+            try
+            {
+                if (!_contaRepository.DeletarHorarioTreino(idHorarioTreino))
+                {
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao deletar horário de treino.",
+                        "Registro de horário de treino não encontrado.",
+                        HttpStatusCode.NotFound);
+                }
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao deletar horário de treino.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
         public void Inserir(InserirContaRequest request, int idUsuario)
         {
             try
