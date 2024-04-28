@@ -27,7 +27,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Atualiza um registro de treino.
         /// </summary>
         [HttpPut("atualizar")]
-        [Permissao(Entidade.Treino, Acao.Atualizar)]
+        [PermissaoUsuario(Entidade.Treino, Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Atualizar(AtualizarTreinoRequest request)
         {
@@ -46,7 +46,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Retorna um registro de treino a partir do ID informado.
         /// </summary>
         [HttpGet("buscar/{idTreino}")]
-        [Permissao(Entidade.Treino, Acao.Visualizar)]
+        [PermissaoUsuario(Entidade.Treino, Acao.Visualizar)]
         [ProducesResponseType(typeof(TreinoResponse), StatusCodes.Status200OK)]
         public IActionResult Buscar(int idTreino)
         {
@@ -65,7 +65,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Deleta um registro de treino a partir do ID informado.
         /// </summary>
         [HttpDelete("deletar/{idTreino}")]
-        [Permissao(Entidade.Treino, Acao.Deletar)]
+        [PermissaoUsuario(Entidade.Treino, Acao.Deletar)]
         [ProducesResponseType(typeof(TreinoResponse), StatusCodes.Status200OK)]
         public IActionResult Deletar(int idTreino)
         {
@@ -84,7 +84,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Insere um registro de treino.
         /// </summary>
         [HttpPost("inserir")]
-        [Permissao(Entidade.Treino, Acao.Inserir)]
+        [PermissaoUsuario(Entidade.Treino, Acao.Inserir)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Inserir(InserirTreinoRequest request)
         {
@@ -103,7 +103,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Retorna uma lista de registros de treino.
         /// </summary>
         [HttpGet("listar")]
-        [Permissao(Entidade.Treino, Acao.Visualizar)]
+        [PermissaoUsuario(Entidade.Treino, Acao.Visualizar)]
         [ProducesResponseType(typeof(List<TreinoResponse>), StatusCodes.Status200OK)]
         public IActionResult Listar(int? idCategoriaTreino)
         {

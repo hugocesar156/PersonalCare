@@ -12,17 +12,23 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("geral", new OpenApiInfo
-    {
-        Version = "v1",
-        Title = "Geral",
-        Description = "Rotas gerais para registros do sistema."
-    });
     options.SwaggerDoc("acesso", new OpenApiInfo
     {
         Version = "v1",
         Title = "Acesso",
         Description = "Rotas de controle de acesso."
+    });
+    options.SwaggerDoc("conta", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Conta",
+        Description = "Rotas para contas do sistema."
+    });
+    options.SwaggerDoc("geral", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Geral",
+        Description = "Rotas gerais para registros do sistema."
     });
 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -81,8 +87,9 @@ if (app.Environment.IsDevelopment())
 
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/swagger/geral/swagger.json", "Geral");
         options.SwaggerEndpoint("/swagger/acesso/swagger.json", "Acesso");
+        options.SwaggerEndpoint("/swagger/conta/swagger.json", "Conta");
+        options.SwaggerEndpoint("/swagger/geral/swagger.json", "Geral");
     });
 }
 

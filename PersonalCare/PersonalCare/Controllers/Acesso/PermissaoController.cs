@@ -28,7 +28,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Adiciona permissões do sistema para um usuário.
         /// </summary>
         [HttpPost("adicionar")]
-        [Permissao(Entidade.Usuario, Acao.Atualizar)]
+        [PermissaoUsuario(Entidade.Usuario, Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Adicionar(AdicionarPermissaoRequest request)
         {
@@ -47,7 +47,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Lista as permissões do sistema.
         /// </summary>
         [HttpGet("listar")]
-        [Permissao(Entidade.Usuario, Acao.Atualizar)]
+        [PermissaoUsuario(Entidade.Usuario, Acao.Atualizar)]
         [ProducesResponseType(typeof(PermissaoResponse), StatusCodes.Status200OK)]
         public IActionResult Listar()
         {
@@ -66,7 +66,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Remove permissões do sistema para um usuário.
         /// </summary>
         [HttpDelete("remover")]
-        [Permissao(Entidade.Usuario, Acao.Atualizar)]
+        [PermissaoUsuario(Entidade.Usuario, Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Remover(RemoverPermissaoRequest request)
         {

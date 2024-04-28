@@ -28,7 +28,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Busca o horário de treino para a conta a partir do ID informado.
         /// </summary>
         [HttpGet("buscarporconta/{idConta}")]
-        [Permissao(Entidade.HorarioTreino, Acao.Visualizar)]
+        [PermissaoUsuario(Entidade.HorarioTreino, Acao.Visualizar)]
         [ProducesResponseType(typeof(HorarioTreinoContaResponse), StatusCodes.Status200OK)]
         public IActionResult BuscarPorConta(int idConta)
         {
@@ -47,7 +47,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Atualiza um horário de treino para a conta com um usuário informado.
         /// </summary>
         [HttpPut("atualizar")]
-        [Permissao(Entidade.HorarioTreino, Acao.Atualizar)]
+        [PermissaoUsuario(Entidade.HorarioTreino, Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Atualizar(AtualizarHorarioTreinoRequest request)
         {
@@ -66,7 +66,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Deleta um horário de treino para a conta a partir do ID informado.
         /// </summary>
         [HttpDelete("deletar/{idHorarioTreino}")]
-        [Permissao(Entidade.HorarioTreino, Acao.Deletar)]
+        [PermissaoUsuario(Entidade.HorarioTreino, Acao.Deletar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Deletar(int idHorarioTreino)
         {
@@ -85,7 +85,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Insere um horário de treino para a conta com um usuário informado.
         /// </summary>
         [HttpPost("inserir")]
-        [Permissao(Entidade.HorarioTreino, Acao.Inserir)]
+        [PermissaoUsuario(Entidade.HorarioTreino, Acao.Inserir)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Inserir(InserirHorarioTreinoRequest request)
         {
@@ -104,7 +104,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Lista os horários de treino de conta para o usuário a partir do ID informado.
         /// </summary>
         [HttpGet("listarporusuario/{idUsuario}")]
-        [Permissao(Entidade.HorarioTreino, Acao.Visualizar)]
+        [PermissaoUsuario(Entidade.HorarioTreino, Acao.Visualizar)]
         [ProducesResponseType(typeof(List<HorarioTreinoUsuarioResponse>), StatusCodes.Status200OK)]
         public IActionResult ListarPorUsuario(int idUsuario)
         {

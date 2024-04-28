@@ -28,7 +28,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Atualiza um registro de conta.
         /// </summary>
         [HttpPut("atualizar")]
-        [Permissao(Entidade.Conta, Acao.Atualizar)]
+        [PermissaoUsuario(Entidade.Conta, Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Atualizar(AtualizarContaRequest request)
         {
@@ -47,7 +47,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Atualiza um contato existente de um registro de conta.
         /// </summary>
         [HttpPut("atualizarcontato")]
-        [Permissao(Entidade.Conta, Acao.Atualizar)]
+        [PermissaoUsuario(Entidade.Conta, Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult AtualizarContato(AtualizarContaContatoRequest request)
         {
@@ -66,7 +66,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Retorna registro de conta a partir do ID da conta informado.
         /// </summary>
         [HttpGet("buscar/{idConta}")]
-        [Permissao(Entidade.Conta, Acao.Visualizar)]
+        [PermissaoUsuario(Entidade.Conta, Acao.Visualizar)]
         [ProducesResponseType(typeof(ContaResponse), StatusCodes.Status200OK)]
         public IActionResult Buscar(int idConta)
         {
@@ -85,7 +85,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Deleta um registro de conta a partir do ID da conta informado.
         /// </summary>
         [HttpDelete("deletar/{idConta}")]
-        [Permissao(Entidade.Conta, Acao.Deletar)]
+        [PermissaoUsuario(Entidade.Conta, Acao.Deletar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Deletar(int idConta)
         {
@@ -104,7 +104,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Deleta um contato de um registro de conta a partir do ID do contato informado.
         /// </summary>
         [HttpDelete("deletarcontato/{idContato}")]
-        [Permissao(Entidade.Conta, Acao.Deletar)]
+        [PermissaoUsuario(Entidade.Conta, Acao.Deletar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult DeletarContato(int idContato)
         {
@@ -123,7 +123,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Insere um registro de conta.
         /// </summary>
         [HttpPost("inserir")]
-        [Permissao(Entidade.Conta, Acao.Inserir)]
+        [PermissaoUsuario(Entidade.Conta, Acao.Inserir)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Inserir(InserirContaRequest request)
         {
@@ -142,7 +142,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Insere um novo contato para o registro de conta.
         /// </summary>
         [HttpPost("inserircontato")]
-        [Permissao(Entidade.Conta, Acao.Inserir)]
+        [PermissaoUsuario(Entidade.Conta, Acao.Inserir)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult InserirContato(InserirContaContatoRequest request)
         {
@@ -161,7 +161,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Retorna uma lista de contas.
         /// </summary>
         [HttpGet("listar")]
-        [Permissao(Entidade.Conta, Acao.Visualizar)]
+        [PermissaoUsuario(Entidade.Conta, Acao.Visualizar)]
         [ProducesResponseType(typeof(List<ContaResponse>), StatusCodes.Status200OK)]
         public IActionResult Listar()
         {

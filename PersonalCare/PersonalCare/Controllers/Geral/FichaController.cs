@@ -28,7 +28,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Atualiza um registro de ficha do cliente.
         /// </summary>
         [HttpPut("atualizar")]
-        [Permissao(Entidade.Ficha, Acao.Atualizar)]
+        [PermissaoUsuario(Entidade.Ficha, Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Atualizar(AtualizarFichaRequest request)
         {
@@ -47,7 +47,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Atualiza um treino para a ficha do clente.
         /// </summary>
         [HttpPut("atualizaritemficha")]
-        [Permissao(Entidade.Ficha, Acao.Atualizar)]
+        [PermissaoUsuario(Entidade.Ficha, Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult AtualizarItemFicha(AtualizarItemFichaRequest request)
         {
@@ -66,7 +66,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Busca o registro de ficha para uma conta a partir do ID da conta informado.
         /// </summary>
         [HttpGet("buscarfichaconta/{idConta}")]
-        [Permissao(Entidade.Ficha, Acao.Visualizar)]
+        [PermissaoUsuario(Entidade.Ficha, Acao.Visualizar)]
         [ProducesResponseType(typeof(FichaResponse), StatusCodes.Status200OK)]
         public IActionResult BuscarFichaConta(int idConta)
         {
@@ -85,7 +85,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Envia a ficha de treino para o email da conta.
         /// </summary>
         [HttpPost("enviarfichaporemail/{idFicha}")]
-        [Permissao(Entidade.Ficha, Acao.Inserir)]
+        [PermissaoUsuario(Entidade.Ficha, Acao.Inserir)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult EnviarFichaPorEmail(int idFicha)
         {
@@ -104,7 +104,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Insere um registro de ficha de treino para um cliente.
         /// </summary>
         [HttpPost("inserir")]
-        [Permissao(Entidade.Ficha, Acao.Inserir)]
+        [PermissaoUsuario(Entidade.Ficha, Acao.Inserir)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Inserir(InserirFichaRequest request)
         {
@@ -123,7 +123,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Insere um novo treino para a ficha do clente.
         /// </summary>
         [HttpPost("inseriritemficha")]
-        [Permissao(Entidade.Ficha, Acao.Inserir)]
+        [PermissaoUsuario(Entidade.Ficha, Acao.Inserir)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult InserirItemFicha(InserirItemFichaRequest request)
         {
@@ -142,7 +142,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Deleta um registro de ficha de cliente a partir do ID informado.
         /// </summary>
         [HttpDelete("deletar/{idFicha}")]
-        [Permissao(Entidade.Ficha, Acao.Deletar)]
+        [PermissaoUsuario(Entidade.Ficha, Acao.Deletar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Deletar(int idFicha)
         {
@@ -161,7 +161,7 @@ namespace PersonalCare.API.Controllers.Geral
         /// Remove um treino para a ficha do cliente a partir do ID de treino de ficha informado.
         /// </summary>
         [HttpDelete("deletaritemficha/{idItemFicha}")]
-        [Permissao(Entidade.Ficha, Acao.Deletar)]
+        [PermissaoUsuario(Entidade.Ficha, Acao.Deletar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult DeletarItemFicha(int idItemFicha)
         {

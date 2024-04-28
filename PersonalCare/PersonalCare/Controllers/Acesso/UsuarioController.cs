@@ -49,7 +49,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Atualiza um registro de usuário.
         /// </summary>
         [HttpPut("atualizar")]
-        [Authorize, Permissao(Entidade.Usuario, Acao.Atualizar)]
+        [Authorize, PermissaoUsuario(Entidade.Usuario, Acao.Atualizar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Atualizar(AtualizarUsuarioRequest request)
         {
@@ -86,7 +86,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Busca um registro de usuário a partir do ID informado.
         /// </summary>
         [HttpGet("buscar/{idUsuario}")]
-        [Authorize, Permissao(Entidade.Usuario, Acao.Visualizar)]
+        [Authorize, PermissaoUsuario(Entidade.Usuario, Acao.Visualizar)]
         [ProducesResponseType(typeof(UsuarioResponse), StatusCodes.Status200OK)]
         public IActionResult Buscar(int idUsuario)
         {
@@ -105,7 +105,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Cadastra um usuário.
         /// </summary>
         [HttpPost("cadastrar")]
-        [Authorize, Permissao(Entidade.Usuario, Acao.Inserir)]
+        [Authorize, PermissaoUsuario(Entidade.Usuario, Acao.Inserir)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Cadastrar(CadastrarUsuarioRequest request)
         {
@@ -124,7 +124,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Deleta um registro de um usuário a partir do ID informado.
         /// </summary>
         [HttpDelete("deletar/{idUsuario}")]
-        [Authorize, Permissao(Entidade.Usuario, Acao.Deletar)]
+        [Authorize, PermissaoUsuario(Entidade.Usuario, Acao.Deletar)]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Deletar(int idUsuario)
         {
@@ -161,7 +161,7 @@ namespace PersonalCare.API.Controllers.Acesso
         /// Retorna uma lista de usuários.
         /// </summary>
         [HttpGet("listar")]
-        [Authorize, Permissao(Entidade.Usuario, Acao.Visualizar)]
+        [Authorize, PermissaoUsuario(Entidade.Usuario, Acao.Visualizar)]
         [ProducesResponseType(typeof(List<ListarUsuarioResponse>), StatusCodes.Status200OK)]
         public IActionResult Listar()
         {
