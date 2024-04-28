@@ -99,5 +99,44 @@ namespace PersonalCare.API.Controllers.Geral
                 return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
             }
         }
+
+        /// <summary>
+        /// Lista os horários de treino de conta para o usuário a partir do ID informado.
+        /// </summary>
+        [HttpGet("listarporusuario/{idUsuario}")]
+        [Permissao(Entidade.HorarioTreino, Acao.Visualizar)]
+        [ProducesResponseType(typeof(List<HorarioTreinoUsuarioResponse>), StatusCodes.Status200OK)]
+        public IActionResult ListarPorUsuario(int idUsuario)
+        {
+            try
+            {
+                var horarios = _horarioTreinoConta.ListarPorUsuario(idUsuario, HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
+                return StatusCode((int)HttpStatusCode.OK, horarios);
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
+        /// Lista os horários de treino de conta para o usuário autenticado.
+        /// </summary>
+        [HttpGet("listarporusuariologado")]
+        [ProducesResponseType(typeof(List<HorarioTreinoUsuarioResponse>), StatusCodes.Status200OK)]
+        public IActionResult ListarPorUsarioLogado()
+        {
+            try
+            {
+                var horarios = _horarioTreinoConta.ListarPorUsuario(int.Parse(HttpContext.User.FindFirstValue(PersonalCareClaims.ID_USUARIO)), 
+                    HttpContext.User.FindFirstValue(PersonalCareClaims.ID_EMPRESA));
+
+                return StatusCode((int)HttpStatusCode.OK, horarios);
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
     }
 }

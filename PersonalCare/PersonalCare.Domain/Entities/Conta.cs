@@ -2,6 +2,23 @@
 {
     public class Conta
     {
+        public Conta()
+        {
+            Nome = string.Empty;
+            Email = string.Empty;
+            Cpf = string.Empty;
+            Contatos = new List<ContatoConta>();
+        }
+
+        public Conta(int _id, string _nome, List<ContatoConta> _contatos)
+        {
+            Id = _id;
+            Nome = _nome;
+            Email = string.Empty;
+            Cpf = string.Empty;
+            Contatos = _contatos;
+        }
+
         public Conta(string _nome, string _email, string _cpf, decimal? _altura, string? _biotipo, DateTime _dataNascimento, int _idUsuarioCadastro)
         {
             Nome = _nome;
@@ -26,7 +43,7 @@
             Contatos = new List<ContatoConta>();
         }
 
-        public Conta(int _id, string _nome, string _email, string _cpf, decimal? _altura, string? _biotipo, DateTime _dataNascimento, DateTime _dataCadastro, DateTime _dataAtualizacao, int _idUsuarioCadastro, List<ContatoConta> contatos)
+        public Conta(int _id, string _nome, string _email, string _cpf, decimal? _altura, string? _biotipo, DateTime _dataNascimento, DateTime _dataCadastro, DateTime _dataAtualizacao, int _idUsuarioCadastro, List<ContatoConta> _contatos)
         {
             Id = _id;
             Nome = _nome;
@@ -38,7 +55,7 @@
             DataCadastro = _dataCadastro;
             DataAtualizacao = _dataAtualizacao;
             IdUsuarioCadastro = _idUsuarioCadastro;
-            Contatos = contatos;
+            Contatos = _contatos;
         }
 
         public int Id { get; }

@@ -143,5 +143,28 @@ namespace PersonalCare.Application.UseCases
                 throw new PersonalCareException("Ocorreu um erro ao inserir horário de treino.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
+
+        public List<HorarioTreinoUsuarioResponse> ListarPorUsuario(int idUsuario, string idEmpresa)
+        {
+            try
+            {
+                if (_usuarioRepository.Buscar(idUsuario, idEmpresa) is null)
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao listar horários de treino.", 
+                        "Registro de usuário não encontrado.", 
+                        HttpStatusCode.NotFound);
+
+                var horarios = _horarioTreinoContaRepository.ListarPorUsuario(idUsuario);
+                return horarios.Select(h => new HorarioTreinoUsuarioResponse(h.Id, h.HoraInicio, h.HoraFim, h.Conta.Id, h.Conta.Nome, h.Conta.Contatos)).ToList();
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao listar horários de treino.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
     }
 }

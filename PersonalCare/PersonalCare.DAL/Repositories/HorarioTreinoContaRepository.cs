@@ -1,4 +1,5 @@
-﻿using PersonalCare.DAL.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonalCare.DAL.Context;
 using PersonalCare.DAL.Models.Base;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
@@ -68,6 +69,18 @@ namespace PersonalCare.DAL.Repositories
 
             _data.Add(entity);
             return _data.SaveChanges() > 0;
+        }
+
+        public List<HorarioContaTreino> ListarPorUsuario(int idUsuario)
+        {
+            var entities = _data.HORARIO_CONTA_TREINOs
+                .Include(h => h.ID_CONTANavigation.CONTATO_CONTa)
+                .Where(h => h.ID_USUARIO == idUsuario)
+                .OrderBy(h => h.HORA_INICIO).ToList();
+
+            return entities.Select(h => new HorarioContaTreino(h.ID, h.HORA_INICIO, h.HORA_FIM, h.ID_CONTA, h.ID_USUARIO,
+                new Conta(h.ID_CONTANavigation.ID, h.ID_CONTANavigation.NOME, h.ID_CONTANavigation.CONTATO_CONTa.Select(c => 
+                new ContatoConta(c.ID, c.NOME, c.NUMERO, c.DDD, c.DDI)).ToList()))).ToList();
         }
 
         public HorarioContaTreino? VerificaDisponibilidade(int idConta)

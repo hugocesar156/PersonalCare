@@ -9,5 +9,6 @@ namespace PersonalCare.Application.Interfaces
         HorarioTreinoContaResponse Buscar(int idConta, string idEmpresa);
         void Inserir(InserirHorarioTreinoRequest request);
         void Deletar(int idHorarioTreino);
+        List<HorarioTreinoUsuarioResponse> ListarPorUsuario(int idUsuario, string idEmpresa);
     }
 }

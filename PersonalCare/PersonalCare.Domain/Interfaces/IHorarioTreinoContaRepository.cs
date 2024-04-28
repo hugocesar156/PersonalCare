@@ -8,6 +8,7 @@ namespace PersonalCare.Domain.Interfaces
         HorarioContaTreino? Buscar(int idConta);
         bool Inserir(HorarioContaTreino request);
         bool Deletar(int idHorarioTreino);
+        List<HorarioContaTreino> ListarPorUsuario(int idUsuario);
         HorarioContaTreino? VerificaDisponibilidade(int idConta);
         HorarioContaTreino? VerificaDisponibilidade(TimeSpan horaInicio, TimeSpan horaFim, int idUsuario);
     }
