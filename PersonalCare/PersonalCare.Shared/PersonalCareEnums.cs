@@ -8,7 +8,8 @@
             Ficha,
             CategoriaTreino,
             Treino,
-            Usuario
+            Usuario,
+            HorarioTreino
         }
 
         public enum Acao

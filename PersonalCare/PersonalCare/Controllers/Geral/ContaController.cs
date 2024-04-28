@@ -63,25 +63,6 @@ namespace PersonalCare.API.Controllers.Geral
         }
 
         /// <summary>
-        /// Atualiza um horário de treino para a conta com um usuário informado.
-        /// </summary>
-        [HttpPut("atualizarhorariotreino")]
-        [Permissao(Entidade.Conta, Acao.Atualizar)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        public IActionResult AtualizarHorarioTreino(AtualizarHorarioTreinoRequest request)
-        {
-            try
-            {
-                _conta.AtualizarHorarioTreino(request);
-                return StatusCode((int)HttpStatusCode.OK, "Horário de treino para a conta atualizado com sucesso.");
-            }
-            catch (PersonalCareException ex)
-            {
-                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
-            }
-        }
-
-        /// <summary>
         /// Retorna registro de conta a partir do ID da conta informado.
         /// </summary>
         [HttpGet("buscar/{idConta}")]
@@ -139,25 +120,6 @@ namespace PersonalCare.API.Controllers.Geral
         }
 
         /// <summary>
-        /// Deleta um horário de treino para a conta a partir do ID informado.
-        /// </summary>
-        [HttpDelete("deletarhorariotreino/{idHorarioTreino}")]
-        [Permissao(Entidade.Conta, Acao.Atualizar)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        public IActionResult DeletarHorarioTreino(int idHorarioTreino)
-        {
-            try
-            {
-                _conta.DeletarHorarioTreino(idHorarioTreino);
-                return StatusCode((int)HttpStatusCode.OK, "Horário de treino para a conta removido com sucesso.");
-            }
-            catch (PersonalCareException ex)
-            {
-                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
-            }
-        }
-
-        /// <summary>
         /// Insere um registro de conta.
         /// </summary>
         [HttpPost("inserir")]
@@ -188,25 +150,6 @@ namespace PersonalCare.API.Controllers.Geral
             {
                 _conta.InserirContato(request);
                 return StatusCode((int)HttpStatusCode.OK, "Contato adicionado para a conta com sucesso.");
-            }
-            catch (PersonalCareException ex)
-            {
-                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
-            }
-        }
-
-        /// <summary>
-        /// Insere um horário de treino para a conta com um usuário informado.
-        /// </summary>
-        [HttpPost("inserirhorariotreino")]
-        [Permissao(Entidade.Conta, Acao.Atualizar)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        public IActionResult InserirHorarioTreino(InserirHorarioTreinoRequest request)
-        {
-            try
-            {
-                _conta.InserirHorarioTreino(request);
-                return StatusCode((int)HttpStatusCode.OK, "Horário de treino para a conta definido com sucesso.");
             }
             catch (PersonalCareException ex)
             {
