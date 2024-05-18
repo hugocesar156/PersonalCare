@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PersonalCare.DAL.Context;
 using PersonalCare.DAL.Models.Base;
+using PersonalCare.DAL.Repositories;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 
 namespace PersonalCare.Domain.Repositories
 {
-    public class ContaRepository : IContaRepository
+    public class ContaRepository : BaseRepository, IContaRepository
     {
         private readonly DataContextBase _data;
 
@@ -94,6 +95,20 @@ namespace PersonalCare.Domain.Repositories
             }
 
             return (string.Empty, string.Empty);
+        }
+
+        public Conta? BuscarPorEmail(string email, string idEmpresa)
+        {
+            SetConnectionString(_data, idEmpresa);
+
+            var entity = _data.CONTAs.FirstOrDefault(c => c.EMAIL == email);
+
+            if (entity is not null)
+            {
+                return new Conta(entity.ID, entity.NOME, entity.EMAIL, entity.CPF, entity.ALTURA, entity.BIOTIPO, entity.DATA_NASCIMENTO, entity.SENHA, entity.SALT);
+            }
+
+            return null;
         }
 
         public bool Deletar(int idConta)

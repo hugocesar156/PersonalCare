@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalCare.Application.Interfaces;
+using PersonalCare.Application.Models.Requests.Usuario;
 using PersonalCare.Application.Models.Responses.Conta;
 using PersonalCare.Application.Permissoes;
 using PersonalCare.Shared;
@@ -9,7 +10,6 @@ using System.Security.Claims;
 
 namespace PersonalCare.API.Controllers.Conta
 {
-    [Authorize]
     [ApiController]
     [Route("conta/perfil")]
     [ApiExplorerSettings(GroupName = "conta")]
@@ -23,10 +23,28 @@ namespace PersonalCare.API.Controllers.Conta
         }
 
         /// <summary>
+        /// Autentica uma conta.
+        /// </summary>
+        [HttpPost("autenticar")]
+        [ProducesResponseType(typeof(ContaResponse), StatusCodes.Status200OK)]
+        public IActionResult Autenticar(AutenticarRequest request)
+        {
+            try
+            {
+                var response = _conta.Autenticar(request);
+                return StatusCode((int)HttpStatusCode.OK, response);
+            }
+            catch (PersonalCareException ex)
+            {
+                return StatusCode((int)ex.StatusCode, new { ex.Erro, ex.Mensagem });
+            }
+        }
+
+        /// <summary>
         /// Busca o registro de conta.
         /// </summary>
         [HttpGet("buscar")]
-        [PermissaoConta]
+        [Authorize, PermissaoConta]
         [ProducesResponseType(typeof(ContaResponse), StatusCodes.Status200OK)]
         public IActionResult Buscar()
         {

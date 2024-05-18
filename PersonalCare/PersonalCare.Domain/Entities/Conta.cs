@@ -7,6 +7,8 @@
             Nome = string.Empty;
             Email = string.Empty;
             Cpf = string.Empty;
+            Senha = string.Empty;
+            Salt = string.Empty;
             Contatos = new List<ContatoConta>();
         }
 
@@ -16,6 +18,8 @@
             Nome = _nome;
             Email = string.Empty;
             Cpf = string.Empty;
+            Senha = string.Empty;
+            Salt = string.Empty;
             Contatos = _contatos;
         }
 
@@ -27,6 +31,8 @@
             Altura = _altura;
             Biotipo = _biotipo;
             DataNascimento = _dataNascimento;
+            Senha = _senha;
+            Salt = _salt;
             IdUsuarioCadastro = _idUsuarioCadastro;
             Contatos = new List<ContatoConta>();
         }
@@ -40,6 +46,22 @@
             Altura = _altura;
             Biotipo = _biotipo;
             DataNascimento = _dataNascimento;
+            Senha = string.Empty;
+            Salt = string.Empty;
+            Contatos = new List<ContatoConta>();
+        }
+
+        public Conta(int _id, string _nome, string _email, string _cpf, decimal? _altura, string? _biotipo, DateTime _dataNascimento, string _senha, string _salt)
+        {
+            Id = _id;
+            Nome = _nome;
+            Email = _email;
+            Cpf = _cpf;
+            Altura = _altura;
+            Biotipo = _biotipo;
+            DataNascimento = _dataNascimento;
+            Senha = _senha;
+            Salt = _salt;
             Contatos = new List<ContatoConta>();
         }
 
@@ -54,6 +76,8 @@
             DataNascimento = _dataNascimento;
             DataCadastro = _dataCadastro;
             DataAtualizacao = _dataAtualizacao;
+            Senha = string.Empty;
+            Salt = string.Empty;
             IdUsuarioCadastro = _idUsuarioCadastro;
             Contatos = _contatos;
         }
@@ -67,6 +91,8 @@
         public DateTime DataNascimento { get; }
         public DateTime DataCadastro { get; }
         public DateTime DataAtualizacao { get; }
+        public string Senha { get; }
+        public string Salt { get; }
         public int IdUsuarioCadastro { get; }
         public List<ContatoConta> Contatos { get; }
     }

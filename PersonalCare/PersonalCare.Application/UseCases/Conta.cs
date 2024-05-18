@@ -1,6 +1,9 @@
-﻿using PersonalCare.Application.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
+using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Conta;
+using PersonalCare.Application.Models.Requests.Usuario;
 using PersonalCare.Application.Models.Responses.Conta;
+using PersonalCare.Application.Models.Responses.Usuario;
 using PersonalCare.Application.Services;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
@@ -11,10 +14,12 @@ namespace PersonalCare.Application.UseCases
 {
     public class Conta : IConta
     {
+        private readonly IConfiguration _configuration;
         private readonly IContaRepository _contaRepository;
 
-        public Conta(IContaRepository contaRepository)
+        public Conta(IConfiguration configuration, IContaRepository contaRepository)
         {
+            _configuration = configuration;
             _contaRepository = contaRepository;
         }
 
@@ -82,6 +87,40 @@ namespace PersonalCare.Application.UseCases
             catch (Exception ex)
             {
                 throw new PersonalCareException("Ocorreu um erro ao atualizar contato do registro de conta.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public AutenticarResponse Autenticar(AutenticarRequest request)
+        {
+            try
+            {
+                var conta = _contaRepository.BuscarPorEmail(request.Email, request.IdEmpresa);
+
+                if (conta is not null)
+                {
+                    if (CriptografiaService.VerificarSenha(request.Senha, conta.Salt, conta.Senha))
+                    {
+                        return new AutenticarResponse(conta.Nome, TokenService.GerarTokenAutenticacaoConta(conta, request.IdEmpresa, _configuration["JWTSigningKey"]));
+                    }
+
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao autenticar a conta.",
+                        "Senha informada inválido.",
+                        HttpStatusCode.NotFound);
+                }
+
+                throw new PersonalCareException(
+                    "Ocorreu um erro ao autenticar a conta.",
+                    "Email informado inválido.",
+                    HttpStatusCode.NotFound);
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao autenticar a conta.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
             }
         }
 

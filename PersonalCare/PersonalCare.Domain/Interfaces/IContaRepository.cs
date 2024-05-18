@@ -7,6 +7,7 @@ namespace PersonalCare.Domain.Interfaces
         bool Atualizar(Conta request);
         bool AtualizarContato(ContatoConta request);
         Conta? Buscar(int idConta);
+        Conta? BuscarPorEmail(string email, string idEmpresa);
         (string cpf, string email) BuscarDadosExistentes(string cpf, string email, int idConta = 0);
         bool Deletar(int idConta);
         bool DeletarContato(int idContato);

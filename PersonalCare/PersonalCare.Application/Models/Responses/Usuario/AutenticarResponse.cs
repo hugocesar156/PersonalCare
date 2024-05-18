@@ -2,13 +2,13 @@
 {
     public class AutenticarResponse
     {
-        public AutenticarResponse(string _nomeUsuario, string _tokenAcesso)
+        public AutenticarResponse(string _nome, string _tokenAcesso)
         {
-            NomeUsuario = _nomeUsuario;
+            Nome = _nome;
             TokenAcesso = _tokenAcesso;
         }
 
-        public string NomeUsuario { get; }
+        public string Nome { get; }
         public string TokenAcesso { get; }
     }
 }

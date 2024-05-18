@@ -147,7 +147,7 @@ namespace PersonalCare.Application.UseCases
                         if (entity.Ativo)
                         {
                             _usuarioRepository.RegistrarAcesso(entity.Id);
-                            return new AutenticarResponse(entity.Nome, TokenService.GerarTokenAutenticacao(entity, request.IdEmpresa, _configuration["JWTSigningKey"]));
+                            return new AutenticarResponse(entity.Nome, TokenService.GerarTokenAutenticacaoUsuario(entity, request.IdEmpresa, _configuration["JWTSigningKey"]));
                         }
 
                         throw new PersonalCareException(

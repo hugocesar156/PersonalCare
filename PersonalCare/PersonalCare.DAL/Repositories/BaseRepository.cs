@@ -7,7 +7,7 @@ namespace PersonalCare.DAL.Repositories
     {
         protected static void SetConnectionString(DataContextBase data, string idEmpresa)
         {
-            data.Database.SetConnectionString(data.Database.GetConnectionString()?.Replace("db_personalcare_base", $"db_personalcare_-{idEmpresa}"));
+            data.Database.SetConnectionString(data.Database.GetConnectionString()?.Replace("db_personalcare_-", $"db_personalcare_-{idEmpresa}"));
         }
     }
 }
