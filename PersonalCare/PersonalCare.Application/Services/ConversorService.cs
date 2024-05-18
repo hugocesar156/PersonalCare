@@ -24,7 +24,7 @@ namespace PersonalCare.Application.Services
                 return (nomeArquivo, bytes);
             }
 
-            throw new Exception("Erro durante conversão de arquvio.");
+            throw new Exception("Erro durante conversão de arquivo.");
         }
     }
 }
