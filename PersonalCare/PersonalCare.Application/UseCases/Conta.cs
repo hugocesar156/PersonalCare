@@ -1,8 +1,7 @@
 ﻿using PersonalCare.Application.Interfaces;
 using PersonalCare.Application.Models.Requests.Conta;
-using PersonalCare.Application.Models.Requests.HorarioTreino;
 using PersonalCare.Application.Models.Responses.Conta;
-using PersonalCare.Application.Models.Responses.HorarioTreino;
+using PersonalCare.Application.Services;
 using PersonalCare.Domain.Entities;
 using PersonalCare.Domain.Interfaces;
 using PersonalCare.Shared;
@@ -168,6 +167,8 @@ namespace PersonalCare.Application.UseCases
         {
             try
             {
+                var (senha, salt) = CriptografiaService.CriptografarSenha(request.Cpf[..6]);
+
                 var entity = new Domain.Entities.Conta(
                     request.Nome,
                     request.Email,
@@ -175,6 +176,8 @@ namespace PersonalCare.Application.UseCases
                     request.Altura,
                     request.Biotipo,
                     request.DataNascimento,
+                    senha, 
+                    salt,
                     idUsuario);
 
                 var (cpf, email) = _contaRepository.BuscarDadosExistentes(entity.Cpf, entity.Email);

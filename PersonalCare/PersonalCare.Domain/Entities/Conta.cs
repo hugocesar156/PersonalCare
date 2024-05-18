@@ -19,7 +19,7 @@
             Contatos = _contatos;
         }
 
-        public Conta(string _nome, string _email, string _cpf, decimal? _altura, string? _biotipo, DateTime _dataNascimento, int _idUsuarioCadastro)
+        public Conta(string _nome, string _email, string _cpf, decimal? _altura, string? _biotipo, DateTime _dataNascimento, string _senha, string _salt, int _idUsuarioCadastro)
         {
             Nome = _nome;
             Email = _email;

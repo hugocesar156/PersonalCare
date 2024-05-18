@@ -22,6 +22,8 @@ namespace PersonalCare.DAL.Models.Base
         public DateTime DATA_CADASTRO { get; set; }
         public DateTime DATA_ATUALIZACAO { get; set; }
         public int ID_USUARIO_CADASTRO { get; set; }
+        public string SENHA { get; set; } = null!;
+        public string SALT { get; set; } = null!;
 
         public virtual ICollection<CONTATO_CONTum> CONTATO_CONTa { get; set; }
         public virtual ICollection<FICHA> FICHAs { get; set; }
