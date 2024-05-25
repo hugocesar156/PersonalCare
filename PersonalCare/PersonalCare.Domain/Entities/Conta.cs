@@ -23,6 +23,17 @@
             Contatos = _contatos;
         }
 
+        public Conta(int _id, string _senha, string _salt)
+        {
+            Id = _id;
+            Nome = string.Empty;
+            Email = string.Empty;
+            Cpf = string.Empty;
+            Senha = _senha;
+            Salt = _salt;
+            Contatos = new List<ContatoConta>();
+        }
+
         public Conta(string _nome, string _email, string _cpf, decimal? _altura, string? _biotipo, DateTime _dataNascimento, string _senha, string _salt, int _idUsuarioCadastro)
         {
             Nome = _nome;

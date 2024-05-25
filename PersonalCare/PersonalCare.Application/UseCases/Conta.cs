@@ -23,6 +23,39 @@ namespace PersonalCare.Application.UseCases
             _contaRepository = contaRepository;
         }
 
+        public void AlterarSenha(AlterarSenhaRequest request, int idConta)
+        {
+            try
+            {
+                var conta = _contaRepository.Buscar(idConta);
+
+                if (conta is not null)
+                {
+                    var (senha, salt) = CriptografiaService.CriptografarSenha(request.Senha);
+
+                    var entity = new Domain.Entities.Conta(conta.Id, senha, salt);
+
+                    if (!_contaRepository.AlterarSenha(entity))
+                        throw new PersonalCareException(
+                            "Ocorreu um erro ao altear senha da conta.",
+                            null, HttpStatusCode.InternalServerError);
+                }
+                else
+                    throw new PersonalCareException(
+                        "Ocorreu um erro ao altear senha da conta.",
+                        "Registro de conta não encontrado no servidor.",
+                        HttpStatusCode.NotFound);
+            }
+            catch (PersonalCareException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PersonalCareException("Ocorreu um erro ao altear senha da conta.", ex?.InnerException?.Message ?? ex?.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
         public void Atualizar(AtualizarContaRequest request)
         {
             try
@@ -215,7 +248,7 @@ namespace PersonalCare.Application.UseCases
                     request.Altura,
                     request.Biotipo,
                     request.DataNascimento,
-                    senha, 
+                    senha,
                     salt,
                     idUsuario);
 
@@ -253,7 +286,7 @@ namespace PersonalCare.Application.UseCases
         {
             try
             {
-                var entity = new Domain.Entities.ContatoConta(request.Nome, request.Numero, request.Ddd, request.Ddi, request.IdConta);
+                var entity = new ContatoConta(request.Nome, request.Numero, request.Ddd, request.Ddi, request.IdConta);
 
                 if (!_contaRepository.InserirContato(entity))
                 {

@@ -16,6 +16,23 @@ namespace PersonalCare.Domain.Repositories
             _data = data;
         }
 
+        public bool AlterarSenha(Conta request)
+        {
+            var entity = _data.CONTAs.FirstOrDefault(c => c.ID == request.Id);
+
+            if (entity is not null)
+            {
+                entity.SENHA = request.Senha;
+                entity.SALT = request.Salt;
+                entity.DATA_ATUALIZACAO = DateTime.Now;
+
+                _data.Update(entity);
+                return _data.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
         public bool Atualizar(Conta request)
         {
             var entity = _data.CONTAs.FirstOrDefault(c => c.ID == request.Id);

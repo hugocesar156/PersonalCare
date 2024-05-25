@@ -7,6 +7,7 @@ namespace PersonalCare.Application.Interfaces
 {
     public interface IConta
     {
+        void AlterarSenha(AlterarSenhaRequest request, int idConta);
         void Atualizar(AtualizarContaRequest request);
         void AtualizarContato(AtualizarContaContatoRequest request);
         AutenticarResponse Autenticar(AutenticarRequest request);

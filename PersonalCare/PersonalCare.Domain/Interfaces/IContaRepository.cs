@@ -4,6 +4,7 @@ namespace PersonalCare.Domain.Interfaces
 {
     public interface IContaRepository
     {
+        bool AlterarSenha(Conta request);
         bool Atualizar(Conta request);
         bool AtualizarContato(ContatoConta request);
         Conta? Buscar(int idConta);
