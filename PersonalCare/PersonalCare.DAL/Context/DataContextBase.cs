@@ -32,7 +32,9 @@ namespace PersonalCare.DAL.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = _configuration.GetConnectionString("PersonalCareBase").Replace("db_personalcare_base", $"db_personalcare_-{_httpContextAccessor.HttpContext.User.FindFirst(PersonalCareClaims.ID_EMPRESA)?.Value}");
+            var idEmpresa = _httpContextAccessor.HttpContext.User.FindFirst(PersonalCareClaims.ID_EMPRESA)?.Value;
+            var connectionString = string.Format(_configuration.GetConnectionString("PersonalCareBase"), idEmpresa);
+
             optionsBuilder.UseSqlServer(connectionString);
         }
 
